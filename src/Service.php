@@ -23,7 +23,7 @@ class Service
     private string $namespace;
     private array $options = [];
     private HttpClient $client;
-    
+
     public function __construct(string $resource, HttpClient $client, array $options = [])
     {
         $this->resource = $resource;
@@ -38,9 +38,14 @@ class Service
         return new $class((array) $data, $this);
     }
 
-    private function uri(?string $path = null)
+    public function uri(?string $path = null)
     {
         return $this->namespace . ($path ? '/' . $path : '');
+    }
+
+    public function uriForResource(string $id, ?string $path = null)
+    {
+        return $this->namespace . '/' . $id . ($path ? '/' . $path : '');
     }
 
     public function create(array $attributes = [], array $options = [])
@@ -55,7 +60,7 @@ class Service
     {
         $uri = $this->uri($id);
         $data = $this->client->put($uri, $attributes, $options);
-        
+
         return $this->resolve($data);
     }
 
@@ -63,7 +68,7 @@ class Service
     {
         $uri = $this->uri($id);
         $data = $this->client->get($uri, [], $options);
-        
+
         return $this->resolve($data);
     }
 
@@ -76,10 +81,11 @@ class Service
             return array_map(
                 function ($item) {
                     return $this->resolve($item);
-                }, $data
+                },
+                $data
             );
         }
-        
+
         return $data;
     }
 
@@ -92,10 +98,11 @@ class Service
             return array_map(
                 function ($item) {
                     return $this->resolve($item);
-                }, $data
+                },
+                $data
             );
         }
-        
+
         return $data;
     }
 
@@ -117,16 +124,16 @@ class Service
 
         $uri = $this->uri($id);
         $data = $this->client->delete($uri, [], $options);
-        
+
         return $this->resolve($data);
     }
 
-    public function getOptions() : array
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function getClient() : HttpClient
+    public function getClient(): HttpClient
     {
         return $this->client;
     }
