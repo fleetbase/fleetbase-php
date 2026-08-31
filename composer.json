@@ -64,7 +64,8 @@
         "contract:generated": [
             "@php tools/generate-endpoint-services.php",
             "@php tools/generate-api-coverage.php",
-            "git diff --exit-code -- contracts/postman-manifest.json contracts/service-map.json docs/api-coverage.md src/Services tests/Contract"
+            "@php tools/generate-api-examples.php",
+            "git diff --exit-code -- contracts/postman-manifest.json contracts/service-map.json docs/api-coverage.md docs/api-examples.md src/Services tests/Contract"
         ],
         "api:snapshot": "@php tools/generate-api-snapshot.php --autoload=vendor/autoload.php --label=working-tree --output=build/contracts/public-api-current.json",
         "api:compatibility": [
