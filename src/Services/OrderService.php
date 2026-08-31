@@ -112,7 +112,7 @@ class OrderService extends Service
      */
     public function setDestination($id, $destinationId, $params = [], $options = [])
     {
-        $uri = $this->uriForResource($id, 'set-destination/' . $destinationId);
+        $uri = $this->uriForResource($id, 'set-destination/' . rawurlencode((string) $destinationId));
 
         return $this->client->post($uri, $params, $options);
     }
