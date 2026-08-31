@@ -58,7 +58,7 @@ $fleetbase = new Fleetbase($_ENV['FLEETBASE_API_KEY'], [
 ]);
 ```
 
-The current modernization work is tracked in [the implementation plan](docs/MODERNIZATION_PLAN.md) and the machine-checked [API contract manifest](contracts/postman-manifest.json). Until the 220-request matrix is complete, do not infer that a raw server endpoint already has a first-class SDK method.
+The current modernization work is tracked in [the implementation plan](docs/MODERNIZATION_PLAN.md), the machine-checked [API contract manifest](contracts/postman-manifest.json), and the human-readable [220-request API coverage matrix](docs/api-coverage.md). All 220 locked requests now have first-class SDK mappings and deterministic request-fixture tests; isolated live-stack verification remains a release gate.
 
 ## Development
 

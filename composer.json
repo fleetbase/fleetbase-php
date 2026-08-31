@@ -34,7 +34,8 @@
         "phpstan/phpstan": "^2.2",
         "phpstan/phpstan-mockery": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.6 || ^10.5 || ^11.5 || ^12.0"
+        "phpunit/phpunit": "^9.6 || ^10.5 || ^11.5 || ^12.0",
+        "symfony/yaml": "^5.4"
     },
     "autoload": {
         "psr-4": {
@@ -56,6 +57,11 @@
         "test:coverage": "@php tools/run-unit-tests.php --coverage-clover=build/coverage/clover.xml --coverage-cobertura=build/coverage/cobertura.xml --coverage-html=build/coverage/html --coverage-text=build/coverage/summary.txt",
         "contract:check": "@php tools/check-contract-manifest.php",
         "contract:complete": "@php tools/check-contract-manifest.php --require-complete",
+        "contract:generated": [
+            "@php tools/generate-endpoint-services.php",
+            "@php tools/generate-api-coverage.php",
+            "git diff --exit-code -- contracts/postman-manifest.json contracts/service-map.json docs/api-coverage.md src/Services tests/Contract"
+        ],
         "api:snapshot": "@php tools/generate-api-snapshot.php --autoload=vendor/autoload.php --label=working-tree --output=build/contracts/public-api-current.json",
         "api:compatibility": [
             "@api:snapshot",
@@ -68,6 +74,7 @@
             "@analyse",
             "@test:unit",
             "@contract:check",
+            "@contract:generated",
             "@api:compatibility"
         ]
     },
