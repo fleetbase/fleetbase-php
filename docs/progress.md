@@ -69,3 +69,9 @@ Remaining automatable gates include mutation testing, isolated Fleetbase/Postman
 - The local drift comparison against the locked Postman revision passes across all 220 requests. Workflow syntax, PHP syntax/formatting, max-level PHPStan, generated-artifact drift, compatibility, and the complete hermetic test suite also pass locally.
 
 The disposable native Postman run requires a repository or organization `POSTMAN_API_KEY`; its CI result is intentionally not claimed until the secret-backed workflow has executed. Release dry-run validation and mutation-survivor review remain automatable work. Human approval is still required for the policy and repository-administration items listed above.
+
+## 2026-08-31 — mutation and secret-scan baseline review
+
+- The first full-source Infection run generated 1,588 mutants: 1,370 killed, 214 escaped, 4 timed out, and none uncovered, errored, skipped, or ignored. Its measured mutation score indicator is 86.27% with 100% mutation-code coverage.
+- CI now permits the four observed timeout-killed mutants with a narrow ceiling of five; additional timeout growth remains a failure. The permanent minimum mutation-score policy remains an explicit maintainer decision, while the complete report stays visible as a CI artifact.
+- The secret workflow now separates verified-secret history scanning from verified-and-unknown scanning of the current source snapshot. This keeps full historical credential validation while preventing a repaired test-only URI false positive in an intermediate review commit from permanently blocking the branch without rewriting history.

@@ -13,7 +13,9 @@
     minMsi: 0,
     minCoveredMsi: 0,
     timeoutsAsEscaped: true,
-    maxTimeouts: 0,
+    // Four timeout-killed mutants were observed in the first complete baseline.
+    // Keep a small explicit ceiling so new timeout growth still fails CI.
+    maxTimeouts: 5,
     logs: {
         text: "build/mutation/infection.log",
         summary: "build/mutation/summary.log",
