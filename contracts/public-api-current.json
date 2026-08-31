@@ -71,12 +71,472 @@
                 }
             ]
         },
+        "Fleetbase\\Sdk\\Collection": {
+            "final": true,
+            "parent": null,
+            "interfaces": [
+                "IteratorAggregate",
+                "Countable",
+                "JsonSerializable",
+                "Traversable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "items",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "meta",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "links",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "all",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "count",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "int",
+                    "parameters": []
+                },
+                {
+                    "name": "getIterator",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Traversable",
+                    "parameters": []
+                },
+                {
+                    "name": "jsonSerialize",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "links",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "meta",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "offsetExists",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "bool",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "offsetGet",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?Fleetbase\\Sdk\\Resource",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "offsetSet",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "void",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "value",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "offsetUnset",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "void",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Configuration": {
+            "final": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "apiKey",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "debug",
+                            "type": "bool",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": false
+                        }
+                    ]
+                },
+                {
+                    "name": "getApiKey",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getBaseUri",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getHost",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getNamespace",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getVersion",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "isDebug",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "bool",
+                    "parameters": []
+                },
+                {
+                    "name": "toArray",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                }
+            ]
+        },
         "Fleetbase\\Sdk\\Fleetbase": {
             "final": false,
             "parent": null,
             "interfaces": [],
             "constants": [],
-            "properties": [],
+            "properties": [
+                {
+                    "name": "chatChannels",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "client",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "comments",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "contacts",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "customers",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "devices",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "drivers",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "entities",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "equipment",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "files",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "fleets",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "fuelReports",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "fuelTransactions",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "geofences",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "issues",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "labels",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "manifests",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "onboard",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "orchestrator",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "orderConfigs",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "orders",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "organizations",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "parts",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "payloads",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "places",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "purchaseRates",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "sensors",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "serviceAreas",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "serviceQuotes",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "serviceRates",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "trackingNumbers",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "trackingStatuses",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "vehicles",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "vendors",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "workOrders",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                },
+                {
+                    "name": "zones",
+                    "visibility": "public",
+                    "static": false,
+                    "type": null
+                }
+            ],
             "methods": [
                 {
                     "name": "__construct",
@@ -110,6 +570,41 @@
                     ]
                 },
                 {
+                    "name": "chatChannels",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "comments",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "contacts",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "drivers",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "files",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
                     "name": "getOptions",
                     "visibility": "public",
                     "static": false,
@@ -131,6 +626,49 @@
                     "parameters": []
                 },
                 {
+                    "name": "orders",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\OrderService",
+                    "parameters": []
+                },
+                {
+                    "name": "organizations",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "payloads",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "places",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "service",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
                     "name": "setApiKey",
                     "visibility": "public",
                     "static": false,
@@ -144,6 +682,20 @@
                             "optional": false
                         }
                     ]
+                },
+                {
+                    "name": "vehicles",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "vendors",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
                 }
             ]
         },
@@ -156,7 +708,121 @@
             ],
             "constants": [],
             "properties": [],
-            "methods": []
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "statusCode",
+                            "type": "?int",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "errorCode",
+                            "type": "?string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "details",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "requestId",
+                            "type": "?string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "method",
+                            "type": "?string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "url",
+                            "type": "?string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "previous",
+                            "type": "?Throwable",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getDetails",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "getErrorCode",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?string",
+                    "parameters": []
+                },
+                {
+                    "name": "getRequestId",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?string",
+                    "parameters": []
+                },
+                {
+                    "name": "getRequestMethod",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?string",
+                    "parameters": []
+                },
+                {
+                    "name": "getRequestUrl",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?string",
+                    "parameters": []
+                },
+                {
+                    "name": "getStatusCode",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?int",
+                    "parameters": []
+                }
+            ]
         },
         "Fleetbase\\Sdk\\HttpClient": {
             "final": false,
@@ -248,6 +914,13 @@
                     "visibility": "public",
                     "static": false,
                     "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getLastPsrResponse",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?Psr\\Http\\Message\\ResponseInterface",
                     "parameters": []
                 },
                 {
@@ -365,6 +1038,44 @@
                     ]
                 },
                 {
+                    "name": "request",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
                     "name": "setHost",
                     "visibility": "public",
                     "static": false,
@@ -399,9 +1110,36 @@
         "Fleetbase\\Sdk\\Resource": {
             "final": false,
             "parent": null,
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
-            "properties": [],
+            "properties": [
+                {
+                    "name": "attributes",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "array"
+                },
+                {
+                    "name": "options",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "array"
+                },
+                {
+                    "name": "originalAttributes",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "array"
+                },
+                {
+                    "name": "service",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "?Fleetbase\\Sdk\\Service"
+                }
+            ],
             "methods": [
                 {
                     "name": "__construct",
@@ -444,6 +1182,43 @@
                         {
                             "name": "name",
                             "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "__isset",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "bool",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "__set",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "void",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "value",
+                            "type": null,
                             "by_reference": false,
                             "variadic": false,
                             "optional": false
@@ -530,6 +1305,27 @@
                     ]
                 },
                 {
+                    "name": "getChanges",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "getDirtyAttributes",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "getService",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "?Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
                     "name": "hasAttribute",
                     "visibility": "public",
                     "static": false,
@@ -575,6 +1371,103 @@
                     ]
                 },
                 {
+                    "name": "jsonSerialize",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "offsetExists",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "bool",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "offsetGet",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "offsetSet",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "void",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "value",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "offsetUnset",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "void",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "reload",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Resource",
+                    "parameters": [
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "requireService",
+                    "visibility": "protected",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
                     "name": "save",
                     "visibility": "public",
                     "static": false,
@@ -589,6 +1482,35 @@
                             "default": []
                         }
                     ]
+                },
+                {
+                    "name": "setAttribute",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Resource",
+                    "parameters": [
+                        {
+                            "name": "attribute",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "value",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "toArray",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
                 },
                 {
                     "name": "update",
@@ -619,7 +1541,9 @@
         "Fleetbase\\Sdk\\Resources\\Contact": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -660,7 +1584,9 @@
         "Fleetbase\\Sdk\\Resources\\Driver": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -701,7 +1627,9 @@
         "Fleetbase\\Sdk\\Resources\\Entity": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -742,7 +1670,9 @@
         "Fleetbase\\Sdk\\Resources\\Order": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1046,7 +1976,9 @@
         "Fleetbase\\Sdk\\Resources\\Payload": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1087,7 +2019,9 @@
         "Fleetbase\\Sdk\\Resources\\Place": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1128,7 +2062,9 @@
         "Fleetbase\\Sdk\\Resources\\ServiceArea": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1169,7 +2105,9 @@
         "Fleetbase\\Sdk\\Resources\\ServiceQuote": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1210,7 +2148,9 @@
         "Fleetbase\\Sdk\\Resources\\ServiceRate": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1251,7 +2191,9 @@
         "Fleetbase\\Sdk\\Resources\\TrackingStatus": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1292,7 +2234,9 @@
         "Fleetbase\\Sdk\\Resources\\Vehicle": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1333,7 +2277,9 @@
         "Fleetbase\\Sdk\\Resources\\Vendor": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1374,7 +2320,9 @@
         "Fleetbase\\Sdk\\Resources\\Waypoint": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1415,7 +2363,9 @@
         "Fleetbase\\Sdk\\Resources\\Zone": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
-            "interfaces": [],
+            "interfaces": [
+                "JsonSerializable"
+            ],
             "constants": [],
             "properties": [],
             "methods": [
@@ -1458,7 +2408,32 @@
             "parent": null,
             "interfaces": [],
             "constants": [],
-            "properties": [],
+            "properties": [
+                {
+                    "name": "client",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "Fleetbase\\Sdk\\HttpClient"
+                },
+                {
+                    "name": "namespace",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "string"
+                },
+                {
+                    "name": "options",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "array"
+                },
+                {
+                    "name": "resource",
+                    "visibility": "protected",
+                    "static": false,
+                    "type": "string"
+                }
+            ],
             "methods": [
                 {
                     "name": "__construct",
@@ -1479,6 +2454,44 @@
                             "by_reference": false,
                             "variadic": false,
                             "optional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "action",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
                         },
                         {
                             "name": "options",
@@ -1591,6 +2604,30 @@
                     "parameters": []
                 },
                 {
+                    "name": "paginate",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Collection",
+                    "parameters": [
+                        {
+                            "name": "query",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
                     "name": "query",
                     "visibility": "public",
                     "static": false,
@@ -1635,6 +2672,36 @@
                             "variadic": false,
                             "optional": true,
                             "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "resolve",
+                    "visibility": "protected",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Resource",
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "resolveCollection",
+                    "visibility": "protected",
+                    "static": false,
+                    "return_type": "?Fleetbase\\Sdk\\Collection",
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
                         }
                     ]
                 },
@@ -2184,18 +3251,41 @@
     },
     "runtime_properties": {
         "Fleetbase\\Sdk\\Fleetbase": [
+            "chatChannels",
             "client",
+            "comments",
             "contacts",
+            "customers",
+            "devices",
             "drivers",
             "entities",
+            "equipment",
+            "files",
+            "fleets",
+            "fuelReports",
+            "fuelTransactions",
+            "geofences",
+            "issues",
+            "labels",
+            "manifests",
+            "onboard",
+            "orchestrator",
+            "orderConfigs",
             "orders",
+            "organizations",
+            "parts",
+            "payloads",
             "places",
+            "purchaseRates",
+            "sensors",
             "serviceAreas",
             "serviceQuotes",
             "serviceRates",
+            "trackingNumbers",
             "trackingStatuses",
             "vehicles",
             "vendors",
+            "workOrders",
             "zones"
         ]
     }

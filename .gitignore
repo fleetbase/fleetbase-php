@@ -1,12 +1,15 @@
 
-/vendor
-composer.phar
-composer.lock
+/vendor/
+/build/
+/.phpunit.cache/
+/.phpunit.result.cache
+/phpunit.xml
+/.php-cs-fixer.cache
+/composer.phar
+/.idea/
+/.vscode/
 .DS_Store
 Thumbs.db
-/phpunit.xml
-/.idea
-/.vscode
-.phpunit.result.cache
 .env
-.env*
+.env.*
+!.env.example

@@ -45,7 +45,7 @@ foreach ($scopes as $collection) {
         }
 
         $relative = str_replace('\\', '/', substr($file->getPathname(), strlen($postmanRoot) + 1));
-        $withinCollection = substr($relative, strlen('postman/collections/' . $collection . '/') );
+        $withinCollection = substr($relative, strlen('postman/collections/' . $collection . '/'));
         $segments = explode('/', $withinCollection);
         $requestName = preg_replace('/\.request\.yaml$/', '', array_pop($segments));
         $group = implode(' / ', $segments);

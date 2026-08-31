@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  *
  * @copyright Copyright (c) Fleetbase Pte Ltd. <ron@fleetbase.io>
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license   https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0-or-later
  */
 
 declare(strict_types=1);
@@ -19,6 +19,12 @@ namespace Fleetbase\Sdk;
  */
 class Arr
 {
+    /**
+     * @template T
+     * @param array<array-key, T> $arr
+     * @param callable(T): bool $predicate
+     * @return bool
+     */
     public static function every(array $arr, callable $predicate)
     {
         foreach ($arr as $e) {
@@ -30,16 +36,27 @@ class Arr
         return true;
     }
 
+    /**
+     * @template T
+     * @param array<array-key, T> $arr
+     * @param callable(T): bool $predicate
+     * @return bool
+     */
     public static function any(array $arr, callable $predicate)
     {
         return !static::every(
             $arr,
-            function ($e) use ($predicate) {
+            function ($e) use ($predicate): bool {
                 return !call_user_func($predicate, $e);
             }
         );
     }
 
+    /**
+     * @template T
+     * @param array<array-key, T> $arr
+     * @return T|-1
+     */
     public static function first(array $arr)
     {
         $arr = array_values($arr);

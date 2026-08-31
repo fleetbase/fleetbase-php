@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/fleetbase/fleetbase-php/security/advisories/new
+    about: Report vulnerabilities privately.
+  - name: Usage support
+    url: https://github.com/fleetbase/fleetbase-php/discussions
+    about: Ask installation and usage questions.

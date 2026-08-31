@@ -155,7 +155,11 @@ function compareMethods(array &$errors, string $className, array $baselineMethod
 
         foreach ($baselineParameters as $index => $baselineParameter) {
             $currentParameter = $currentParameters[$index];
-            foreach (['name', 'type', 'by_reference', 'variadic'] as $field) {
+            if (($baselineParameter['name'] ?? null) !== ($currentParameter['name'] ?? null)
+                && !hasCompatibleNamedParameter($baselineParameter, $currentParameters)) {
+                $errors[] = sprintf('Class %s removed named parameter %s from method %s', $className, $baselineParameter['name'], $name);
+            }
+            foreach (['type', 'by_reference', 'variadic'] as $field) {
                 if (($baselineParameter[$field] ?? null) !== ($currentParameter[$field] ?? null)) {
                     $errors[] = sprintf('Class %s changed parameter %d %s of method %s', $className, $index + 1, $field, $name);
                 }
@@ -175,6 +179,33 @@ function compareMethods(array &$errors, string $className, array $baselineMethod
             }
         }
     }
+}
+
+/**
+ * PHP 8 named calls remain compatible when an optional parameter moves to a
+ * later optional position with the same name and declaration.
+ *
+ * @param array<string, mixed> $baselineParameter
+ * @param array<int, array<string, mixed>> $currentParameters
+ */
+function hasCompatibleNamedParameter(array $baselineParameter, array $currentParameters): bool
+{
+    foreach ($currentParameters as $currentParameter) {
+        if (($currentParameter['name'] ?? null) !== ($baselineParameter['name'] ?? null)) {
+            continue;
+        }
+
+        foreach (['type', 'by_reference', 'variadic', 'optional'] as $field) {
+            if (($currentParameter[$field] ?? null) !== ($baselineParameter[$field] ?? null)) {
+                return false;
+            }
+        }
+
+        return !array_key_exists('default', $baselineParameter)
+            || (array_key_exists('default', $currentParameter) && $currentParameter['default'] === $baselineParameter['default']);
+    }
+
+    return false;
 }
 
 /**

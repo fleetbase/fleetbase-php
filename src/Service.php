@@ -1,133 +1,161 @@
 <?php
 
 /**
- * This file is part of the fleetbase/fleetbase-php library
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This file is part of the fleetbase/fleetbase-php library.
  *
  * @copyright Copyright (c) Fleetbase Pte Ltd. <ron@fleetbase.io>
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0-or-later
  */
 
 declare(strict_types=1);
 
 namespace Fleetbase\Sdk;
 
-/**
- * Fleetbase PHP SDK Base Service
- */
 class Service
 {
-    private string $resource;
-    private string $namespace;
-    private array $options = [];
-    private HttpClient $client;
+    protected string $resource;
+    protected string $namespace;
 
+    /** @var array<string, mixed> */
+    protected array $options = [];
+
+    protected HttpClient $client;
+
+    /** @param array<string, mixed> $options */
     public function __construct(string $resource, HttpClient $client, array $options = [])
     {
         $this->resource = $resource;
-        $this->namespace = Utils::createNamespace($resource);
+        $namespace = $options['namespace'] ?? null;
+        $this->namespace = is_string($namespace)
+            ? trim($namespace, '/')
+            : Utils::createNamespace($resource);
         $this->client = $client;
         $this->options = $options;
     }
 
-    private function resolve($data)
-    {
-        $class = "Fleetbase\\Sdk\\Resources\\" . Utils::classify($this->resource);
-        return new $class((array) $data, $this);
-    }
-
+    /** @return string */
     public function uri(?string $path = null)
     {
-        return $this->namespace . ($path ? '/' . $path : '');
+        return $this->namespace . ($path !== null && $path !== '' ? '/' . ltrim($path, '/') : '');
     }
 
+    /** @return string */
     public function uriForResource(string $id, ?string $path = null)
     {
-        return $this->namespace . '/' . $id . ($path ? '/' . $path : '');
+        return $this->uri(rawurlencode($id) . ($path !== null && $path !== '' ? '/' . ltrim($path, '/') : ''));
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $options
+     * @return Resource
+     */
     public function create(array $attributes = [], array $options = [])
     {
-        $uri = $this->uri();
-        $data = $this->client->post($uri, $attributes, $options);
-
-        return $this->resolve($data);
+        return $this->resolve($this->client->post($this->uri(), $attributes, $options));
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $options
+     * @return Resource
+     */
     public function update(string $id, array $attributes = [], array $options = [])
     {
-        $uri = $this->uri($id);
-        $data = $this->client->put($uri, $attributes, $options);
-
-        return $this->resolve($data);
+        return $this->resolve($this->client->put($this->uriForResource($id), $attributes, $options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return Resource
+     */
     public function findRecord(string $id, array $options = [])
     {
-        $uri = $this->uri($id);
-        $data = $this->client->get($uri, [], $options);
-
-        return $this->resolve($data);
+        return $this->resolve($this->client->get($this->uriForResource($id), [], $options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return mixed
+     */
     public function findAll(array $options = [])
     {
-        $uri = $this->uri();
-        $data = $this->client->get($uri, [], $options);
+        $data = $this->client->get($this->uri(), [], $options);
+        $collection = $this->resolveCollection($data);
 
-        if (is_array($data)) {
-            return array_map(
-                function ($item) {
-                    return $this->resolve($item);
-                },
-                $data
-            );
-        }
-
-        return $data;
+        return $collection instanceof Collection ? $collection->all() : $data;
     }
 
+    /**
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
+     * @return mixed
+     */
     public function query(array $query = [], array $options = [])
     {
-        $uri = $this->uri();
-        $data = $this->client->get($uri, $query, $options);
+        $data = $this->client->get($this->uri(), $query, $options);
+        $collection = $this->resolveCollection($data);
 
-        if (is_array($data)) {
-            return array_map(
-                function ($item) {
-                    return $this->resolve($item);
-                },
-                $data
-            );
-        }
-
-        return $data;
+        return $collection instanceof Collection ? $collection->all() : $data;
     }
 
+    /**
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
+     */
+    public function paginate(array $query = [], array $options = []): Collection
+    {
+        $data = $this->client->get($this->uri(), $query, $options);
+        $collection = $this->resolveCollection($data);
+
+        if (!$collection instanceof Collection) {
+            return new Collection([]);
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
+     * @return Resource
+     */
     public function queryRecord(array $query = [], array $options = [])
     {
         $query['single'] = true;
-
-        $uri = $this->uri();
-        $data = $this->client->get($uri, $query, $options);
-
-        return $this->resolve($data);
+        return $this->resolve($this->client->get($this->uri(), $query, $options));
     }
 
+    /**
+     * @param Resource|string $id
+     * @param array<string, mixed> $options
+     * @return Resource
+     */
     public function destroy($id, array $options = [])
     {
         if ($id instanceof Resource) {
             $id = $id->getAttribute('id');
         }
+        if (!is_string($id) || $id === '') {
+            throw new \InvalidArgumentException('A resource ID is required for deletion.');
+        }
 
-        $uri = $this->uri($id);
-        $data = $this->client->delete($uri, [], $options);
-
-        return $this->resolve($data);
+        return $this->resolve($this->client->delete($this->uriForResource($id), [], $options));
     }
 
+    /**
+     * Call an explicit non-CRUD endpoint without bypassing client behavior.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $options
+     * @return mixed
+     */
+    public function action(string $method, string $path, array $data = [], array $options = [])
+    {
+        return $this->client->request($method, $this->uri($path), $data, $options);
+    }
+
+    /** @return array<string, mixed> */
     public function getOptions(): array
     {
         return $this->options;
@@ -136,5 +164,73 @@ class Service
     public function getClient(): HttpClient
     {
         return $this->client;
+    }
+
+    /** @param mixed $data */
+    protected function resolve($data): Resource
+    {
+        if (is_object($data) && isset($data->data) && is_object($data->data)) {
+            $data = $data->data;
+        }
+        if (!is_object($data) && !is_array($data)) {
+            throw new \UnexpectedValueException('Fleetbase resource responses must be objects or arrays.');
+        }
+
+        $class = 'Fleetbase\\Sdk\\Resources\\' . Utils::classify($this->resource);
+        if (!class_exists($class) || !is_subclass_of($class, Resource::class)) {
+            $class = Resource::class;
+        }
+
+        /** @var Resource $resource */
+        $resource = new $class($this->stringKeyedArray((array) $data), $this, $this->options);
+        return $resource;
+    }
+
+    /** @param mixed $data */
+    protected function resolveCollection($data): ?Collection
+    {
+        $items = null;
+        $meta = [];
+        $links = [];
+
+        if (is_array($data)) {
+            $items = $data;
+        } elseif (is_object($data)) {
+            foreach (['data', 'results', 'items'] as $key) {
+                if (isset($data->{$key}) && is_array($data->{$key})) {
+                    $items = $data->{$key};
+                    break;
+                }
+            }
+            $meta = isset($data->meta) && is_object($data->meta) ? $this->stringKeyedArray((array) $data->meta) : [];
+            $links = isset($data->links) && is_object($data->links) ? $this->stringKeyedArray((array) $data->links) : [];
+        }
+
+        if ($items === null) {
+            return null;
+        }
+
+        $resources = [];
+        foreach ($items as $item) {
+            $resources[] = $this->resolve($item);
+        }
+
+        return new Collection($resources, $meta, $links);
+    }
+
+    /**
+     * @param array<mixed, mixed> $value
+     * @return array<string, mixed>
+     */
+    private function stringKeyedArray(array $value): array
+    {
+        $result = [];
+        foreach ($value as $key => $item) {
+            if (is_string($key)) {
+                $result[$key] = $item;
+            }
+        }
+
+        return $result;
     }
 }

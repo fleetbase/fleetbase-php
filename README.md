@@ -1,87 +1,78 @@
 # Fleetbase PHP SDK
 
-[![Source Code][badge-source]][source]
-[![Latest Version][badge-release]][packagist]
-[![Software License][badge-license]][license]
-[![PHP Version][badge-php]][php]
-[![Build Status][badge-build]][build]
-[![Coverage Status][badge-coverage]][coverage]
-[![Total Downloads][badge-downloads]][downloads]
+[![CI](https://github.com/fleetbase/fleetbase-php/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fleetbase/fleetbase-php/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/fleetbase/fleetbase-php/branch/main/graph/badge.svg)](https://codecov.io/gh/fleetbase/fleetbase-php)
+[![Latest release](https://img.shields.io/packagist/v/fleetbase/fleetbase-php.svg)](https://packagist.org/packages/fleetbase/fleetbase-php)
+[![PHP versions](https://img.shields.io/packagist/dependency-v/fleetbase/fleetbase-php/php)](https://packagist.org/packages/fleetbase/fleetbase-php)
+[![Downloads](https://img.shields.io/packagist/dt/fleetbase/fleetbase-php.svg)](https://packagist.org/packages/fleetbase/fleetbase-php)
+[![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue.svg)](LICENSE)
 
-Fleetbase PHP SDK
+The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted Fleetbase installations while retaining the public API used by the 1.0.x SDK.
 
-This project adheres to a [Contributor Code of Conduct][conduct]. By
-participating in this project and its community, you are expected to uphold this
-code.
-
+> License notice: the upcoming 1.1.0 release is licensed under `AGPL-3.0-or-later`. Published 1.0.x tags remain available under their original MIT license. Review [the migration guide](docs/migration-guide.md) before upgrading.
 
 ## Requirements
 
-PHP 7.4 and later.
+- PHP 7.4 or PHP 8.0–8.5
+- Composer 2.2 or newer
+- A Fleetbase API key
 
+PHP 7.4 and 8.0 are compatibility targets only and no longer receive PHP security updates. Production applications should use a PHP version currently supported by the PHP project.
 
 ## Installation
-
-The preferred method of installation is via [Composer][]. Run the following
-command to install the package and add it as a requirement to your project's
-`composer.json`:
 
 ```bash
 composer require fleetbase/fleetbase-php
 ```
 
-
-## Quick Start
-
-Simple usage looks like:
+## Quick start
 
 ```php
-$fleetbase = new \Fleetbase\Sdk\Fleetbase('< api key here >');
+<?php
 
-$spaceNeedle = $fleetbase->places->create([
+require __DIR__ . '/vendor/autoload.php';
+
+use Fleetbase\Sdk\Fleetbase;
+
+$fleetbase = new Fleetbase($_ENV['FLEETBASE_API_KEY']);
+
+$place = $fleetbase->places->create([
     'name' => 'Space Needle',
     'street1' => '400 Broad Street',
     'city' => 'Seattle',
     'state' => 'WA',
-    'country' => 'US'
+    'country' => 'US',
+]);
+
+echo $place->id;
+```
+
+Never commit an API key. Load it from your runtime secret manager or environment.
+
+## Self-hosted Fleetbase
+
+```php
+$fleetbase = new Fleetbase($_ENV['FLEETBASE_API_KEY'], [
+    'host' => 'https://fleetbase.example.com',
+    'namespace' => 'v1',
 ]);
 ```
 
-## Documentation
+The current modernization work is tracked in [the implementation plan](docs/MODERNIZATION_PLAN.md) and the machine-checked [API contract manifest](contracts/postman-manifest.json). Until the 220-request matrix is complete, do not infer that a raw server endpoint already has a first-class SDK method.
 
-Check out the [documentation website][documentation] for detailed information
-and code examples.
+## Development
 
+```bash
+composer install
+composer check
+```
 
-## Contributing
+Tests are hermetic by default and must not use production credentials or mutate a shared API. See [CONTRIBUTING.md](CONTRIBUTING.md) for the quality, contract, and pull-request requirements.
 
-Contributions are welcome! Please read [CONTRIBUTING][] for details.
+## Security and support
 
+Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). Usage questions and supported-version guidance are in [SUPPORT.md](SUPPORT.md).
 
-## Copyright and License
+## License
 
-The fleetbase/fleetbase-php library is copyright © [Fleetbase Pte Ltd.](https://fleetbase.io)
-and licensed for use under the MIT License (MIT). Please see [LICENSE][] for
-more information.
-
-
-[conduct]: https://github.com/fleetbase/fleetbase-php/blob/master/.github/CODE_OF_CONDUCT.md
-[composer]: http://getcomposer.org/
-[documentation]: https://fleetbase.github.io/fleetbase-php/
-[contributing]: https://github.com/fleetbase/fleetbase-php/blob/master/.github/CONTRIBUTING.md
-
-[badge-source]: http://img.shields.io/badge/source-fleetbase/fleetbase--php-blue.svg?style=flat-square
-[badge-release]: https://img.shields.io/packagist/v/fleetbase/fleetbase-php.svg?style=flat-square&label=release
-[badge-license]: https://img.shields.io/packagist/l/fleetbase/fleetbase-php.svg?style=flat-square
-[badge-php]: https://img.shields.io/packagist/php-v/fleetbase/fleetbase-php.svg?style=flat-square
-[badge-build]: https://img.shields.io/travis/fleetbase/fleetbase-php/master.svg?style=flat-square
-[badge-coverage]: https://img.shields.io/coveralls/github/fleetbase/fleetbase-php/master.svg?style=flat-square
-[badge-downloads]: https://img.shields.io/packagist/dt/fleetbase/fleetbase-php.svg?style=flat-square&colorB=mediumvioletred
-
-[source]: https://github.com/fleetbase/fleetbase-php
-[packagist]: https://packagist.org/packages/fleetbase/fleetbase-php
-[license]: https://github.com/fleetbase/fleetbase-php/blob/master/LICENSE
-[php]: https://php.net
-[build]: https://travis-ci.org/fleetbase/fleetbase-php
-[coverage]: https://coveralls.io/r/fleetbase/fleetbase-php?branch=master
-[downloads]: https://packagist.org/packages/fleetbase/fleetbase-php
+The code prepared for 1.1.0 and later is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). Previously published tags retain the license shipped with those tags.
