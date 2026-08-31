@@ -37,6 +37,8 @@ jobs:
           tools: composer:v2
       - name: Install locked dependencies
         run: composer install --no-interaction --prefer-dist
+      - name: Audit locked dependencies
+        run: composer audit --locked --no-interaction
       - name: Validate version, branch, changelog, and notes
         run: |
           if [ "$PUBLISH_RELEASE" = "true" ]; then
@@ -115,3 +117,33 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "Fleetbase PHP SDK $RELEASE_VERSION" \
             --notes-file "docs/releases/$RELEASE_VERSION.md"
+
+  verify-package:
+    name: Verify published Packagist install
+    if: inputs.publish == true
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+    steps:
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+      - name: Wait for Packagist and install the exact release
+        run: |
+          mkdir -p build/packagist-consumer
+          composer init --working-dir=build/packagist-consumer --name=fleetbase/release-verifier --no-interaction
+          for attempt in $(seq 1 20); do
+            if composer show fleetbase/fleetbase-php "$RELEASE_VERSION" --all --no-interaction >/dev/null 2>&1; then
+              composer require --working-dir=build/packagist-consumer "fleetbase/fleetbase-php:$RELEASE_VERSION" --no-interaction --prefer-dist
+              composer install --working-dir=build/packagist-consumer --no-interaction --no-dev --optimize-autoloader
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "Packagist did not expose fleetbase/fleetbase-php:$RELEASE_VERSION within 10 minutes." >&2
+          exit 1

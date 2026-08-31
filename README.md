@@ -12,6 +12,8 @@ The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). 
 
 > The upcoming 1.1.0 release changes the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
 
+Maintainers preparing 1.1.0 should use the [release checklist](docs/release-checklist.md) and [default-branch migration runbook](docs/default-branch-migration.md).
+
 ## Requirements
 
 - PHP 7.4 or PHP 8.0–8.5
