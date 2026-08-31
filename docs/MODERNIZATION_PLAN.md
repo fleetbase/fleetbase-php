@@ -8,7 +8,7 @@ Target: a backwards-compatible `1.1.0` release, followed by an optional `2.0.0` 
 
 ## Executive summary
 
-The current SDK is a 2022 prototype rather than a production-ready client library. It has no repository CI or release automation, vendors 4,394 dependency files, supports PHP 7.4 but excludes every PHP 8 release through its Composer constraint, performs destructive integration tests against a live API, and exposes only a fraction of the current Fleetbase API.
+The current SDK is a 2022 prototype rather than a production-ready client library. It has no repository CI or release automation, vendors 4,394 dependency files, supports PHP 7.4 but excludes every PHP 8 release through its Composer constraint, performs destructive integration tests against a live API, and exposes only a fraction of the current Fleetbase API. The modernization will also move the project from MIT to `AGPL-3.0-or-later`, matching current Fleetbase Core API and Fleet-Ops licensing.
 
 The official merged Postman collections currently define 220 requests across 36 collection groups:
 
@@ -110,9 +110,11 @@ Even existing stores are incomplete. Orders alone have 30 documented requests, i
 - `vendor/`, `.env.test`, and `.phpunit.result.cache` are committed.
 - The published archive therefore carries development dependencies and local test configuration.
 - README links point to missing or stale files and services, including Travis CI and `master`-based badges.
+- README badges do not represent current CI, coverage, PHP support, branch naming, or license status.
 - There is no `SECURITY.md`, `CONTRIBUTING.md`, code of conduct, support policy, issue template, PR template, funding/config metadata, or Dependabot/Renovate setup at the repository level.
 - `CHANGELOG.md` does not provide a reliable release history or migration guidance.
 - There are no `.gitattributes` export rules, so package archives are not intentionally minimized.
+- The repository and Composer metadata currently declare MIT; the requested move to AGPL v3 must be applied consistently and must not misrepresent the terms of already-published releases.
 
 ### 5. Release and supply-chain gaps
 
@@ -242,6 +244,7 @@ Deliverables:
 - Add Architecture Decision Records for PHP support, PSR transport, pagination, endpoint generation, exceptions, and release automation.
 - Audit Packagist ownership, auto-update status, download metadata, and the unpublished/visible contents of `1.0.2`.
 - Audit repository administrators, branch protection, environments, secrets, webhooks, and signing policy without exposing secret values.
+- Confirm Fleetbase has the rights required to relicense all existing SDK code and record the effective release; previously published MIT tags remain under their original license.
 - Decide whether the existing `.env.test` value was ever real; if so, rotate it outside the repository work and purge it from history in a separately approved security operation.
 
 Exit gate: the public surface and release infrastructure are documented, secrets risk is resolved, and the contract refs are reproducible.
@@ -253,9 +256,10 @@ Deliverables:
 - Remove tracked `vendor/`, `.env.test`, and PHPUnit cache files from the next commit and cover them in `.gitignore`/`.gitattributes`.
 - Retain `composer.lock` for reproducible contributor tooling, but exclude it from distribution archives if the maintainer adopts that library policy.
 - Refresh Composer metadata: precise description, minimum-stability policy, `prefer-stable`, funding/support links, autoload exclusions, and a platform/config policy.
+- Replace the MIT license with the canonical GNU Affero General Public License v3 text, set Composer's SPDX identifier to `AGPL-3.0-or-later`, update source headers/notices and documentation, and verify GitHub and Packagist detect the new license on the release branch/tag.
 - Upgrade PHPUnit, PHPStan, coding standard tooling, Mockery if retained, and coverage dependencies using PHP-version-specific dev resolution where necessary.
 - Add PHP-CS-Fixer or a maintained PSR-12 rule set, EditorConfig, static-analysis config, and Composer scripts with consistent names.
-- Add `SECURITY.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, support policy, templates, and a current README.
+- Add `SECURITY.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, support policy, templates, and a current README. Replace stale Travis/`master` badges with verified badges for current CI, coverage, PHP support, Packagist release/downloads, and `AGPL-3.0-or-later`; every badge must link to its authoritative report or package page.
 - Add Dependabot or Renovate for Composer and GitHub Actions.
 
 Exit gate: a fresh clone installs with Composer, contains no vendored dependencies or secrets, and all local non-network checks are green.
@@ -308,6 +312,7 @@ Exit gate: all 220 Postman requests have an approved mapping and the public docs
 Deliverables:
 
 - Rewrite README quick start, configuration, self-hosted base URL, error handling, pagination, uploads/downloads, retries, debugging, and migration sections.
+- Document the license change prominently in the README, changelog, migration guide, release notes, Composer metadata, and GitHub Release so downstream users can assess AGPL obligations before upgrading.
 - Add framework recipes for plain PHP, Laravel container/service provider configuration, Symfony service configuration, and generic PSR-11/PSR-18 applications without forcing framework dependencies.
 - Verify Composer 2.2 LTS/current installation, prefer-lowest/current dependency resolution, Packagist dist installation, Git VCS installation, and optimized/no-dev autoloading.
 - Add PHP SDK mappings to the Fleetbase API reference generator for Core and every newly supported store/action in a coordinated `fleetbase/fleetbase.io` PR.
@@ -430,7 +435,8 @@ Every implementation PR must include:
 - [ ] Plain PHP, Laravel, and Symfony fixture installs pass from the built archive.
 - [ ] Composer audit, dependency review, CodeQL, secret scan, and license checks pass.
 - [ ] The archive contains no `vendor/`, credentials, caches, tests fixtures with secrets, or local paths.
-- [ ] README, changelog, migration guide, API coverage matrix, and generated API examples are current.
+- [ ] README, authoritative badges, changelog, migration guide, API coverage matrix, and generated API examples are current.
+- [ ] `LICENSE`, Composer metadata, source notices, GitHub detection, Packagist metadata, and release notes consistently report `AGPL-3.0-or-later`, while old tags retain their original MIT terms.
 - [ ] Release automation completes a no-publish dry run.
 - [ ] A maintainer approves the protected release environment and the GitHub/Packagist release is verified after publication.
 - [ ] `main` is the default branch and all integrations have been verified against it.
