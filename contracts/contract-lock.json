@@ -14,6 +14,13 @@
         }
     },
     "sources": {
+        "fleetbase_stack": {
+            "repository": "https://github.com/fleetbase/fleetbase",
+            "ref": "origin/main",
+            "commit": "d810cee000d42713942a2343264eb706b0b3a59a",
+            "core_api_submodule": "b7691c06ffdfe8f8874352e746aa8e523d5e3531",
+            "fleetops_submodule": "a9131daeb1a23ed4b0046dd2d7b632fb100bfba0"
+        },
         "postman": {
             "repository": "https://github.com/fleetbase/postman",
             "ref": "origin/main",

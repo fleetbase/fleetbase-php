@@ -60,3 +60,12 @@ At this checkpoint, remaining work included the final hard coverage gate, mutati
 - Changed consumer CI to download, inspect, extract, and install the built source archive before running the plain PHP, Laravel, and Symfony verifiers; path-based checkout installs no longer satisfy this gate.
 
 Remaining automatable gates include mutation testing, isolated Fleetbase/Postman contract CI, and release dry-run validation. Human approval remains required for relicensing rights, the mutation threshold, protected release approvers/signing, Packagist verification, the API-reference repository change, and the final default-branch change.
+
+## 2026-08-31 — disposable upstream contract gates
+
+- Locked the full Fleetbase stack commit that contains the exact Core API and Fleet-Ops package revisions used by the 220-request SDK contract.
+- Added a weekly/manual disposable-stack workflow that builds those locked sources, proves both package revisions, runs both official Postman collections, mints a fresh test credential, and exercises representative SDK success and failure paths against the same API instance.
+- Added a separate weekly/manual drift workflow that compares the current official Postman collections with the SDK lock, uploads machine-readable evidence, and opens or updates a repository issue when requests are added, removed, or materially changed.
+- The local drift comparison against the locked Postman revision passes across all 220 requests. Workflow syntax, PHP syntax/formatting, max-level PHPStan, generated-artifact drift, compatibility, and the complete hermetic test suite also pass locally.
+
+The disposable native Postman run requires a repository or organization `POSTMAN_API_KEY`; its CI result is intentionally not claimed until the secret-backed workflow has executed. Release dry-run validation and mutation-survivor review remain automatable work. Human approval is still required for the policy and repository-administration items listed above.
