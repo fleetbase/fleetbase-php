@@ -224,9 +224,138 @@ final class ResourceCollectionTest extends TestCase
         self::assertSame($client, $places->getClient());
     }
 
+    public function testResourceCoversSaveDefaultsValidationAndFailureState(): void
+    {
+        $client = $this->mockHttpClient([
+            $this->jsonResponse(['id' => 'new_1', 'name' => 'New']),
+            $this->jsonResponse(['id' => 'same_1', 'name' => 'Same']),
+            $this->jsonResponse(['id' => 'same_1', 'name' => 'Same', 'deleted' => false]),
+            new \RuntimeException('save failed'),
+        ]);
+        $service = new Service('Place', $client);
+
+        $new = new Place(['name' => 'New'], $service);
+        self::assertInstanceOf(Place::class, $new->save(null));
+        self::assertSame('new_1', $new->getAttribute('id'));
+
+        $same = new Place(['id' => 'same_1', 'name' => 'Same'], $service);
+        self::assertInstanceOf(Place::class, $same->save());
+        self::assertSame('{"id":"same_1","name":"Same"}', (string) $this->requestAt(1)->getBody());
+        self::assertInstanceOf(Place::class, $same->destroy());
+        self::assertFalse($same->__get('isDestroyed'));
+
+        try {
+            $same->update(['name' => 'Failure']);
+            self::fail('Expected update failure.');
+        } catch (\RuntimeException $exception) {
+            self::assertSame('save failed', $exception->getMessage());
+            self::assertFalse($same->__get('isSaving'));
+        }
+
+        foreach (['create', 'update', 'destroy'] as $method) {
+            try {
+                $arguments = $method === 'update' ? [[], 'invalid'] : ($method === 'create' ? [[], 'invalid'] : ['invalid']);
+                (new \ReflectionMethod($same, $method))->invokeArgs($same, $arguments);
+                self::fail('Expected invalid resource options.');
+            } catch (\InvalidArgumentException $exception) {
+                self::assertStringContainsString('options', $exception->getMessage());
+            }
+        }
+
+        $same->setAttribute('name', 'Changed')->setAttribute('name', 'Same');
+        self::assertFalse($same->isDirty('name'));
+        self::assertFalse((new \ReflectionMethod($same, 'isDirty'))->invoke($same, 42));
+        self::assertFalse((new \ReflectionMethod($same, 'isDirty'))->invoke($same, ['missing', 42]));
+        self::assertFalse((new \ReflectionMethod($same, 'isAttributeFilled'))->invoke($same, 42));
+    }
+
+    public function testServiceCoversDirectCollectionsEnvelopesDeletionAndEndpointBoundaries(): void
+    {
+        $client = $this->mockHttpClient([
+            $this->jsonResponse([['id' => 'direct']]),
+            $this->jsonResponse(['data' => ['id' => 'enveloped']]),
+            $this->jsonResponse(['id' => 'deleted']),
+            $this->jsonResponse(['ok' => true]),
+            $this->jsonResponse(['ok' => true]),
+        ]);
+        $service = new class ('Place', $client, ['namespace' => '/custom/']) extends Service {
+            /**
+             * @param array<string, mixed> $parameters
+             * @param array<string, mixed> $options
+             * @return mixed
+             */
+            public function callEndpoint(string $method, string $template, array $parameters = [], array $options = [])
+            {
+                return $this->endpoint($method, $template, $parameters, $options);
+            }
+        };
+
+        $all = $service->findAll();
+        self::assertIsArray($all);
+        self::assertCount(1, $all);
+        self::assertSame('enveloped', $service->findRecord('enveloped')->getAttribute('id'));
+        self::assertSame('deleted', $service->destroy(new Place(['id' => 'deleted']))->getAttribute('id'));
+        foreach ([null, '', 123, new Place()] as $invalid) {
+            try {
+                (new \ReflectionMethod($service, 'destroy'))->invoke($service, $invalid);
+                self::fail('Expected deletion to require an ID.');
+            } catch (\InvalidArgumentException $exception) {
+                self::assertStringContainsString('ID', $exception->getMessage());
+            }
+        }
+
+        $result = $service->callEndpoint('GET', '{{base_url}}/{{namespace}}/places/{{place}}?existing=yes', [
+            'place' => 'place one',
+            'ignored' => 'value',
+        ], ['query' => ['page' => 2]]);
+        self::assertIsObject($result);
+        self::assertTrue(get_object_vars($result)['ok'] ?? false);
+        $service->callEndpoint('POST', 'places/:place', [
+            'place' => 'place-two',
+            'body' => ['name' => 'Body', 0 => 'ignored'],
+        ], ['query' => []]);
+        self::assertSame('existing=yes&page=2&ignored=value', $this->requestAt(3)->getUri()->getQuery());
+        self::assertSame('{"name":"Body"}', (string) $this->requestAt(4)->getBody());
+
+        try {
+            $service->callEndpoint('GET', 'places/{{missing}}');
+            self::fail('Expected a required endpoint parameter.');
+        } catch (\InvalidArgumentException $exception) {
+            self::assertStringContainsString('missing', $exception->getMessage());
+        }
+    }
+
+    public function testReloadRejectsUnexpectedServiceResultAndRestoresState(): void
+    {
+        $service = new class ('Place', $this->mockHttpClient([])) extends Service {
+            /** @return mixed */
+            public function findRecord(string $id, array $options = [])
+            {
+                return (object) ['not' => 'a resource'];
+            }
+        };
+        $resource = new Place(['id' => 'place_1'], $service);
+        try {
+            $resource->reload();
+            self::fail('Expected invalid reload result.');
+        } catch (\UnexpectedValueException $exception) {
+            self::assertStringContainsString('did not return a resource', $exception->getMessage());
+            self::assertFalse($resource->__get('isReloading'));
+        }
+    }
+
     /** @param mixed $data */
     private function jsonResponse($data, int $status = 200): Response
     {
         return new Response($status, ['Content-Type' => 'application/json'], json_encode($data, JSON_THROW_ON_ERROR));
+    }
+
+    private function requestAt(int $index): \Psr\Http\Message\RequestInterface
+    {
+        $transaction = $this->history[$index] ?? null;
+        self::assertIsArray($transaction);
+        $request = $transaction['request'] ?? null;
+        self::assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $request);
+        return $request;
     }
 }

@@ -79,4 +79,6 @@ jobs:
         env:
           XDEBUG_MODE: coverage
       - name: Print coverage summary
-        run: cat build/coverage/summary.txt
+        run: |
+          cat build/coverage/summary.txt
+          php tools/report-uncovered.php build/coverage/clover.xml

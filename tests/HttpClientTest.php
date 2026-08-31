@@ -11,12 +11,14 @@ use Fleetbase\Sdk\Exception\DecodingException;
 use Fleetbase\Sdk\Exception\NotFoundException;
 use Fleetbase\Sdk\Exception\RateLimitException;
 use Fleetbase\Sdk\Exception\ServerException;
+use Fleetbase\Sdk\Exception\TimeoutException;
 use Fleetbase\Sdk\Exception\TransportException;
 use Fleetbase\Sdk\Exception\UnexpectedResponseException;
 use Fleetbase\Sdk\Exception\ValidationException;
 use Fleetbase\Sdk\FleetbaseException;
 use Fleetbase\Sdk\HttpClient;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -262,6 +264,160 @@ final class HttpClientTest extends TestCase
         self::assertSame('https://self.example.test/root', $client->getHost());
         self::assertSame('api/v2', $client->getNamespace());
         self::assertSame('test_public_key', $client->getOptions()['publicKey']);
+    }
+
+    public function testCoversResponseAndUrlBoundaries(): void
+    {
+        $client = $this->mockHttpClient([]);
+        try {
+            $client->getLastResponse();
+            self::fail('Expected a missing last response to fail.');
+        } catch (UnexpectedResponseException $exception) {
+            self::assertStringContainsString('No Fleetbase response', $exception->getMessage());
+        }
+
+        $response = \Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive('getStatusCode')->andReturn(200);
+        $response->shouldReceive('getHeaders')->andReturn(['Content-Type' => ['application/json']]);
+        $response->shouldReceive('getBody')->andReturnUsing(static function () {
+            return (new HttpFactory())->createStream('{"wrapped":true}');
+        });
+        $response->shouldReceive('getProtocolVersion')->andReturn('1.1');
+        $response->shouldReceive('getReasonPhrase')->andReturn('OK');
+        $response->shouldReceive('getHeaderLine')->with('Content-Type')->andReturn('application/json');
+
+        $psrClient = new class ($response) implements ClientInterface {
+            private ResponseInterface $response;
+
+            public function __construct(ResponseInterface $response)
+            {
+                $this->response = $response;
+            }
+
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+                return $this->response;
+            }
+        };
+        $wrapped = new HttpClient([
+            'publicKey' => 'test_public_key',
+            'httpClient' => $psrClient,
+            'requestFactory' => new HttpFactory(),
+            'streamFactory' => new HttpFactory(),
+        ]);
+        $decoded = $wrapped->get('https://api.example.test/direct');
+        self::assertIsObject($decoded);
+        self::assertTrue(get_object_vars($decoded)['wrapped'] ?? false);
+        self::assertSame(200, $wrapped->getLastResponse()->getStatusCode());
+        self::assertSame($response, $wrapped->getLastPsrResponse());
+
+        $sanitize = new \ReflectionMethod($wrapped, 'sanitizeUrl');
+        $sanitize->setAccessible(true);
+        self::assertSame('[invalid-url]', $sanitize->invoke($wrapped, 'http://:'));
+        self::assertSame('https://example.test:8443/path', $sanitize->invoke($wrapped, 'https://user:secret@example.test:8443/path?api_key=secret'));
+    }
+
+    public function testCoversRetryAndTransportFailureBoundaries(): void
+    {
+        $request = new Request('GET', 'https://api.example.test/v1/things');
+        $timeout = new ConnectException('operation timed out', $request);
+        try {
+            $this->mockHttpClient([$timeout])->get('things');
+            self::fail('Expected timeout mapping.');
+        } catch (TimeoutException $exception) {
+            self::assertSame($timeout, $exception->getPrevious());
+        }
+
+        $delays = [];
+        $transportFailure = new class ('temporary') extends \RuntimeException implements ClientExceptionInterface {
+        };
+        $queueClient = new class ([$transportFailure, new Response(200, ['Content-Type' => 'application/json'], '{}')]) implements ClientInterface {
+            /** @var array<int, ClientExceptionInterface|ResponseInterface> */
+            private array $queue;
+
+            /** @param array<int, ClientExceptionInterface|ResponseInterface> $queue */
+            public function __construct(array $queue)
+            {
+                $this->queue = $queue;
+            }
+
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+                $next = array_shift($this->queue);
+                if ($next instanceof ClientExceptionInterface) {
+                    throw $next;
+                }
+                if (!$next instanceof ResponseInterface) {
+                    throw new \RuntimeException('Test queue exhausted.');
+                }
+                return $next;
+            }
+        };
+        $retrying = new HttpClient([
+            'publicKey' => 'test_public_key',
+            'httpClient' => $queueClient,
+            'max_retries' => 1,
+            'retry_delay_ms' => 0,
+            'retry_sleep' => static function (int $milliseconds, int $attempt) use (&$delays): void {
+                $delays[] = [$milliseconds, $attempt];
+            },
+        ]);
+        self::assertIsObject($retrying->get('things'));
+        self::assertSame([[0, 1]], $delays);
+
+        foreach ([
+            ['max_retries' => -1, 'message' => 'retry count'],
+            ['max_retries' => 1, 'retry_delay_ms' => -1, 'message' => 'retry delay'],
+        ] as $options) {
+            $invalid = $this->mockHttpClient([new Response(503)]);
+            try {
+                $invalid->get('things', [], $options);
+                self::fail('Expected invalid retry configuration.');
+            } catch (\InvalidArgumentException $exception) {
+                self::assertStringContainsString($options['message'], $exception->getMessage());
+            }
+        }
+    }
+
+    public function testCoversRetryAfterAndErrorPayloadVariants(): void
+    {
+        $delays = [];
+        $client = $this->mockHttpClient([
+            new Response(503, ['Retry-After' => gmdate(DATE_RFC7231, time() - 60)]),
+            new Response(200, ['Content-Type' => 'application/json'], '{}'),
+            new Response(503, ['Retry-After' => 'not-a-date']),
+            new Response(200, ['Content-Type' => 'application/json'], '{}'),
+            new Response(400, ['Content-Type' => 'application/json', 'X-Request-Id' => 'first'], '{"error":"bad","error_code":"E_ALT","errors":{"field":"invalid"}}'),
+            new Response(400, ['Content-Type' => 'application/json', 'Request-Id' => 'second'], '{"detail":"detail only","errors":"invalid"}'),
+            new Response(400, ['Content-Type' => 'application/json'], '{}'),
+        ]);
+        $options = [
+            'max_retries' => 1,
+            'retry_delay_ms' => 7,
+            'retry_sleep' => static function (int $milliseconds) use (&$delays): void {
+                $delays[] = $milliseconds;
+            },
+        ];
+        $client->get('past-date', [], $options);
+        $client->get('bad-date', [], $options);
+        self::assertSame([0, 7], $delays);
+
+        $expected = [
+            ['bad', 'E_ALT', ['field' => 'invalid'], 'first'],
+            ['detail only', null, [], 'second'],
+            ['Fleetbase API request failed with HTTP 400.', null, [], null],
+        ];
+        foreach ($expected as $index => $values) {
+            try {
+                $client->get('error-' . $index);
+                self::fail('Expected error response.');
+            } catch (UnexpectedResponseException $exception) {
+                self::assertSame($values[0], $exception->getMessage());
+                self::assertSame($values[1], $exception->getErrorCode());
+                self::assertSame($values[2], $exception->getDetails());
+                self::assertSame($values[3], $exception->getRequestId());
+            }
+        }
     }
 
     private function requestAt(int $index): RequestInterface
