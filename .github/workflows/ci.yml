@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out source
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up PHP
         uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
         with:
@@ -32,7 +32,7 @@ jobs:
       - name: Validate Composer metadata
         run: composer validate --strict
       - name: Install locked dependencies
-        uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # 3.2.1
+        run: composer install --no-interaction --prefer-dist
       - name: Run quality and contract gates
         run: composer check
 
@@ -47,7 +47,7 @@ jobs:
         dependencies: [lowest, latest]
     steps:
       - name: Check out source
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up PHP
         uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
         with:
@@ -65,7 +65,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out source
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up PHP with Xdebug
         uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
         with:
@@ -73,7 +73,7 @@ jobs:
           coverage: xdebug
           tools: composer:v2
       - name: Install locked dependencies
-        uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # 3.2.1
+        run: composer install --no-interaction --prefer-dist
       - name: Generate fresh line and branch coverage
         run: composer test:coverage
         env:
@@ -83,6 +83,16 @@ jobs:
           cat build/coverage/summary.txt
           php tools/report-uncovered.php build/coverage/clover.xml
           php tools/report-uncovered-branches.php build/coverage/coverage.php
+      - name: Upload fresh coverage evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: coverage-evidence
+          path: |
+            build/coverage/clover.xml
+            build/coverage/cobertura.xml
+            build/coverage/summary.txt
+          if-no-files-found: error
+          retention-days: 14
 
   consumers:
     name: ${{ matrix.fixture }} consumer
@@ -94,7 +104,7 @@ jobs:
         fixture: [plain, laravel, symfony]
     steps:
       - name: Check out source
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up PHP
         uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
         with:
@@ -107,3 +117,22 @@ jobs:
         run: composer verify --working-dir=fixtures/consumer/${{ matrix.fixture }}
       - name: Verify optimized production autoloading
         run: composer install --working-dir=fixtures/consumer/${{ matrix.fixture }} --no-interaction --no-dev --optimize-autoloader
+
+  archive:
+    name: Distribution archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up PHP
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: none
+      - name: Build deterministic source archive
+        run: |
+          mkdir -p build/dist
+          git archive --format=tar.gz --prefix=fleetbase-php-dev/ --output=build/dist/fleetbase-php-dev.tar.gz HEAD
+      - name: Inspect distribution contents
+        run: php tools/check-release-archive.php build/dist/fleetbase-php-dev.tar.gz

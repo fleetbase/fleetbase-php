@@ -38,3 +38,13 @@ The aggregate `composer check` gate now passes locally: syntax, formatting, max-
 - Current local evidence: PHPStan max passes, PHPUnit 11.5 passes with 13 tests and 1,489 assertions, all 220 mappings are complete, and API compatibility passes against 1.0.2 and 1.0.3.
 
 Fresh Xdebug line/branch coverage is being added as a visible CI diagnostic before the 100.00% hard threshold is enabled. Remaining work includes exhaustive lifecycle/utility branches, request and response fixtures from official examples, consumer/framework fixtures, mutation testing, security/release workflows, API-reference coordination, and human-gated repository/release administration.
+
+## 2026-08-31 — request fixtures, coverage, and consumer integration
+
+- Enriched the locked manifest with official descriptions, authentication modes, path/query/body fixtures, and 127 response-example references. Generated a 220-row API coverage matrix, and made generated service/tests/docs drift a CI failure.
+- Deterministic contract tests now validate official JSON, query, and multipart request fixtures in addition to every method and path. PHPUnit 11.5 currently passes with 34 tests and 1,869 assertions.
+- Fresh CI coverage advanced from 69.00% lines / 67.56% branches to 100% of ordinary executable lines and 99%+ branches. Exact uncovered line and branch diagnostics are emitted from Clover and serialized Xdebug evidence. The only remaining uncovered lines are the process-terminating legacy `Utils::dd()` helper; its treatment is part of the documented compatibility-shim approval decision.
+- The full CI dependency matrix remains green on PHP 7.4–8.5. Clean copied installs now pass locally for plain PHP, Laravel 12's container, and Symfony 7.4's dependency-injection and PSR-18 client, including optimized `--no-dev` autoload generation.
+- Added machine-enforced AGPL metadata/source notices and distribution archive inspection. Security and release workflows are being completed with exact action commit pins, dependency review, Composer audit, secret scanning, CodeQL workflow analysis, SBOM generation, provenance, and a protected `release` environment.
+
+Remaining automatable gates include exact 100% branch enforcement, the approved treatment or isolated coverage merge for `Utils::dd()`, mutation testing, archive-based consumer installs, isolated Fleetbase/Postman contract CI, generated PHP examples, full documentation recipes, and release dry-run validation. Human approval remains required for relicensing rights, mutation/exclusion policy, protected release approvers/signing, Packagist verification, and the final default-branch change.

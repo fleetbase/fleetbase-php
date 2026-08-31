@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-31
+
 ### Added
 
 - PHP 8.0 through 8.5 compatibility and PSR-18/PSR-7 transport injection.
@@ -50,6 +52,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Latest baseline whose public API is explicitly preserved by 1.1.0.
 
 
-[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.0.3...HEAD
+[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/fleetbase/fleetbase-php/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/fleetbase/fleetbase-php/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/fleetbase/fleetbase-php/compare/1.0.1...1.0.2

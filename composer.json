@@ -54,9 +54,13 @@
         "analyse": "phpstan analyse --configuration=phpstan.neon.dist --no-progress --debug",
         "test:unit": "@php tools/run-unit-tests.php",
         "test:unit:legacy": "phpunit --configuration=phpunit-9.xml.dist",
-        "test:coverage": "@php tools/run-unit-tests.php --coverage-clover=build/coverage/clover.xml --coverage-cobertura=build/coverage/cobertura.xml --coverage-html=build/coverage/html --coverage-php=build/coverage/coverage.php --coverage-text=build/coverage/summary.txt",
+        "test:coverage": [
+            "@php tools/run-unit-tests.php --coverage-clover=build/coverage/clover.xml --coverage-cobertura=build/coverage/cobertura.xml --coverage-html=build/coverage/html --coverage-php=build/coverage/coverage.php --coverage-text=build/coverage/summary.txt",
+            "@php tools/merge-terminating-coverage.php"
+        ],
         "contract:check": "@php tools/check-contract-manifest.php",
         "contract:complete": "@php tools/check-contract-manifest.php --require-complete",
+        "license:check": "@php tools/check-license.php",
         "contract:generated": [
             "@php tools/generate-endpoint-services.php",
             "@php tools/generate-api-coverage.php",
@@ -75,6 +79,7 @@
             "@test:unit",
             "@contract:check",
             "@contract:generated",
+            "@license:check",
             "@api:compatibility"
         ]
     },

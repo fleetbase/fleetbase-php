@@ -342,28 +342,35 @@ class HttpClient
             throw new \InvalidArgumentException('The Fleetbase retry count must be a non-negative integer.');
         }
 
-        $attempt = 0;
-        while (true) {
-            try {
-                $response = $this->send($request, $options);
-            } catch (ClientExceptionInterface $exception) {
-                if ($attempt >= $configuredRetries || !$this->isRetryableRequest($request)) {
-                    throw $exception;
-                }
-                ++$attempt;
-                $this->waitBeforeRetry($attempt, null, $options);
-                continue;
-            }
+        return $this->sendAttempt($request, $options, $configuredRetries, 0);
+    }
 
-            if ($attempt >= $configuredRetries
-                || !$this->isRetryableRequest($request)
-                || !$this->isRetryableStatus($response->getStatusCode())) {
-                return $response;
+    /** @param array<string, mixed> $options */
+    private function sendAttempt(RequestInterface $request, array $options, int $configuredRetries, int $attempt): ResponseInterface
+    {
+        try {
+            $response = $this->send($request, $options);
+        } catch (ClientExceptionInterface $exception) {
+            if ($attempt >= $configuredRetries || !$this->isRetryableRequest($request)) {
+                throw $exception;
             }
 
             ++$attempt;
-            $this->waitBeforeRetry($attempt, $response, $options);
+            $this->waitBeforeRetry($attempt, null, $options);
+
+            return $this->sendAttempt($request, $options, $configuredRetries, $attempt);
         }
+
+        if ($attempt >= $configuredRetries
+            || !$this->isRetryableRequest($request)
+            || !$this->isRetryableStatus($response->getStatusCode())) {
+            return $response;
+        }
+
+        ++$attempt;
+        $this->waitBeforeRetry($attempt, $response, $options);
+
+        return $this->sendAttempt($request, $options, $configuredRetries, $attempt);
     }
 
     private function isRetryableRequest(RequestInterface $request): bool
