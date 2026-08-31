@@ -61,106 +61,106 @@ class Fleetbase
     /** @var OrderService */
     public $orders;
 
-    /** @var Service */
+    /** @var EntityService */
     public $entities;
 
-    /** @var Service */
+    /** @var PlaceService */
     public $places;
 
-    /** @var Service */
+    /** @var DriverService */
     public $drivers;
 
-    /** @var Service */
+    /** @var VehicleService */
     public $vehicles;
 
-    /** @var Service */
+    /** @var VendorService */
     public $vendors;
 
-    /** @var Service */
+    /** @var ContactService */
     public $contacts;
 
-    /** @var Service */
+    /** @var ServiceAreaService */
     public $serviceAreas;
 
-    /** @var Service */
+    /** @var ZoneService */
     public $zones;
 
-    /** @var Service */
+    /** @var TrackingStatusService */
     public $trackingStatuses;
 
-    /** @var Service */
+    /** @var ServiceRateService */
     public $serviceRates;
 
-    /** @var Service */
+    /** @var ServiceQuoteService */
     public $serviceQuotes;
 
-    /** @var Service */
+    /** @var CustomerService */
     public $customers;
 
-    /** @var Service */
+    /** @var DeviceService */
     public $devices;
 
-    /** @var Service */
+    /** @var EquipmentService */
     public $equipment;
 
-    /** @var Service */
+    /** @var FleetService */
     public $fleets;
 
-    /** @var Service */
+    /** @var FuelReportService */
     public $fuelReports;
 
-    /** @var Service */
+    /** @var FuelTransactionService */
     public $fuelTransactions;
 
-    /** @var Service */
+    /** @var GeofenceService */
     public $geofences;
 
-    /** @var Service */
+    /** @var IssueService */
     public $issues;
 
-    /** @var Service */
+    /** @var LabelService */
     public $labels;
 
-    /** @var Service */
+    /** @var ManifestService */
     public $manifests;
 
-    /** @var Service */
+    /** @var OnboardService */
     public $onboard;
 
-    /** @var Service */
+    /** @var OrchestratorService */
     public $orchestrator;
 
-    /** @var Service */
+    /** @var OrderConfigService */
     public $orderConfigs;
 
-    /** @var Service */
+    /** @var OrganizationService */
     public $organizations;
 
-    /** @var Service */
+    /** @var PartService */
     public $parts;
 
-    /** @var Service */
+    /** @var PayloadService */
     public $payloads;
 
-    /** @var Service */
+    /** @var PurchaseRateService */
     public $purchaseRates;
 
-    /** @var Service */
+    /** @var SensorService */
     public $sensors;
 
-    /** @var Service */
+    /** @var TrackingNumberService */
     public $trackingNumbers;
 
-    /** @var Service */
+    /** @var WorkOrderService */
     public $workOrders;
 
-    /** @var Service */
+    /** @var ChatChannelService */
     public $chatChannels;
 
-    /** @var Service */
+    /** @var CommentService */
     public $comments;
 
-    /** @var Service */
+    /** @var FileService */
     public $files;
 
     /** @param array<string, mixed> $config */
@@ -309,5 +309,125 @@ class Fleetbase
     public function chatChannels(): Service
     {
         return $this->chatChannels;
+    }
+
+    public function entities(): EntityService
+    {
+        return $this->entities;
+    }
+
+    public function serviceAreas(): ServiceAreaService
+    {
+        return $this->serviceAreas;
+    }
+
+    public function zones(): ZoneService
+    {
+        return $this->zones;
+    }
+
+    public function trackingStatuses(): TrackingStatusService
+    {
+        return $this->trackingStatuses;
+    }
+
+    public function serviceRates(): ServiceRateService
+    {
+        return $this->serviceRates;
+    }
+
+    public function serviceQuotes(): ServiceQuoteService
+    {
+        return $this->serviceQuotes;
+    }
+
+    public function customers(): CustomerService
+    {
+        return $this->customers;
+    }
+
+    public function devices(): DeviceService
+    {
+        return $this->devices;
+    }
+
+    public function equipment(): EquipmentService
+    {
+        return $this->equipment;
+    }
+
+    public function fleets(): FleetService
+    {
+        return $this->fleets;
+    }
+
+    public function fuelReports(): FuelReportService
+    {
+        return $this->fuelReports;
+    }
+
+    public function fuelTransactions(): FuelTransactionService
+    {
+        return $this->fuelTransactions;
+    }
+
+    public function geofences(): GeofenceService
+    {
+        return $this->geofences;
+    }
+
+    public function issues(): IssueService
+    {
+        return $this->issues;
+    }
+
+    public function labels(): LabelService
+    {
+        return $this->labels;
+    }
+
+    public function manifests(): ManifestService
+    {
+        return $this->manifests;
+    }
+
+    public function onboard(): OnboardService
+    {
+        return $this->onboard;
+    }
+
+    public function orchestrator(): OrchestratorService
+    {
+        return $this->orchestrator;
+    }
+
+    public function orderConfigs(): OrderConfigService
+    {
+        return $this->orderConfigs;
+    }
+
+    public function parts(): PartService
+    {
+        return $this->parts;
+    }
+
+    public function purchaseRates(): PurchaseRateService
+    {
+        return $this->purchaseRates;
+    }
+
+    public function sensors(): SensorService
+    {
+        return $this->sensors;
+    }
+
+    public function trackingNumbers(): TrackingNumberService
+    {
+        return $this->trackingNumbers;
+    }
+
+    public function workOrders(): WorkOrderService
+    {
+        return $this->workOrders;
     }
 }

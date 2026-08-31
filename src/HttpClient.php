@@ -140,7 +140,7 @@ class HttpClient
         }
 
         try {
-            $response = $this->send($request, $options);
+            $response = $this->sendWithRetries($request, $options);
         } catch (ConnectException $exception) {
             $message = stripos($exception->getMessage(), 'timed out') !== false
                 ? 'The Fleetbase request timed out.'
@@ -334,6 +334,96 @@ class HttpClient
         return $this->client->sendRequest($request);
     }
 
+    /** @param array<string, mixed> $options */
+    private function sendWithRetries(RequestInterface $request, array $options): ResponseInterface
+    {
+        $configuredRetries = $options['max_retries'] ?? $this->options['max_retries'] ?? 0;
+        if (!is_int($configuredRetries) || $configuredRetries < 0) {
+            throw new \InvalidArgumentException('The Fleetbase retry count must be a non-negative integer.');
+        }
+
+        $attempt = 0;
+        while (true) {
+            try {
+                $response = $this->send($request, $options);
+            } catch (ClientExceptionInterface $exception) {
+                if ($attempt >= $configuredRetries || !$this->isRetryableRequest($request)) {
+                    throw $exception;
+                }
+                ++$attempt;
+                $this->waitBeforeRetry($attempt, null, $options);
+                continue;
+            }
+
+            if ($attempt >= $configuredRetries
+                || !$this->isRetryableRequest($request)
+                || !$this->isRetryableStatus($response->getStatusCode())) {
+                return $response;
+            }
+
+            ++$attempt;
+            $this->waitBeforeRetry($attempt, $response, $options);
+        }
+    }
+
+    private function isRetryableRequest(RequestInterface $request): bool
+    {
+        if ($request->hasHeader('Idempotency-Key')) {
+            return true;
+        }
+
+        return in_array($request->getMethod(), ['GET', 'HEAD', 'OPTIONS', 'PUT', 'DELETE'], true);
+    }
+
+    private function isRetryableStatus(int $status): bool
+    {
+        return $status === 429 || $status >= 500;
+    }
+
+    /** @param array<string, mixed> $options */
+    private function waitBeforeRetry(int $attempt, ?ResponseInterface $response, array $options): void
+    {
+        $milliseconds = $this->retryAfterMilliseconds($response);
+        if ($milliseconds === null) {
+            $configuredDelay = $options['retry_delay_ms'] ?? $this->options['retry_delay_ms'] ?? 100;
+            if (!is_int($configuredDelay) || $configuredDelay < 0) {
+                throw new \InvalidArgumentException('The Fleetbase retry delay must be a non-negative integer.');
+            }
+            $milliseconds = min(30000, $configuredDelay * (1 << min(8, $attempt - 1)));
+        }
+
+        $sleeper = $options['retry_sleep'] ?? $this->options['retry_sleep'] ?? null;
+        if (is_callable($sleeper)) {
+            call_user_func($sleeper, $milliseconds, $attempt);
+            return;
+        }
+
+        if ($milliseconds > 0) {
+            usleep($milliseconds * 1000);
+        }
+    }
+
+    private function retryAfterMilliseconds(?ResponseInterface $response): ?int
+    {
+        if (!$response instanceof ResponseInterface) {
+            return null;
+        }
+        $retryAfter = trim($response->getHeaderLine('Retry-After'));
+        if ($retryAfter === '') {
+            return null;
+        }
+        if (ctype_digit($retryAfter)) {
+            return min(30000, ((int) $retryAfter) * 1000);
+        }
+
+        $timestamp = strtotime($retryAfter);
+        if ($timestamp === false) {
+            return null;
+        }
+
+        return min(30000, max(0, ($timestamp - time()) * 1000));
+    }
+
     /** @return mixed */
     private function decodeResponse(ResponseInterface $response, string $method, string $url)
     {
@@ -377,7 +467,14 @@ class HttpClient
         $message = $this->extractString($payload, ['message', 'error', 'detail'])
             ?? sprintf('Fleetbase API request failed with HTTP %d.', $status);
         $code = $this->extractString($payload, ['code', 'error_code']);
-        $details = is_array($payload['errors'] ?? null) ? $this->stringKeyedArray($payload['errors']) : [];
+        $errorDetails = $payload['errors'] ?? null;
+        if (is_object($errorDetails)) {
+            $details = $this->objectToArray($errorDetails);
+        } elseif (is_array($errorDetails)) {
+            $details = $this->stringKeyedArray($errorDetails);
+        } else {
+            $details = [];
+        }
         $class = $this->exceptionClassForStatus($status);
 
         throw new $class(

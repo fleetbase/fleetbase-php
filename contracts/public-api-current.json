@@ -599,6 +599,20 @@
                     "parameters": []
                 },
                 {
+                    "name": "customers",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\CustomerService",
+                    "parameters": []
+                },
+                {
+                    "name": "devices",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\DeviceService",
+                    "parameters": []
+                },
+                {
                     "name": "drivers",
                     "visibility": "public",
                     "static": false,
@@ -606,10 +620,52 @@
                     "parameters": []
                 },
                 {
+                    "name": "entities",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\EntityService",
+                    "parameters": []
+                },
+                {
+                    "name": "equipment",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\EquipmentService",
+                    "parameters": []
+                },
+                {
                     "name": "files",
                     "visibility": "public",
                     "static": false,
                     "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "fleets",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\FleetService",
+                    "parameters": []
+                },
+                {
+                    "name": "fuelReports",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\FuelReportService",
+                    "parameters": []
+                },
+                {
+                    "name": "fuelTransactions",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\FuelTransactionService",
+                    "parameters": []
+                },
+                {
+                    "name": "geofences",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\GeofenceService",
                     "parameters": []
                 },
                 {
@@ -627,10 +683,52 @@
                     "parameters": []
                 },
                 {
+                    "name": "issues",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\IssueService",
+                    "parameters": []
+                },
+                {
+                    "name": "labels",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\LabelService",
+                    "parameters": []
+                },
+                {
+                    "name": "manifests",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\ManifestService",
+                    "parameters": []
+                },
+                {
                     "name": "newInstance",
                     "visibility": "public",
                     "static": true,
                     "return_type": "Fleetbase\\Sdk\\Fleetbase",
+                    "parameters": []
+                },
+                {
+                    "name": "onboard",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\OnboardService",
+                    "parameters": []
+                },
+                {
+                    "name": "orchestrator",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\OrchestratorService",
+                    "parameters": []
+                },
+                {
+                    "name": "orderConfigs",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\OrderConfigService",
                     "parameters": []
                 },
                 {
@@ -648,6 +746,13 @@
                     "parameters": []
                 },
                 {
+                    "name": "parts",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\PartService",
+                    "parameters": []
+                },
+                {
                     "name": "payloads",
                     "visibility": "public",
                     "static": false,
@@ -659,6 +764,20 @@
                     "visibility": "public",
                     "static": false,
                     "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "purchaseRates",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\PurchaseRateService",
+                    "parameters": []
+                },
+                {
+                    "name": "sensors",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\SensorService",
                     "parameters": []
                 },
                 {
@@ -677,6 +796,27 @@
                     ]
                 },
                 {
+                    "name": "serviceAreas",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\ServiceAreaService",
+                    "parameters": []
+                },
+                {
+                    "name": "serviceQuotes",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\ServiceQuoteService",
+                    "parameters": []
+                },
+                {
+                    "name": "serviceRates",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\ServiceRateService",
+                    "parameters": []
+                },
+                {
                     "name": "setApiKey",
                     "visibility": "public",
                     "static": false,
@@ -692,6 +832,20 @@
                     ]
                 },
                 {
+                    "name": "trackingNumbers",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\TrackingNumberService",
+                    "parameters": []
+                },
+                {
+                    "name": "trackingStatuses",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\TrackingStatusService",
+                    "parameters": []
+                },
+                {
                     "name": "vehicles",
                     "visibility": "public",
                     "static": false,
@@ -703,6 +857,20 @@
                     "visibility": "public",
                     "static": false,
                     "return_type": "Fleetbase\\Sdk\\Service",
+                    "parameters": []
+                },
+                {
+                    "name": "workOrders",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\WorkOrderService",
+                    "parameters": []
+                },
+                {
+                    "name": "zones",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Services\\ZoneService",
                     "parameters": []
                 }
             ]
@@ -1546,6 +1714,26 @@
                 }
             ]
         },
+        "Fleetbase\\Sdk\\Resources\\ChatChannel": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Comment": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
         "Fleetbase\\Sdk\\Resources\\Contact": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
@@ -1588,6 +1776,26 @@
                     ]
                 }
             ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Customer": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Device": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
         },
         "Fleetbase\\Sdk\\Resources\\Driver": {
             "final": false,
@@ -1674,6 +1882,116 @@
                     ]
                 }
             ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Equipment": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\File": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Fleet": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\FuelReport": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\FuelTransaction": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Geofence": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Issue": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Label": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Manifest": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Onboard": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Orchestrator": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
         },
         "Fleetbase\\Sdk\\Resources\\Order": {
             "final": false,
@@ -1981,6 +2299,36 @@
                 }
             ]
         },
+        "Fleetbase\\Sdk\\Resources\\OrderConfig": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Organization": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Part": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
         "Fleetbase\\Sdk\\Resources\\Payload": {
             "final": false,
             "parent": "Fleetbase\\Sdk\\Resource",
@@ -2066,6 +2414,26 @@
                     ]
                 }
             ]
+        },
+        "Fleetbase\\Sdk\\Resources\\PurchaseRate": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\Resources\\Sensor": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
         },
         "Fleetbase\\Sdk\\Resources\\ServiceArea": {
             "final": false,
@@ -2195,6 +2563,16 @@
                     ]
                 }
             ]
+        },
+        "Fleetbase\\Sdk\\Resources\\TrackingNumber": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
         },
         "Fleetbase\\Sdk\\Resources\\TrackingStatus": {
             "final": false,
@@ -2367,6 +2745,16 @@
                     ]
                 }
             ]
+        },
+        "Fleetbase\\Sdk\\Resources\\WorkOrder": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [
+                "JsonSerializable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
         },
         "Fleetbase\\Sdk\\Resources\\Zone": {
             "final": false,

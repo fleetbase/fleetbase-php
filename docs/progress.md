@@ -27,3 +27,14 @@ Remaining in Phase 0: characterize observable legacy behavior, add automated sna
 - PHPStan 2.2 at max initially reported 307 errors across source/tests after excluding standalone build tools. The foundation refactor resolved all 307 without a baseline or ignore entry; max-level analysis now passes.
 
 The aggregate `composer check` gate now passes locally: syntax, formatting, max-level analysis, hermetic tests, contract structure, and compatibility against 1.0.2/1.0.3. Remaining work includes exhaustive transport/resource tests, fresh 100% line/branch coverage, the full endpoint service mapping, framework fixtures, and expanded security/release workflows.
+
+## 2026-08-31 — official endpoint surface mapped
+
+- Mapped all 220 locked Postman requests to 35 explicit service classes and checked-in endpoint methods; the 36 source groups collapse to 35 services because both collections contain the Organizations group.
+- Added deterministic placeholder handling for both `{{name}}` and Postman `:name` path forms, including URL encoding and required-parameter failures.
+- Added a hermetic transport contract that executes every manifest row and asserts the HTTP verb and resolved path. The manifest validator now proves each implementation and test reference exists.
+- Added dedicated facade service instances and accessors for every in-scope group while preserving every 1.0.2 and 1.0.3 entry point.
+- Added concrete resource hydration classes for every service group and opt-in retry behavior limited to safe/idempotent requests, including `Retry-After` handling.
+- Current local evidence: PHPStan max passes, PHPUnit 11.5 passes with 13 tests and 1,489 assertions, all 220 mappings are complete, and API compatibility passes against 1.0.2 and 1.0.3.
+
+Fresh Xdebug line/branch coverage is being added as a visible CI diagnostic before the 100.00% hard threshold is enabled. Remaining work includes exhaustive lifecycle/utility branches, request and response fixtures from official examples, consumer/framework fixtures, mutation testing, security/release workflows, API-reference coordination, and human-gated repository/release administration.

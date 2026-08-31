@@ -58,3 +58,25 @@ jobs:
         run: composer update --no-interaction --prefer-dist ${{ matrix.dependencies == 'lowest' && '--prefer-lowest' || '' }}
       - name: Run hermetic unit tests
         run: composer test:unit
+
+  coverage:
+    name: Coverage evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Set up PHP with Xdebug
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: xdebug
+          tools: composer:v2
+      - name: Install locked dependencies
+        uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # 3.2.1
+      - name: Generate fresh line and branch coverage
+        run: composer test:coverage
+        env:
+          XDEBUG_MODE: coverage
+      - name: Print coverage summary
+        run: cat build/coverage/summary.txt

@@ -49,7 +49,9 @@ foreach ($requests as $index => $request) {
 
 ksort($groups);
 $concernsDirectory = $sourceRoot . '/Concerns';
+$resourcesDirectory = dirname($sourceRoot) . '/Resources';
 ensureDirectory($concernsDirectory);
+ensureDirectory($resourcesDirectory);
 
 $serviceMap = [];
 foreach ($groups as $service => $definition) {
@@ -64,6 +66,12 @@ foreach ($groups as $service => $definition) {
         $resource = substr($service, 0, -strlen('Service'));
         $namespace = namespaceFromRequest(reset($methods));
         writeGenerated($sourceRoot . '/' . $service . '.php', renderService($service, $trait, $resource, $namespace));
+    }
+
+    $resource = substr($service, 0, -strlen('Service'));
+    $resourcePath = $resourcesDirectory . '/' . $resource . '.php';
+    if (!is_file($resourcePath)) {
+        writeGenerated($resourcePath, renderResource($resource));
     }
 
     $serviceMap[$group] = [
@@ -163,6 +171,14 @@ function renderService(string $service, string $trait, string $resource, string 
     $code .= '        parent::__construct(' . var_export($resource, true) . ", \$client, array_merge(['namespace' => " . var_export($namespace, true) . "], \$options));\n";
     $code .= "    }\n";
     $code .= "}\n";
+    return $code;
+}
+
+function renderResource(string $resource): string
+{
+    $code = generatedHeader('Fleetbase\\Sdk\\Resources');
+    $code .= "use Fleetbase\\Sdk\\Resource;\n\n";
+    $code .= "class {$resource} extends Resource\n{\n}\n";
     return $code;
 }
 

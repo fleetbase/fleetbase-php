@@ -6,7 +6,6 @@ namespace Fleetbase\Sdk\Test\Fleetbase;
 
 use Fleetbase\Sdk\Fleetbase;
 use Fleetbase\Sdk\Service;
-use Fleetbase\Sdk\Services\OrderService;
 use Fleetbase\Sdk\Test\TestCase;
 
 final class FleetbaseTest extends TestCase
@@ -15,24 +14,10 @@ final class FleetbaseTest extends TestCase
     {
         $sdk = new Fleetbase('test_public_key');
 
-        $this->assertInstanceOf(OrderService::class, $sdk->orders);
-
-        foreach (
-            [
-                'entities',
-                'places',
-                'drivers',
-                'vehicles',
-                'vendors',
-                'contacts',
-                'serviceAreas',
-                'zones',
-                'trackingStatuses',
-                'serviceRates',
-                'serviceQuotes',
-            ] as $store
-        ) {
-            $this->assertInstanceOf(Service::class, $sdk->{$store});
+        foreach (self::services() as $store => $serviceClass) {
+            self::assertInstanceOf($serviceClass, $sdk->{$store});
+            self::assertSame($sdk->{$store}, $sdk->service($store));
+            self::assertSame($sdk->{$store}, $sdk->{$store}());
         }
     }
 
@@ -59,5 +44,47 @@ final class FleetbaseTest extends TestCase
         $sdk = Fleetbase::newInstance('test_public_key', ['namespace' => 'api']);
 
         $this->assertSame('api', $sdk->getOptions()['namespace']);
+    }
+
+    /** @return array<string, class-string<Service>> */
+    private static function services(): array
+    {
+        return [
+            'orders' => \Fleetbase\Sdk\Services\OrderService::class,
+            'entities' => \Fleetbase\Sdk\Services\EntityService::class,
+            'places' => \Fleetbase\Sdk\Services\PlaceService::class,
+            'drivers' => \Fleetbase\Sdk\Services\DriverService::class,
+            'vehicles' => \Fleetbase\Sdk\Services\VehicleService::class,
+            'vendors' => \Fleetbase\Sdk\Services\VendorService::class,
+            'contacts' => \Fleetbase\Sdk\Services\ContactService::class,
+            'serviceAreas' => \Fleetbase\Sdk\Services\ServiceAreaService::class,
+            'zones' => \Fleetbase\Sdk\Services\ZoneService::class,
+            'trackingStatuses' => \Fleetbase\Sdk\Services\TrackingStatusService::class,
+            'serviceRates' => \Fleetbase\Sdk\Services\ServiceRateService::class,
+            'serviceQuotes' => \Fleetbase\Sdk\Services\ServiceQuoteService::class,
+            'customers' => \Fleetbase\Sdk\Services\CustomerService::class,
+            'devices' => \Fleetbase\Sdk\Services\DeviceService::class,
+            'equipment' => \Fleetbase\Sdk\Services\EquipmentService::class,
+            'fleets' => \Fleetbase\Sdk\Services\FleetService::class,
+            'fuelReports' => \Fleetbase\Sdk\Services\FuelReportService::class,
+            'fuelTransactions' => \Fleetbase\Sdk\Services\FuelTransactionService::class,
+            'geofences' => \Fleetbase\Sdk\Services\GeofenceService::class,
+            'issues' => \Fleetbase\Sdk\Services\IssueService::class,
+            'labels' => \Fleetbase\Sdk\Services\LabelService::class,
+            'manifests' => \Fleetbase\Sdk\Services\ManifestService::class,
+            'onboard' => \Fleetbase\Sdk\Services\OnboardService::class,
+            'orchestrator' => \Fleetbase\Sdk\Services\OrchestratorService::class,
+            'orderConfigs' => \Fleetbase\Sdk\Services\OrderConfigService::class,
+            'organizations' => \Fleetbase\Sdk\Services\OrganizationService::class,
+            'parts' => \Fleetbase\Sdk\Services\PartService::class,
+            'payloads' => \Fleetbase\Sdk\Services\PayloadService::class,
+            'purchaseRates' => \Fleetbase\Sdk\Services\PurchaseRateService::class,
+            'sensors' => \Fleetbase\Sdk\Services\SensorService::class,
+            'trackingNumbers' => \Fleetbase\Sdk\Services\TrackingNumberService::class,
+            'workOrders' => \Fleetbase\Sdk\Services\WorkOrderService::class,
+            'chatChannels' => \Fleetbase\Sdk\Services\ChatChannelService::class,
+            'comments' => \Fleetbase\Sdk\Services\CommentService::class,
+            'files' => \Fleetbase\Sdk\Services\FileService::class,
+        ];
     }
 }
