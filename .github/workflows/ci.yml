@@ -98,6 +98,7 @@ jobs:
 
   consumers:
     name: ${{ matrix.fixture }} consumer
+    needs: archive
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -113,7 +114,17 @@ jobs:
           php-version: "8.2"
           coverage: none
           tools: composer:v2
-      - name: Install consumer and local SDK copy
+      - name: Download inspected source archive
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: distribution-archive
+          path: build/dist
+      - name: Prepare archive-backed package repository
+        run: |
+          mkdir -p build/consumer-source
+          tar -xzf build/dist/fleetbase-php-dev.tar.gz -C build/consumer-source
+          php tools/configure-consumer-fixture.php "fixtures/consumer/${{ matrix.fixture }}" "build/consumer-source/fleetbase-php-dev"
+      - name: Install consumer from inspected archive
         run: composer update --working-dir=fixtures/consumer/${{ matrix.fixture }} --no-interaction --prefer-dist
       - name: Verify framework integration
         run: composer verify --working-dir=fixtures/consumer/${{ matrix.fixture }}
@@ -138,3 +149,10 @@ jobs:
           git archive --format=tar.gz --prefix=fleetbase-php-dev/ --output=build/dist/fleetbase-php-dev.tar.gz HEAD
       - name: Inspect distribution contents
         run: php tools/check-release-archive.php build/dist/fleetbase-php-dev.tar.gz
+      - name: Upload inspected source archive
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: distribution-archive
+          path: build/dist/fleetbase-php-dev.tar.gz
+          if-no-files-found: error
+          retention-days: 14
