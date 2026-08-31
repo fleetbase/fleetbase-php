@@ -38,6 +38,7 @@ This plan treats the Postman Native Git collections as the public contract inven
   - PHPStan 0.11.20: fail with 28 errors and PHP 8.2 deprecations
   - PHPUnit: intentionally not run because the suite reads a local API key and creates, updates, and deletes live resources
   - Composer audit: not completed because the sandbox could not reach Packagist; this remains a required first implementation check
+  - GitHub dependency baseline reported during the branch push: 21 known vulnerabilities on the default branch (`8 high`, `13 moderate`)
 
 ### Contract sources
 
