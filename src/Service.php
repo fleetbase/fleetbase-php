@@ -155,6 +155,62 @@ class Service
         return $this->client->request($method, $this->uri($path), $data, $options);
     }
 
+    /**
+     * Execute an endpoint copied from the locked official API contract.
+     *
+     * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $options
+     * @return mixed
+     */
+    protected function endpoint(string $method, string $template, array $parameters = [], array $options = [])
+    {
+        $path = preg_replace('#^\{\{base_url\}\}/\{\{namespace\}\}/?#i', '', $template);
+        if (!is_string($path)) {
+            throw new \InvalidArgumentException('The endpoint URL template is invalid.');
+        }
+
+        $used = [];
+        $replace = function (array $matches) use ($parameters, &$used): string {
+            $name = $matches[1] ?? null;
+            if (!is_string($name) || $name === '') {
+                throw new \InvalidArgumentException('The endpoint URL contains an invalid parameter.');
+            }
+            if (!array_key_exists($name, $parameters) || !is_scalar($parameters[$name])) {
+                throw new \InvalidArgumentException(sprintf('Endpoint parameter "%s" is required.', $name));
+            }
+            $used[$name] = true;
+            return rawurlencode((string) $parameters[$name]);
+        };
+        $path = preg_replace_callback('/\{\{([^}]+)\}\}/', $replace, $path);
+        $path = is_string($path)
+            ? preg_replace_callback('/:([A-Za-z][A-Za-z0-9_-]*)/', $replace, $path)
+            : null;
+        if (!is_string($path)) {
+            throw new \InvalidArgumentException('The endpoint URL parameters could not be resolved.');
+        }
+
+        $data = [];
+        if (isset($parameters['body']) && is_array($parameters['body'])) {
+            $data = $this->stringKeyedArray($parameters['body']);
+        } else {
+            foreach ($parameters as $name => $value) {
+                if ($name !== 'body' && !isset($used[$name])) {
+                    $data[$name] = $value;
+                }
+            }
+        }
+
+        if (isset($options['query']) && is_array($options['query'])) {
+            $query = http_build_query($options['query'], '', '&', PHP_QUERY_RFC3986);
+            if ($query !== '') {
+                $path .= (strpos($path, '?') === false ? '?' : '&') . $query;
+            }
+            unset($options['query']);
+        }
+
+        return $this->client->request($method, $path, $data, $options);
+    }
+
     /** @return array<string, mixed> */
     public function getOptions(): array
     {

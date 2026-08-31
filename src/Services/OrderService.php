@@ -16,12 +16,15 @@ namespace Fleetbase\Sdk\Services;
 
 use Fleetbase\Sdk\HttpClient;
 use Fleetbase\Sdk\Service;
+use Fleetbase\Sdk\Services\Concerns\OrderServiceEndpoints;
 
 /**
  * Fleetbase PHP SDK Base Resource
  */
 class OrderService extends Service
 {
+    use OrderServiceEndpoints;
+
     public function __construct(HttpClient $client, array $options = [])
     {
         parent::__construct('Order', $client, $options);

@@ -18,6 +18,10 @@ $lockPath = isset($options['lock']) && is_string($options['lock'])
 
 $manifest = readJson($manifestPath);
 $lock = readJson($lockPath);
+$autoload = dirname(__DIR__) . '/vendor/autoload.php';
+if (is_file($autoload)) {
+    require $autoload;
+}
 $errors = [];
 $expectedRequests = $lock['sources']['postman']['expected_requests'] ?? null;
 $expectedGroups = $lock['sources']['postman']['expected_groups'] ?? null;
@@ -60,9 +64,30 @@ foreach ($requests as $index => $request) {
         ++$counts['mapped'];
         if (!is_string($request['implementation'] ?? null) || $request['implementation'] === '') {
             $errors[] = sprintf('Complete request %s has no implementation', $id);
+        } else {
+            $implementation = explode('::', $request['implementation'], 2);
+            $class = $implementation[0] ?? '';
+            $method = $implementation[1] ?? '';
+            if (!class_exists($class) || !method_exists($class, $method)) {
+                $errors[] = sprintf('Complete request %s points to missing implementation %s', $id, $request['implementation']);
+            }
         }
         if (!is_array($request['tests'] ?? null) || $request['tests'] === []) {
             $errors[] = sprintf('Complete request %s has no tests', $id);
+        } else {
+            foreach ($request['tests'] as $test) {
+                if (!is_string($test)) {
+                    $errors[] = sprintf('Complete request %s has an invalid test reference', $id);
+                    continue;
+                }
+                $testReference = explode('::', $test, 2);
+                $testFile = $testReference[0] ?? '';
+                $testMethod = $testReference[1] ?? '';
+                $testContents = is_file($testFile) ? file_get_contents($testFile) : false;
+                if (!is_string($testContents) || !preg_match('/function\s+' . preg_quote($testMethod, '/') . '\s*\(/', $testContents)) {
+                    $errors[] = sprintf('Complete request %s points to missing test %s', $id, $test);
+                }
+            }
         }
     } elseif ($status === 'exception') {
         ++$counts['exceptions'];
