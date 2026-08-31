@@ -83,6 +83,8 @@ jobs:
           cat build/coverage/summary.txt
           php tools/report-uncovered.php build/coverage/clover.xml
           php tools/report-uncovered-branches.php build/coverage/coverage.php
+      - name: Enforce complete line and branch coverage
+        run: php tools/check-coverage.php build/coverage/summary.txt 100
       - name: Upload fresh coverage evidence
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

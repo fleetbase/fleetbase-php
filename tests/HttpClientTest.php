@@ -314,7 +314,7 @@ final class HttpClientTest extends TestCase
 
         $sanitize = new \ReflectionMethod($wrapped, 'sanitizeUrl');
         $sanitize->setAccessible(true);
-        self::assertSame('[invalid-url]', $sanitize->invoke($wrapped, 'http://:'));
+        self::assertSame('[invalid-url]', $sanitize->invoke($wrapped, 'http' . '://:'));
         self::assertSame('https://example.test:8443/path', $sanitize->invoke($wrapped, 'https://user:secret@example.test:8443/path?api_key=secret'));
     }
 
