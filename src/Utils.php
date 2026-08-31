@@ -40,7 +40,7 @@ class Utils
     public static function createNamespace(string $namespace)
     {
         $words = preg_split('/(?=[A-Z])/', $namespace, -1, PREG_SPLIT_NO_EMPTY);
-        if ($words === false) {
+        if (!$words) {
             return strtolower(static::pluralize($namespace));
         }
         $namespace = implode('-', $words);

@@ -97,6 +97,7 @@ final class ResourceCollectionTest extends TestCase
         self::assertFalse($resource->isAttributeFilled(['id', 'empty']));
         self::assertFalse($resource->isAttributeFilled('missing'));
         self::assertSame(['id' => 'resource_1'], $resource->getAttributes(['id']));
+        self::assertSame(['nested' => ['id' => 'nested']], $resource->getAttributes(['nested']));
         self::assertSame($resource->getAttributes(), $resource->getAttributes(null));
         self::assertSame([
             'id' => 'resource_1',
@@ -341,6 +342,31 @@ final class ResourceCollectionTest extends TestCase
         } catch (\UnexpectedValueException $exception) {
             self::assertStringContainsString('did not return a resource', $exception->getMessage());
             self::assertFalse($resource->__get('isReloading'));
+        }
+    }
+
+    public function testPreservesLegacyResourceConstructorAliases(): void
+    {
+        $classes = [
+            \Fleetbase\Sdk\Resources\Contact::class,
+            \Fleetbase\Sdk\Resources\Driver::class,
+            \Fleetbase\Sdk\Resources\Entity::class,
+            \Fleetbase\Sdk\Resources\Payload::class,
+            \Fleetbase\Sdk\Resources\Place::class,
+            \Fleetbase\Sdk\Resources\ServiceArea::class,
+            \Fleetbase\Sdk\Resources\ServiceQuote::class,
+            \Fleetbase\Sdk\Resources\ServiceRate::class,
+            \Fleetbase\Sdk\Resources\TrackingStatus::class,
+            \Fleetbase\Sdk\Resources\Vehicle::class,
+            \Fleetbase\Sdk\Resources\Vendor::class,
+            \Fleetbase\Sdk\Resources\Waypoint::class,
+            \Fleetbase\Sdk\Resources\Zone::class,
+        ];
+
+        foreach ($classes as $class) {
+            $resource = new $class();
+            $resource->__constructor(['id' => 'legacy']);
+            self::assertSame('legacy', $resource->getAttribute('id'));
         }
     }
 

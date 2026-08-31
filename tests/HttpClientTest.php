@@ -390,6 +390,7 @@ final class HttpClientTest extends TestCase
             new Response(400, ['Content-Type' => 'application/json', 'X-Request-Id' => 'first'], '{"error":"bad","error_code":"E_ALT","errors":{"field":"invalid"}}'),
             new Response(400, ['Content-Type' => 'application/json', 'Request-Id' => 'second'], '{"detail":"detail only","errors":"invalid"}'),
             new Response(400, ['Content-Type' => 'application/json'], '{}'),
+            new Response(400, ['Content-Type' => 'application/json'], '{"errors":["invalid"]}'),
         ]);
         $options = [
             'max_retries' => 1,
@@ -406,6 +407,7 @@ final class HttpClientTest extends TestCase
             ['bad', 'E_ALT', ['field' => 'invalid'], 'first'],
             ['detail only', null, [], 'second'],
             ['Fleetbase API request failed with HTTP 400.', null, [], null],
+            ['Fleetbase API request failed with HTTP 400.', null, [], null],
         ];
         foreach ($expected as $index => $values) {
             try {
@@ -418,6 +420,40 @@ final class HttpClientTest extends TestCase
                 self::assertSame($values[3], $exception->getRequestId());
             }
         }
+    }
+
+    public function testCoversTransportOptionsDefaultSleepAndLegacyNullOptions(): void
+    {
+        $client = $this->mockHttpClient([
+            new Response(200, ['Content-Type' => 'application/json'], '{}'),
+            new Response(503),
+            new Response(200, ['Content-Type' => 'application/json'], '{}'),
+            new Response(200, ['Content-Type' => 'application/json'], '{}'),
+        ]);
+        $client->get('transport-options', [], [
+            'timeout' => 1.5,
+            'connect_timeout' => 0.5,
+            'allow_redirects' => false,
+            'verify' => false,
+            'proxy' => 'http://proxy.example.test',
+        ]);
+        $transaction = $this->history[0] ?? null;
+        self::assertIsArray($transaction);
+        $options = $transaction['options'] ?? null;
+        self::assertIsArray($options);
+        self::assertSame(1.5, $options['timeout'] ?? null);
+        self::assertSame(0.5, $options['connect_timeout'] ?? null);
+        self::assertFalse($options['allow_redirects'] ?? true);
+        self::assertFalse($options['verify'] ?? true);
+        self::assertSame('http://proxy.example.test', $options['proxy'] ?? null);
+        self::assertFalse($options['http_errors'] ?? true);
+
+        $client->get('short-sleep', [], ['max_retries' => 1, 'retry_delay_ms' => 1]);
+        self::assertIsObject((new \ReflectionMethod($client, 'get'))->invoke($client, 'null-options', [], null));
+
+        $filter = new \ReflectionMethod($client, 'stringKeyedArray');
+        $filter->setAccessible(true);
+        self::assertSame(['kept' => true], $filter->invoke($client, [0 => false, 'kept' => true]));
     }
 
     private function requestAt(int $index): RequestInterface

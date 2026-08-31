@@ -85,5 +85,6 @@ final class ConfigurationUtilityTest extends TestCase
         self::assertSame('companies', Utils::pluralize('company'));
         self::assertSame('FuelReport', Utils::classify('fuel_report'));
         self::assertSame('tracking-statuses', Utils::createNamespace('TrackingStatus'));
+        self::assertSame('', Utils::createNamespace(''));
     }
 }

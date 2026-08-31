@@ -164,29 +164,23 @@ class Service
      */
     protected function endpoint(string $method, string $template, array $parameters = [], array $options = [])
     {
-        $path = preg_replace('#^\{\{base_url\}\}/\{\{namespace\}\}/?#i', '', $template);
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException('The endpoint URL template is invalid.');
+        $path = $template;
+        $prefix = '{{base_url}}/{{namespace}}';
+        if (strncasecmp($path, $prefix, strlen($prefix)) === 0) {
+            $path = ltrim(substr($path, strlen($prefix)), '/');
         }
 
         $used = [];
-        $replace = function (array $matches) use ($parameters, &$used): string {
-            $name = $matches[1] ?? null;
-            if (!is_string($name) || $name === '') {
-                throw new \InvalidArgumentException('The endpoint URL contains an invalid parameter.');
+        foreach (['/\{\{([^}]+)\}\}/', '/:([A-Za-z][A-Za-z0-9_-]*)/'] as $pattern) {
+            while (preg_match($pattern, $path, $matches) === 1) {
+                $placeholder = $matches[0];
+                $name = $matches[1];
+                if (!array_key_exists($name, $parameters) || !is_scalar($parameters[$name])) {
+                    throw new \InvalidArgumentException(sprintf('Endpoint parameter "%s" is required.', $name));
+                }
+                $used[$name] = true;
+                $path = str_replace($placeholder, rawurlencode((string) $parameters[$name]), $path);
             }
-            if (!array_key_exists($name, $parameters) || !is_scalar($parameters[$name])) {
-                throw new \InvalidArgumentException(sprintf('Endpoint parameter "%s" is required.', $name));
-            }
-            $used[$name] = true;
-            return rawurlencode((string) $parameters[$name]);
-        };
-        $path = preg_replace_callback('/\{\{([^}]+)\}\}/', $replace, $path);
-        $path = is_string($path)
-            ? preg_replace_callback('/:([A-Za-z][A-Za-z0-9_-]*)/', $replace, $path)
-            : null;
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException('The endpoint URL parameters could not be resolved.');
         }
 
         $data = [];
