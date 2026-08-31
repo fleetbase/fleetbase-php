@@ -1,0 +1,2202 @@
+{
+    "schema_version": 1,
+    "release": "1.0.3",
+    "namespace": "Fleetbase\\Sdk",
+    "classes": {
+        "Fleetbase\\Sdk\\Arr": {
+            "final": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "any",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "arr",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "predicate",
+                            "type": "callable",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "every",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "arr",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "predicate",
+                            "type": "callable",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "first",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "arr",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Fleetbase": {
+            "final": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "publicKey",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "config",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "debug",
+                            "type": "bool",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": false
+                        }
+                    ]
+                },
+                {
+                    "name": "getOptions",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "getVersion",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "newInstance",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": "Fleetbase\\Sdk\\Fleetbase",
+                    "parameters": []
+                },
+                {
+                    "name": "setApiKey",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\Fleetbase",
+                    "parameters": [
+                        {
+                            "name": "publicKey",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\FleetbaseException": {
+            "final": false,
+            "parent": "RuntimeException",
+            "interfaces": [
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": [],
+            "properties": [],
+            "methods": []
+        },
+        "Fleetbase\\Sdk\\HttpClient": {
+            "final": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "get",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getHost",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getLastResponse",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "GuzzleHttp\\Psr7\\Response",
+                    "parameters": []
+                },
+                {
+                    "name": "getNamespace",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "string",
+                    "parameters": []
+                },
+                {
+                    "name": "getOptions",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "patch",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "post",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "put",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "setHost",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\HttpClient",
+                    "parameters": [
+                        {
+                            "name": "host",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "setNamespace",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\HttpClient",
+                    "parameters": [
+                        {
+                            "name": "namespace",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resource": {
+            "final": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "?array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "__get",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "create",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "destroy",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getAttribute",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attribute",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "defaultValue",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getAttributes",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "properties",
+                            "type": "?array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "hasAttribute",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "isAttributeFilled",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "isDirty",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attribute",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "save",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "options",
+                            "type": "?array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "update",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Contact": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Driver": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Entity": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Order": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Services\\OrderService",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "cancel",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "captureQrCode",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "subjectId",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "captureSignature",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "subjectId",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "complete",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "dispatch",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getDistanceAndTime",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getNextActivity",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "setDestination",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "destinationId",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "start",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "updateActivity",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Payload": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Place": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\ServiceArea": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\ServiceQuote": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\ServiceRate": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\TrackingStatus": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Vehicle": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Vendor": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Waypoint": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Resources\\Zone": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Resource",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__constructor",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "service",
+                            "type": "?Fleetbase\\Sdk\\Service",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Service": {
+            "final": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "resource",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "client",
+                            "type": "Fleetbase\\Sdk\\HttpClient",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "create",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "destroy",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "findAll",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "findRecord",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getClient",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "Fleetbase\\Sdk\\HttpClient",
+                    "parameters": []
+                },
+                {
+                    "name": "getOptions",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": "array",
+                    "parameters": []
+                },
+                {
+                    "name": "query",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "query",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "queryRecord",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "query",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "update",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "attributes",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "uri",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "?string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        }
+                    ]
+                },
+                {
+                    "name": "uriForResource",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "path",
+                            "type": "?string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Services\\OrderService": {
+            "final": false,
+            "parent": "Fleetbase\\Sdk\\Service",
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "__construct",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "client",
+                            "type": "Fleetbase\\Sdk\\HttpClient",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "cancel",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "captureQrCode",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "subjectId",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "captureSignature",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "subjectId",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "complete",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "dispatch",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getDistanceAndTime",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "getNextActivity",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "setDestination",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "destinationId",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "start",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                },
+                {
+                    "name": "updateActivity",
+                    "visibility": "public",
+                    "static": false,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "params",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        },
+                        {
+                            "name": "options",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "Fleetbase\\Sdk\\Utils": {
+            "final": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "classify",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "string",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "createNamespace",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "namespace",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "dd",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": []
+                },
+                {
+                    "name": "get",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "key",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        },
+                        {
+                            "name": "default",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": true,
+                            "default": null
+                        }
+                    ]
+                },
+                {
+                    "name": "pluralize",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "string",
+                            "type": "string",
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "name": "value",
+                    "visibility": "public",
+                    "static": true,
+                    "return_type": null,
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": null,
+                            "by_reference": false,
+                            "variadic": false,
+                            "optional": false
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "runtime_properties": {
+        "Fleetbase\\Sdk\\Fleetbase": [
+            "client",
+            "contacts",
+            "drivers",
+            "entities",
+            "orders",
+            "places",
+            "serviceAreas",
+            "serviceQuotes",
+            "serviceRates",
+            "trackingStatuses",
+            "vehicles",
+            "vendors",
+            "zones"
+        ]
+    }
+}

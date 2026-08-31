@@ -25,9 +25,10 @@ This plan treats the Postman Native Git collections as the public contract inven
 
 - Repository: `fleetbase/fleetbase-php`
 - Default branch: `master`
-- Baseline commit and latest tag: `569fe88` / `1.0.2`
+- Required compatibility baseline: `569fe88` / `1.0.2`
+- Latest published tag after refreshing official refs: `97dabc5` / `1.0.3`
 - Baseline commit date: 2022-01-03
-- Repository history: 23 commits and three tags (`1.0.0`, `1.0.1`, `1.0.2`)
+- The 1.0.3 delta adds order actions that are also part of the compatibility surface; it changes the second `OrderService::getDistanceAndTime()` argument and contains malformed QR/signature path expressions, so callability and corrected behavior both require regression tests.
 - Production source and tests: 1,307 lines across 25 PHP files
 - Tracked dependencies: 4,394 files under `vendor/`
 - CI/release configuration: none
