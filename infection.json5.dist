@@ -1,0 +1,27 @@
+{
+    source: {
+        directories: [
+            "src"
+        ]
+    },
+    timeout: 10,
+    threads: "max",
+    testFramework: "phpunit",
+    phpUnit: {
+        configDir: "."
+    },
+    minMsi: 0,
+    minCoveredMsi: 0,
+    timeoutsAsEscaped: true,
+    maxTimeouts: 0,
+    logs: {
+        text: "build/mutation/infection.log",
+        summary: "build/mutation/summary.log",
+        summaryJson: "build/mutation/summary.json",
+        html: "build/mutation/report.html",
+        github: true
+    },
+    mutators: {
+        "@default": true
+    }
+}

@@ -8,6 +8,7 @@
 /phpunit.xml
 /.php-cs-fixer.cache
 /composer.phar
+/infection.json5
 /.idea/
 /.vscode/
 .DS_Store
