@@ -1,0 +1,26 @@
+{
+    "name": "fleetbase/sdk-symfony-consumer-fixture",
+    "description": "Symfony container and PSR-18 consumer fixture for fleetbase/fleetbase-php",
+    "type": "project",
+    "license": "proprietary",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../..",
+            "options": {
+                "symlink": false,
+                "versions": { "fleetbase/fleetbase-php": "1.1.0-dev" }
+            }
+        }
+    ],
+    "require": {
+        "fleetbase/fleetbase-php": "^1.1@dev",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/http-client": "^7.4"
+    },
+    "scripts": {
+        "verify": "@php verify.php"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

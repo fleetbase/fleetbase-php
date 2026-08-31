@@ -8,6 +8,7 @@ use Fleetbase\Sdk\Exception\AuthenticationException;
 use Fleetbase\Sdk\Exception\AuthorizationException;
 use Fleetbase\Sdk\Exception\ConflictException;
 use Fleetbase\Sdk\Exception\DecodingException;
+use Fleetbase\Sdk\Exception\InvalidConfigurationException;
 use Fleetbase\Sdk\Exception\NotFoundException;
 use Fleetbase\Sdk\Exception\RateLimitException;
 use Fleetbase\Sdk\Exception\ServerException;
@@ -454,6 +455,28 @@ final class HttpClientTest extends TestCase
         $filter = new \ReflectionMethod($client, 'stringKeyedArray');
         $filter->setAccessible(true);
         self::assertSame(['kept' => true], $filter->invoke($client, [0 => false, 'kept' => true]));
+    }
+
+    public function testCoversConstructorErrorAndNonJsonErrorBranches(): void
+    {
+        try {
+            new HttpClient(['publicKey' => 123]);
+            self::fail('Expected a non-string public key to fail configuration.');
+        } catch (InvalidConfigurationException $exception) {
+            self::assertStringContainsString('API key', $exception->getMessage());
+        }
+
+        $client = $this->mockHttpClient([new Response(400)]);
+        try {
+            $client->get('empty-error');
+            self::fail('Expected an empty HTTP error response.');
+        } catch (UnexpectedResponseException $exception) {
+            self::assertSame('Fleetbase API request failed with HTTP 400.', $exception->getMessage());
+        }
+
+        $sanitize = new \ReflectionMethod($client, 'sanitizeUrl');
+        $sanitize->setAccessible(true);
+        self::assertSame('/relative/path', $sanitize->invoke($client, '/relative/path?api_key=secret'));
     }
 
     private function requestAt(int $index): RequestInterface

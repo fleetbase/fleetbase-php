@@ -268,6 +268,14 @@ final class ResourceCollectionTest extends TestCase
         self::assertFalse((new \ReflectionMethod($same, 'isDirty'))->invoke($same, 42));
         self::assertFalse((new \ReflectionMethod($same, 'isDirty'))->invoke($same, ['missing', 42]));
         self::assertFalse((new \ReflectionMethod($same, 'isAttributeFilled'))->invoke($same, 42));
+
+        $boundaryClient = $this->mockHttpClient([
+            $this->jsonResponse(['id' => 'boundary']),
+            $this->jsonResponse(['id' => 'boundary']),
+        ]);
+        $boundary = new Place(['id' => 'boundary'], new Service('Place', $boundaryClient));
+        self::assertInstanceOf(Place::class, (new \ReflectionMethod($boundary, 'create'))->invoke($boundary, 'invalid'));
+        self::assertInstanceOf(Place::class, (new \ReflectionMethod($boundary, 'update'))->invoke($boundary, 'invalid'));
     }
 
     public function testServiceCoversDirectCollectionsEnvelopesDeletionAndEndpointBoundaries(): void
@@ -343,6 +351,22 @@ final class ResourceCollectionTest extends TestCase
             self::assertStringContainsString('did not return a resource', $exception->getMessage());
             self::assertFalse($resource->__get('isReloading'));
         }
+    }
+
+    public function testFindAllAndQueryPreserveUnrecognizedRawResponses(): void
+    {
+        $client = $this->mockHttpClient([
+            $this->jsonResponse(['unrecognized' => 'all']),
+            $this->jsonResponse(['unrecognized' => 'query']),
+        ]);
+        $service = new Service('Place', $client);
+
+        $all = $service->findAll();
+        $query = $service->query(['filter' => 'active']);
+        self::assertIsObject($all);
+        self::assertIsObject($query);
+        self::assertSame('all', get_object_vars($all)['unrecognized'] ?? null);
+        self::assertSame('query', get_object_vars($query)['unrecognized'] ?? null);
     }
 
     public function testPreservesLegacyResourceConstructorAliases(): void

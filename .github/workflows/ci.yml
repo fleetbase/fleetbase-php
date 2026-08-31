@@ -83,3 +83,27 @@ jobs:
           cat build/coverage/summary.txt
           php tools/report-uncovered.php build/coverage/clover.xml
           php tools/report-uncovered-branches.php build/coverage/coverage.php
+
+  consumers:
+    name: ${{ matrix.fixture }} consumer
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        fixture: [plain, laravel, symfony]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+      - name: Install consumer and local SDK copy
+        run: composer update --working-dir=fixtures/consumer/${{ matrix.fixture }} --no-interaction --prefer-dist
+      - name: Verify framework integration
+        run: composer verify --working-dir=fixtures/consumer/${{ matrix.fixture }}
+      - name: Verify optimized production autoloading
+        run: composer install --working-dir=fixtures/consumer/${{ matrix.fixture }} --no-interaction --no-dev --optimize-autoloader

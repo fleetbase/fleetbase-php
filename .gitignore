@@ -1,5 +1,7 @@
 
 /vendor/
+/fixtures/**/vendor/
+/fixtures/**/composer.lock
 /build/
 /.phpunit.cache/
 /.phpunit.result.cache
