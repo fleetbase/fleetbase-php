@@ -4,8 +4,8 @@ The release workflow validates and packages the candidate automatically. Publica
 
 ## Maintainer decisions before publication
 
-- Confirm Fleetbase has the rights required to publish the new release under `AGPL-3.0-or-later`.
-- Approve a minimum mutation score and any narrowly justified exclusions. The first complete baseline measured 86.27% with 100% mutation-code coverage and no ignored source.
+- Fleetbase ownership and authorization to publish the new release under `AGPL-3.0-or-later` was confirmed by the maintainer.
+- An 85% minimum mutation score was approved. The final pre-release baseline measured 86.02% with 100% mutation-code coverage and no ignored source.
 - Select protected `release` environment approvers and the signing/attestation identity.
 - Verify Packagist ownership and the GitHub update hook.
 - Approve the coordinated Fleetbase API-reference generator update.
