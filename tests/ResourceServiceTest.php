@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Fleetbase\Sdk\Test;
 
-use Fleetbase\Sdk\Collection;
 use Fleetbase\Sdk\Resource;
 use Fleetbase\Sdk\Resources\Place;
 use Fleetbase\Sdk\Service;
 use GuzzleHttp\Psr7\Response;
 use JsonSerializable;
 
-final class ResourceCollectionTest extends TestCase
+final class ResourceServiceTest extends TestCase
 {
     public function testResourceLifecycleTracksChangesHooksAndState(): void
     {
@@ -147,44 +146,7 @@ final class ResourceCollectionTest extends TestCase
         }
     }
 
-    public function testCollectionSupportsIterationMetadataAndControlledMutation(): void
-    {
-        $first = new Resource(['id' => 'one']);
-        $second = new Resource(['id' => 'two']);
-        $collection = new Collection([$first], ['page' => 1], ['next' => '/page/2']);
-
-        self::assertCount(1, $collection);
-        self::assertSame([$first], $collection->all());
-        self::assertSame(['page' => 1], $collection->meta());
-        self::assertSame(['next' => '/page/2'], $collection->links());
-        self::assertSame([$first], iterator_to_array($collection));
-        self::assertTrue($collection->offsetExists(0));
-        self::assertFalse($collection->offsetExists('0'));
-        self::assertSame($first, $collection->offsetGet(0));
-        self::assertNull($collection->offsetGet('0'));
-        $collection->offsetSet(null, $second);
-        $collection->offsetSet(0, $second);
-        self::assertSame([$second, $second], $collection->all());
-        $collection->offsetUnset(0);
-        $collection->offsetUnset('0');
-        self::assertSame([$second], $collection->all());
-        self::assertSame([
-            'data' => [['id' => 'two']],
-            'meta' => ['page' => 1],
-            'links' => ['next' => '/page/2'],
-        ], $collection->jsonSerialize());
-
-        foreach ([[0, 'invalid'], ['bad', $first]] as $arguments) {
-            try {
-                $collection->offsetSet($arguments[0], $arguments[1]);
-                self::fail('Expected invalid collection mutation.');
-            } catch (\InvalidArgumentException $exception) {
-                self::assertStringContainsString('Fleetbase collection', $exception->getMessage());
-            }
-        }
-    }
-
-    public function testServiceHydratesEnvelopesPaginationFallbacksAndActions(): void
+    public function testServiceHydratesListShapesFallbacksAndActions(): void
     {
         $client = $this->mockHttpClient([
             $this->jsonResponse(['data' => [['id' => 'one']], 'meta' => ['page' => 1], 'links' => ['next' => null]]),
@@ -196,17 +158,21 @@ final class ResourceCollectionTest extends TestCase
             $this->jsonResponse(['ok' => true]),
         ]);
         $places = new Service('Place', $client);
-        $page = $places->paginate();
-        self::assertCount(1, $page);
-        self::assertSame(['page' => 1], $page->meta());
-        self::assertSame(['next' => null], $page->links());
         $all = $places->findAll();
         $queried = $places->query();
+        $items = $places->query();
+        $unrecognized = $places->findAll();
         self::assertIsArray($all);
         self::assertIsArray($queried);
+        self::assertIsArray($items);
         self::assertContainsOnlyInstancesOf(Place::class, $all);
         self::assertContainsOnlyInstancesOf(Place::class, $queried);
-        self::assertCount(0, $places->paginate());
+        self::assertContainsOnlyInstancesOf(Place::class, $items);
+        self::assertSame('one', $all[0]->getAttribute('id'));
+        self::assertSame('two', $queried[0]->getAttribute('id'));
+        self::assertSame('three', $items[0]->getAttribute('id'));
+        self::assertIsObject($unrecognized);
+        self::assertTrue(get_object_vars($unrecognized)['unrecognized'] ?? false);
 
         $fallback = (new Service('MissingResource', $client))->findRecord('fallback');
         self::assertSame(Resource::class, get_class($fallback));

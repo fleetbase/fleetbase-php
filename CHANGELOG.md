@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - PHP 8.0 through 8.5 compatibility and PSR-18/PSR-7 transport injection.
-- Typed SDK exception hierarchy, paginated collection support, deterministic contract/API snapshots, hermetic tests, and modern repository guidance.
+- Typed SDK exception hierarchy, defensive list-response hydration, deterministic contract/API snapshots, hermetic tests, and modern repository guidance.
 
 ### Changed
 

@@ -116,26 +116,6 @@ $response = $fleetbase->client->request('GET', 'future-endpoint', [
 
 The raw `request()` method is the forward-compatibility escape hatch. It still applies authentication, URL normalization, decoding, retries, hooks, and exception mapping.
 
-## Pagination
-
-`findAll()` and `query()` preserve the legacy array return. Use `paginate()` when you need response metadata and links.
-
-```php
-$page = $fleetbase->places->paginate([
-    'limit' => 25,
-    'offset' => 0,
-]);
-
-foreach ($page as $place) {
-    echo $place->id . PHP_EOL;
-}
-
-$meta = $page->meta();
-$links = $page->links();
-```
-
-Collections are iterable, countable, JSON serializable, and expose `all()`, `meta()`, and `links()`.
-
 ## Errors
 
 All SDK failures are catchable as `FleetbaseException`. More specific exceptions cover authentication, authorization, validation, missing resources, conflicts, rate limits, server responses, timeouts, transport failures, decoding failures, and unexpected responses.

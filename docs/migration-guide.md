@@ -14,4 +14,4 @@ The runtime constraint widens from `^7.4` to `^7.4 || ^8.0`. PHP 7.4 and 8.0 are
 
 The 1.1.0 release preserves the `Fleetbase\Sdk` namespace, facade constructor, existing store properties, `HttpClient` verbs and accessors, generic service methods, resource lifecycle/attribute methods, resource classes, and published order actions. Demonstrably unusable behavior is corrected with regression tests and changelog entries.
 
-The final guide will list every corrected behavior, new exception type, pagination/return-shape addition, transport injection option, and framework recipe before release.
+The final guide will list every corrected behavior, new exception type, transport injection option, and framework recipe before release. Fleetbase API v1 does not expose an SDK pagination contract, so 1.1.0 retains the legacy array return from `findAll()` and `query()` and does not introduce a speculative pagination method.

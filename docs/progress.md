@@ -22,7 +22,7 @@ Remaining in Phase 0: characterize observable legacy behavior, add automated sna
 - Widened runtime support to `^7.4 || ^8.0`; added PSR HTTP contracts and maintained development tools. Composer strict validation passes and a fresh advisory audit reports zero known vulnerabilities in the new lock.
 - Replaced live, credential-dependent tests with a hermetic Guzzle mock suite: pass on PHP 8.2 / PHPUnit 11.5 with 5 tests, 45 assertions, no deprecations.
 - Added canonical AGPL v3 text, `AGPL-3.0-or-later` Composer/source notices, migration warning, README/badges, community health files, Dependabot configuration, and a pinned-action baseline CI matrix.
-- Added configuration validation, declared legacy facade properties, injectable PSR-18 transport, response/error mapping, mutable resource state tracking, pagination, and repaired order-service access/path behavior.
+- Added configuration validation, declared legacy facade properties, injectable PSR-18 transport, response/error mapping, mutable resource state tracking, and repaired order-service access/path behavior.
 - Public API compatibility checks pass against both 1.0.2 and 1.0.3. The contract manifest structure passes with all 220 requests still explicitly unmapped.
 - PHPStan 2.2 at max initially reported 307 errors across source/tests after excluding standalone build tools. The foundation refactor resolved all 307 without a baseline or ignore entry; max-level analysis now passes.
 
@@ -56,7 +56,7 @@ At this checkpoint, remaining work included the final hard coverage gate, mutati
 - Built and inspected a source archive with 136 files and no forbidden development state. The 1.1.0 release identity check passes against latest tag 1.0.3.
 - The first security run passed Composer audit/license verification and dependency review. It also exposed two actionable workflow findings: a test-only malformed URI triggered TruffleHog's unverified URI detector, and repository-level CodeQL default setup rejected a duplicate advanced SARIF upload. The fixture is now scanner-safe, while advanced Actions analysis remains locally enforced from SARIF without competing with default setup.
 - Generated a first-class PHP example for each of the 220 locked requests. The exact fenced snippets execute through the public `Fleetbase` facade and a hermetic Guzzle transport in the unit suite (35 tests, 2,311 assertions), and generated-doc drift is part of `composer check`.
-- Replaced the abbreviated README with configuration, self-hosting, PSR-18, services, pagination, errors, uploads/downloads, retries, diagnostics, Laravel, Symfony, compatibility, security, and license guidance backed by the implemented APIs.
+- Replaced the abbreviated README with configuration, self-hosting, PSR-18, services, errors, uploads/downloads, retries, diagnostics, Laravel, Symfony, compatibility, security, and license guidance backed by the implemented APIs.
 - Changed consumer CI to download, inspect, extract, and install the built source archive before running the plain PHP, Laravel, and Symfony verifiers; path-based checkout installs no longer satisfy this gate.
 
 Remaining automatable gates include mutation testing, isolated Fleetbase/Postman contract CI, and release dry-run validation. Human approval remains required for relicensing rights, the mutation threshold, protected release approvers/signing, Packagist verification, the API-reference repository change, and the final default-branch change.
@@ -76,3 +76,8 @@ The disposable native Postman run requires a repository or organization `POSTMAN
 - CI now permits the four observed timeout-killed mutants with a narrow ceiling of five; additional timeout growth remains a failure. The permanent minimum mutation-score policy remains an explicit maintainer decision, while the complete report stays visible as a CI artifact.
 - The secret workflow now separates verified-secret history scanning from verified-and-unknown scanning of the current source snapshot. This keeps full historical credential validation while preventing a repaired test-only URI false positive in an intermediate review commit from permanently blocking the branch without rewriting history.
 - Pull-request CI now assembles the complete 1.1.0 release candidate only after quality, compatibility, exact coverage, mutation, archive, and all consumer gates pass. The standalone release workflow additionally audits dependencies and verifies that a published version becomes installable from Packagist.
+
+## 2026-09-02 — pagination contract correction
+
+- Maintainer review confirmed that Fleetbase API v1 does not expose an SDK pagination contract. Removed the unreleased speculative `Service::paginate()` method, its collection metadata abstraction, tests, README example, and release claims.
+- `findAll()` and `query()` continue returning arrays for 1.0.x compatibility. They retain defensive hydration for bare arrays and recognized `data`, `results`, or `items` list envelopes, but do not page, slice, or automatically issue follow-up requests.

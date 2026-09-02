@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "release": "current",
+    "release": "working-tree",
     "namespace": "Fleetbase\\Sdk",
     "classes": {
         "Fleetbase\\Sdk\\Arr": {
@@ -63,160 +63,6 @@
                         {
                             "name": "arr",
                             "type": "array",
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": false
-                        }
-                    ]
-                }
-            ]
-        },
-        "Fleetbase\\Sdk\\Collection": {
-            "final": true,
-            "parent": null,
-            "interfaces": [
-                "IteratorAggregate",
-                "Countable",
-                "JsonSerializable",
-                "Traversable"
-            ],
-            "constants": [],
-            "properties": [],
-            "methods": [
-                {
-                    "name": "__construct",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": null,
-                    "parameters": [
-                        {
-                            "name": "items",
-                            "type": "array",
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": false
-                        },
-                        {
-                            "name": "meta",
-                            "type": "array",
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": true,
-                            "default": []
-                        },
-                        {
-                            "name": "links",
-                            "type": "array",
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": true,
-                            "default": []
-                        }
-                    ]
-                },
-                {
-                    "name": "all",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "array",
-                    "parameters": []
-                },
-                {
-                    "name": "count",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "int",
-                    "parameters": []
-                },
-                {
-                    "name": "getIterator",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "Traversable",
-                    "parameters": []
-                },
-                {
-                    "name": "jsonSerialize",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "array",
-                    "parameters": []
-                },
-                {
-                    "name": "links",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "array",
-                    "parameters": []
-                },
-                {
-                    "name": "meta",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "array",
-                    "parameters": []
-                },
-                {
-                    "name": "offsetExists",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "bool",
-                    "parameters": [
-                        {
-                            "name": "offset",
-                            "type": null,
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": false
-                        }
-                    ]
-                },
-                {
-                    "name": "offsetGet",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "?Fleetbase\\Sdk\\Resource",
-                    "parameters": [
-                        {
-                            "name": "offset",
-                            "type": null,
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": false
-                        }
-                    ]
-                },
-                {
-                    "name": "offsetSet",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "void",
-                    "parameters": [
-                        {
-                            "name": "offset",
-                            "type": null,
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": false
-                        },
-                        {
-                            "name": "value",
-                            "type": null,
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": false
-                        }
-                    ]
-                },
-                {
-                    "name": "offsetUnset",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "void",
-                    "parameters": [
-                        {
-                            "name": "offset",
-                            "type": null,
                             "by_reference": false,
                             "variadic": false,
                             "optional": false
@@ -3038,30 +2884,6 @@
                     "parameters": []
                 },
                 {
-                    "name": "paginate",
-                    "visibility": "public",
-                    "static": false,
-                    "return_type": "Fleetbase\\Sdk\\Collection",
-                    "parameters": [
-                        {
-                            "name": "query",
-                            "type": "array",
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": true,
-                            "default": []
-                        },
-                        {
-                            "name": "options",
-                            "type": "array",
-                            "by_reference": false,
-                            "variadic": false,
-                            "optional": true,
-                            "default": []
-                        }
-                    ]
-                },
-                {
                     "name": "query",
                     "visibility": "public",
                     "static": false,
@@ -3128,7 +2950,7 @@
                     "name": "resolveCollection",
                     "visibility": "protected",
                     "static": false,
-                    "return_type": "?Fleetbase\\Sdk\\Collection",
+                    "return_type": "?array",
                     "parameters": [
                         {
                             "name": "data",

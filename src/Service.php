@@ -83,7 +83,7 @@ class Service
         $data = $this->client->get($this->uri(), [], $options);
         $collection = $this->resolveCollection($data);
 
-        return $collection instanceof Collection ? $collection->all() : $data;
+        return is_array($collection) ? $collection : $data;
     }
 
     /**
@@ -96,23 +96,7 @@ class Service
         $data = $this->client->get($this->uri(), $query, $options);
         $collection = $this->resolveCollection($data);
 
-        return $collection instanceof Collection ? $collection->all() : $data;
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     * @param array<string, mixed> $options
-     */
-    public function paginate(array $query = [], array $options = []): Collection
-    {
-        $data = $this->client->get($this->uri(), $query, $options);
-        $collection = $this->resolveCollection($data);
-
-        if (!$collection instanceof Collection) {
-            return new Collection([]);
-        }
-
-        return $collection;
+        return is_array($collection) ? $collection : $data;
     }
 
     /**
@@ -236,12 +220,13 @@ class Service
         return $resource;
     }
 
-    /** @param mixed $data */
-    protected function resolveCollection($data): ?Collection
+    /**
+     * @param mixed $data
+     * @return array<int, Resource>|null
+     */
+    protected function resolveCollection($data): ?array
     {
         $items = null;
-        $meta = [];
-        $links = [];
 
         if (is_array($data)) {
             $items = $data;
@@ -252,8 +237,6 @@ class Service
                     break;
                 }
             }
-            $meta = isset($data->meta) && is_object($data->meta) ? $this->stringKeyedArray((array) $data->meta) : [];
-            $links = isset($data->links) && is_object($data->links) ? $this->stringKeyedArray((array) $data->links) : [];
         }
 
         if ($items === null) {
@@ -265,7 +248,7 @@ class Service
             $resources[] = $this->resolve($item);
         }
 
-        return new Collection($resources, $meta, $links);
+        return $resources;
     }
 
     /**
