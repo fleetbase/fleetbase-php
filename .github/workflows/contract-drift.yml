@@ -1,0 +1,71 @@
+name: API contract drift
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * 1"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: contract-drift
+  cancel-in-progress: true
+
+jobs:
+  drift:
+    name: Compare current Postman contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out SDK contract lock
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check out current official Postman contract
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: fleetbase/postman
+          ref: main
+          path: .postman
+      - name: Record current Postman commit
+        id: postman
+        run: echo "sha=$(git -C .postman rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Set up PHP
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+      - name: Install locked tooling
+        run: composer install --no-interaction --prefer-dist
+      - name: Generate current contract inventory
+        run: php tools/generate-contract-manifest.php --postman=.postman --output=build/contract-drift.json --ref=${{ steps.postman.outputs.sha }}
+      - name: Compare current contract with SDK lock
+        id: compare
+        continue-on-error: true
+        run: php tools/check-contract-drift.php --candidate=build/contract-drift.json --output=build/contract-drift.md
+      - name: Open or update drift issue
+        if: steps.compare.outcome == 'failure'
+        run: |
+          gh label create contract-drift --color B60205 --description "Official API contract changed" --force
+          issue="$(gh issue list --state open --label contract-drift --json number --jq '.[0].number')"
+          if [ -n "$issue" ]; then
+            gh issue comment "$issue" --body-file build/contract-drift.md
+          else
+            gh issue create --title "Official Postman contract drift detected" --label contract-drift --body-file build/contract-drift.md
+          fi
+      - name: Upload drift evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: contract-drift
+          path: |
+            build/contract-drift.json
+            build/contract-drift.md
+          if-no-files-found: error
+          retention-days: 14
+      - name: Enforce no drift
+        if: steps.compare.outcome == 'failure'
+        run: exit 1

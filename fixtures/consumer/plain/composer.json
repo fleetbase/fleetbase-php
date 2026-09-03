@@ -1,0 +1,24 @@
+{
+    "name": "fleetbase/sdk-plain-consumer-fixture",
+    "description": "Plain PHP consumer fixture for fleetbase/fleetbase-php",
+    "type": "project",
+    "license": "proprietary",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../..",
+            "options": {
+                "symlink": false,
+                "versions": { "fleetbase/fleetbase-php": "1.1.0-dev" }
+            }
+        }
+    ],
+    "require": {
+        "fleetbase/fleetbase-php": "^1.1@dev"
+    },
+    "scripts": {
+        "verify": "@php verify.php"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

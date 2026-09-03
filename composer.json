@@ -1,10 +1,10 @@
 {
     "name": "fleetbase/fleetbase-php",
-    "description": "Fleetbase\\PHP\\SDK",
+    "description": "Official PHP SDK for the Fleetbase logistics and operations APIs",
     "type": "library",
     "keywords": ["fleetbase", "logistics-api", "ecommerce-api", "fleetbase-sdk", "fleetbase-api"],
     "homepage": "https://github.com/fleetbase/fleetbase-php",
-    "license": "MIT",
+    "license": "AGPL-3.0-or-later",
     "authors": [
         {
             "name": "Ronald A. Richardson",
@@ -13,25 +13,29 @@
         }
     ],
     "support": {
-        "docs": "https://fleetbase.github.io/fleetbase-php/",
+        "docs": "https://fleetbase.io/docs/api",
         "issues": "https://github.com/fleetbase/fleetbase-php/issues",
         "rss": "https://github.com/fleetbase/fleetbase-php/releases.atom",
         "source": "https://github.com/fleetbase/fleetbase-php.git",
         "wiki": "https://github.com/fleetbase/fleetbase-php/wiki"
     },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "doctrine/inflector": "^2.0",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.4",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0 || ^2.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1",
-        "php-parallel-lint/php-parallel-lint": "^1",
-        "phpstan/phpstan": "^0.11",
-        "phpstan/phpstan-mockery": "^0.11",
-        "phpunit/phpunit": "^8",
-        "squizlabs/php_codesniffer": "^3",
-        "vlucas/phpdotenv": "^5.4"
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "mockery/mockery": "^1.6",
+        "php-parallel-lint/php-parallel-lint": "^1.4",
+        "phpstan/phpstan": "^2.2",
+        "phpstan/phpstan-mockery": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.6 || ^10.5 || ^11.5 || ^12.0",
+        "symfony/yaml": "^5.4"
     },
     "autoload": {
         "psr-4": {
@@ -44,32 +48,56 @@
         }
     },
     "scripts": {
-        "lint": "parallel-lint src tests",
-        "phpcs": "phpcs src tests --standard=psr12 -sp --colors",
-        "phpstan": [
-            "phpstan analyse src -c phpstan.neon --level max --no-progress",
-            "phpstan analyse tests -c phpstan.neon --level 4 --no-progress"
+        "lint": "parallel-lint src tests tools",
+        "format": "php-cs-fixer fix --diff --verbose --sequential",
+        "format:check": "php-cs-fixer fix --dry-run --diff --verbose --sequential",
+        "analyse": "phpstan analyse --configuration=phpstan.neon.dist --no-progress --debug",
+        "test:unit": "@php tools/run-unit-tests.php",
+        "test:unit:legacy": "phpunit --configuration=phpunit-9.xml.dist",
+        "test:coverage": [
+            "@php tools/run-unit-tests.php --coverage-clover=build/coverage/clover.xml --coverage-cobertura=build/coverage/cobertura.xml --coverage-html=build/coverage/html --coverage-php=build/coverage/coverage.php --coverage-text=build/coverage/summary.txt",
+            "@php tools/merge-terminating-coverage.php"
         ],
-        "phpunit": "phpunit --verbose --colors=always",
-        "phpunit-ci": "phpunit --verbose --coverage-clover build/logs/clover.xml",
-        "phpunit-coverage": "phpunit --verbose --colors=always --coverage-html build/coverage",
-        "test": [
-            "@lint",
-            "@phpcs",
-            "@phpstan",
-            "@phpunit"
+        "contract:check": "@php tools/check-contract-manifest.php",
+        "contract:complete": "@php tools/check-contract-manifest.php --require-complete",
+        "license:check": "@php tools/check-license.php",
+        "contract:generated": [
+            "@php tools/generate-endpoint-services.php",
+            "@php tools/generate-api-coverage.php",
+            "@php tools/generate-api-examples.php",
+            "git diff --exit-code -- contracts/postman-manifest.json contracts/service-map.json docs/api-coverage.md docs/api-examples.md src/Services tests/Contract"
         ],
-        "test-ci": [
+        "api:snapshot": "@php tools/generate-api-snapshot.php --autoload=vendor/autoload.php --label=working-tree --output=build/contracts/public-api-current.json",
+        "api:compatibility": [
+            "@api:snapshot",
+            "@php tools/check-api-compatibility.php --baseline=contracts/public-api-1.0.2.json --current=build/contracts/public-api-current.json",
+            "@php tools/check-api-compatibility.php --baseline=contracts/public-api-1.0.3.json --current=build/contracts/public-api-current.json"
+        ],
+        "check": [
             "@lint",
-            "@phpcs",
-            "@phpstan",
-            "@phpunit-ci"
+            "@format:check",
+            "@analyse",
+            "@test:unit",
+            "@contract:check",
+            "@contract:generated",
+            "@license:check",
+            "@api:compatibility"
         ]
     },
+    "funding": [
+        {
+            "type": "custom",
+            "url": "https://fleetbase.io"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "config": {
         "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true
-        }
+        "allow-plugins": {},
+        "preferred-install": {
+            "*": "dist"
+        },
+        "optimize-autoloader": true
     }
 }

@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose an SDK capability or API mapping
+title: "[Feature]: "
+labels: [enhancement, needs-triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and use case
+    validations:
+      required: true
+  - type: input
+    id: contract
+    attributes:
+      label: Official Postman request or API documentation link
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed PHP API
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility considerations
