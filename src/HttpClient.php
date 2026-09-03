@@ -263,7 +263,7 @@ class HttpClient
         $headers = [
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $this->apiKey,
-            'User-Agent' => 'fleetbase-php/1.1.0 PHP/' . PHP_VERSION,
+            'User-Agent' => 'fleetbase-php/1.1.1 PHP/' . PHP_VERSION,
         ];
         if (is_array($options['headers'] ?? null)) {
             foreach ($options['headers'] as $name => $value) {

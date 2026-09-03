@@ -6,9 +6,10 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$options = getopt('', ['manifest:', 'output:']);
+$options = getopt('', ['manifest:', 'output:', 'catalog-output:']);
 $manifestPath = is_string($options['manifest'] ?? null) ? $options['manifest'] : 'contracts/postman-manifest.json';
 $outputPath = is_string($options['output'] ?? null) ? $options['output'] : 'docs/api-examples.md';
+$catalogPath = is_string($options['catalog-output'] ?? null) ? $options['catalog-output'] : 'contracts/php-sdk-examples.json';
 $contents = file_get_contents($manifestPath);
 $manifest = is_string($contents) ? json_decode($contents, true) : null;
 if (!is_array($manifest) || !is_array($manifest['requests'] ?? null)) {
@@ -23,6 +24,12 @@ $lines = [
     'Create `$fleetbase` once as shown in the README, then use the relevant service call below. Fixture identifiers and payloads are illustrative; replace them with values from your application.',
 ];
 $currentGroup = null;
+$catalog = [
+    'schema_version' => 1,
+    'generated_from' => $manifest['source'] ?? [],
+    'package' => 'fleetbase/fleetbase-php',
+    'examples' => [],
+];
 
 foreach ($manifest['requests'] as $request) {
     if (!is_array($request)) {
@@ -46,13 +53,32 @@ foreach ($manifest['requests'] as $request) {
     }
 
     [$parameters, $callOptions] = arguments($request);
-    $call = sprintf(
-        "\$result = \$fleetbase->%s->%s(\n    %s,\n    %s\n);",
-        $property,
-        $method,
-        exported($parameters, 1),
-        exported($callOptions, 1)
-    );
+    if ($method === 'dispatchOrder' && is_string($parameters['id'] ?? null)) {
+        $call = sprintf(
+            '$result = $fleetbase->%s->%s(%s);',
+            $property,
+            $method,
+            var_export($parameters['id'], true)
+        );
+    } else {
+        $call = sprintf(
+            "\$result = \$fleetbase->%s->%s(\n    %s,\n    %s\n);",
+            $property,
+            $method,
+            exported($parameters, 1),
+            exported($callOptions, 1)
+        );
+    }
+
+    $id = requiredString($request, 'id');
+    $catalog['examples'][$id] = [
+        'collection' => requiredString($request, 'collection'),
+        'group' => $group,
+        'name' => requiredString($request, 'name'),
+        'implementation' => requiredString($request, 'implementation'),
+        'call' => $call,
+        'code' => "<?php\n\n\$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n" . $call,
+    ];
 
     $lines[] = '';
     $lines[] = '### ' . requiredString($request, 'name');
@@ -77,8 +103,16 @@ if (!is_dir($directory) && !mkdir($directory, 0777, true) && !is_dir($directory)
 if (file_put_contents($outputPath, implode("\n", $lines) . "\n") === false) {
     fail('Unable to write the API examples.');
 }
+$catalogDirectory = dirname($catalogPath);
+if (!is_dir($catalogDirectory) && !mkdir($catalogDirectory, 0777, true) && !is_dir($catalogDirectory)) {
+    fail('Unable to create the API example catalog directory.');
+}
+$catalogJson = json_encode($catalog, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+if (!is_string($catalogJson) || file_put_contents($catalogPath, $catalogJson . "\n") === false) {
+    fail('Unable to write the API example catalog.');
+}
 
-printf("Generated %d executable API examples.\n", count($manifest['requests']));
+printf("Generated %d executable API examples and the website catalog.\n", count($manifest['requests']));
 
 /** @param array<string, mixed> $request @return array{array<string, mixed>, array<string, mixed>} */
 function arguments(array $request): array

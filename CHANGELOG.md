@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-09-03
+
+### Added
+
+- Disposable-stack CI that executes all 220 locked Postman requests through their exact PHP SDK methods.
+- Automatic validation and publication when a semantic `release/` branch is merged into `main`.
+- A machine-readable PHP example catalog keyed by stable Postman request IDs for the public API reference.
+
+### Changed
+
+- Normalized order dispatch calls so `dispatch($orderId)`, `dispatchOrder($orderId)`, and the legacy parameter-array form use the same official `PATCH` endpoint.
+- Corrected the order destination action to use the HTTP verb defined by the official API contract.
+
 ## [1.1.0] - 2026-08-31
 
 ### Added
@@ -52,7 +65,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Latest baseline whose public API is explicitly preserved by 1.1.0.
 
 
-[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.1.1...HEAD
+[1.1.1]: https://github.com/fleetbase/fleetbase-php/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/fleetbase/fleetbase-php/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/fleetbase/fleetbase-php/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/fleetbase/fleetbase-php/compare/1.0.1...1.0.2

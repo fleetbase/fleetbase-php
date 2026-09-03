@@ -76,7 +76,7 @@ foreach ($manifest['requests'] as $request) {
         $responses !== [] ? implode(', ', $responses) : 'No official example',
         '[HTTP status mapping](../tests/HttpClientTest.php)',
         '[endpoint fixture](../tests/Contract/EndpointContractTest.php)',
-        'Pending isolated stack',
+        'Official collection through SDK bridge',
         escaped(stringValue($request['status'] ?? null)),
     ]) . ' |';
 }

@@ -36,7 +36,7 @@ final class OrderTest extends TestCase
 
     public function testLegacyOrderServiceAndResourceActionsResolveCorrectPaths(): void
     {
-        $client = $this->mockHttpClient(array_fill(0, 24, new Response(200, ['Content-Type' => 'application/json'], '{}')));
+        $client = $this->mockHttpClient(array_fill(0, 25, new Response(200, ['Content-Type' => 'application/json'], '{}')));
         $service = new OrderService($client);
         $before = false;
 
@@ -46,6 +46,8 @@ final class OrderTest extends TestCase
         }]);
         $service->getNextActivity('order_1');
         $service->dispatch('order_1');
+        $service->dispatchOrder('order_1');
+        $service->dispatchOrder(['id' => 'order_1']);
         $service->start('order_1');
         $service->updateActivity('order_1');
         $service->setDestination('order_1', 'destination with space');
@@ -70,7 +72,7 @@ final class OrderTest extends TestCase
         $order->cancel();
 
         self::assertTrue($before);
-        self::assertCount(23, $this->history);
+        self::assertCount(25, $this->history);
         $paths = array_map(function ($transaction): string {
             self::assertIsArray($transaction);
             $request = $transaction['request'] ?? null;
@@ -79,7 +81,11 @@ final class OrderTest extends TestCase
                 . ($request->getUri()->getQuery() !== '' ? '?' . $request->getUri()->getQuery() : '');
         }, $this->history);
         self::assertContains('GET /v1/orders/order_1/distance-and-time?include=route', $paths);
-        self::assertContains('POST /v1/orders/order_1/set-destination/destination%20with%20space', $paths);
+        self::assertSame(3, count(array_filter($paths, static function (string $path): bool {
+            return $path === 'PATCH /v1/orders/order_1/dispatch';
+        })));
+        self::assertContains('PATCH /v1/orders/order_2/dispatch', $paths);
+        self::assertContains('PATCH /v1/orders/order_1/set-destination/destination%20with%20space', $paths);
         self::assertContains('POST /v1/orders/order_1/capture-qr', $paths);
         self::assertContains('POST /v1/orders/order_1/capture-qr/subject%20with%20space', $paths);
         self::assertContains('POST /v1/orders/order_1/capture-signature', $paths);
@@ -93,6 +99,13 @@ final class OrderTest extends TestCase
             try {
                 (new \ReflectionMethod($service, 'getDistanceAndTime'))->invoke($service, 'order_1', $arguments[0], $arguments[1]);
                 self::fail('Expected invalid action arguments.');
+            } catch (\InvalidArgumentException $exception) {
+                self::assertStringContainsString('arrays', $exception->getMessage());
+            }
+
+            try {
+                (new \ReflectionMethod($service, 'dispatch'))->invoke($service, 'order_1', $arguments[0], $arguments[1]);
+                self::fail('Expected invalid dispatch arguments.');
             } catch (\InvalidArgumentException $exception) {
                 self::assertStringContainsString('arrays', $exception->getMessage());
             }

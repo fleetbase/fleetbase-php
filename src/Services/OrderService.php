@@ -72,9 +72,11 @@ class OrderService extends Service
      */
     public function dispatch($id, $params = [], $options = [])
     {
-        $uri = $this->uriForResource($id, 'dispatch');
+        if (!is_array($params) || !is_array($options)) {
+            throw new \InvalidArgumentException('Order action parameters and options must be arrays.');
+        }
 
-        return $this->client->post($uri, $params, $options);
+        return $this->dispatchOrder($id, $params, $options);
     }
 
     /**
@@ -114,7 +116,7 @@ class OrderService extends Service
     {
         $uri = $this->uriForResource($id, 'set-destination/' . rawurlencode((string) $destinationId));
 
-        return $this->client->post($uri, $params, $options);
+        return $this->client->patch($uri, $params, $options);
     }
 
     /**

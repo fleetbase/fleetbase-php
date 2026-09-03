@@ -1,7 +1,11 @@
 name: Disposable API contract
 
 on:
+  workflow_call:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
   schedule:
     - cron: "41 3 * * 0"
 
@@ -13,23 +17,42 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  gate:
+    name: Check Postman secret
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.check.outputs.enabled }}
+    steps:
+      - id: check
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+        run: |
+          if [ -n "$POSTMAN_API_KEY" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::POSTMAN_API_KEY is not set; skipping the API contract run."
+          fi
+
   contract:
     name: Official Postman and SDK contract
+    needs: gate
+    if: >-
+      needs.gate.outputs.enabled == 'true' &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 55
     env:
       FLEETBASE_STACK_REF: d810cee000d42713942a2343264eb706b0b3a59a
-      POSTMAN_REF: 43253dbf87e5030d95d12be019dc26fcb7151ed6
+      FLEETBASE_API_IMAGE: fleetbase/fleetbase-api:latest
+      POSTMAN_REF: 9a7d4d898b4e74d735d93c78d67d4d5013c1a28b
       SOURCE_TOKEN: ${{ secrets._GITHUB_AUTH_TOKEN || github.token }}
       POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
     steps:
-      - name: Require contract-only credentials
-        run: |
-          if [ -z "$POSTMAN_API_KEY" ]; then
-            echo "POSTMAN_API_KEY is required to run the official native collection." >&2
-            exit 1
-          fi
-      - name: Check out the locked Fleetbase stack
+      # This is the same boot path used by fleetbase/fleetbase's reusable
+      # api-contract workflow. The remaining SDK-specific steps must share this
+      # runner so the Postman base URL can point through the PHP SDK bridge.
+      - name: Checkout fleetbase/fleetbase
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: fleetbase/fleetbase
@@ -46,20 +69,24 @@ jobs:
           sed -i 's#actions/upload-artifact@v4#actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a#g' .github/actions/postman-contract/action.yml
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
-      - name: Build the locked API stack
+      - name: Pull published API image
         run: |
-          docker build \
-            --file docker/Dockerfile \
-            --target app-release \
-            --build-arg GITHUB_AUTH_KEY="$SOURCE_TOKEN" \
-            --tag fleetbase/fleetbase-api:sdk-contract \
-            .
-          docker tag fleetbase/fleetbase-api:sdk-contract fleetbase/fleetbase-api:latest
-      - name: Prepare non-interactive test configuration
+          docker pull "$FLEETBASE_API_IMAGE"
+          {
+            echo "### API image under test"
+            echo '```'
+            docker image inspect "$FLEETBASE_API_IMAGE" --format 'requested: fleetbase/fleetbase-api:latest{{"\n"}}tags:      {{join .RepoTags ", "}}{{"\n"}}digest:    {{join .RepoDigests ", "}}{{"\n"}}created:   {{.Created}}'
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Ensure clean database volume
         run: |
           sudo rm -rf docker/database/mysql
           mkdir -p docker/database/mysql
-          cp api/.env.example api/.env
+      - name: Run non-interactive installer
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: |
+          [ -f api/.env ] || cp api/.env.example api/.env 2>/dev/null || touch api/.env
           set_env() {
             if grep -q "^$1=" api/.env; then
               sed -i "s|^$1=.*|$1=$2|" api/.env
@@ -68,32 +95,29 @@ jobs:
             fi
           }
           set_env THROTTLE_ENABLED false
+          if [ -n "${GOOGLE_MAPS_API_KEY:-}" ]; then
+            set_env GOOGLE_MAPS_API_KEY "$GOOGLE_MAPS_API_KEY"
+            echo "Geocoding enabled for address-string contract fixtures."
+          else
+            echo "::notice::GOOGLE_MAPS_API_KEY not set; coordinate and GeoJSON place fixtures remain available."
+          fi
           set_env STOREFRONT_BYPASS_VERIFICATION_CODE 000000
           set_env STOREFRONT_REVIEW_ACCOUNTS '+15555550123'
           set_env MAIL_MAILER log
           set_env MAIL_FROM_ADDRESS ci-contract@fleetbase.local
-      - name: Install the disposable stack
-        run: bash scripts/docker-install.sh --non-interactive
+          bash scripts/docker-install.sh --non-interactive
       - name: Wait for API health
         run: |
-          for attempt in $(seq 1 40); do
+          set -uo pipefail
+          for attempt in $(seq 1 30); do
             if curl --fail --silent --max-time 5 http://localhost:8000/health | grep -q '"status"'; then
-              echo "Disposable API is healthy."
+              echo "API is healthy."
               exit 0
             fi
             sleep 5
           done
-          echo "Disposable API did not become healthy." >&2
+          echo "::error::API did not become healthy."
           exit 1
-      - name: Run both locked official Postman collections
-        uses: ./.github/actions/postman-contract
-        with:
-          collections: |
-            Fleetbase API
-            Fleetbase Core API
-          postman-ref: ${{ env.POSTMAN_REF }}
-          postman-api-key: ${{ env.POSTMAN_API_KEY }}
-          github-token: ${{ env.SOURCE_TOKEN }}
       - name: Mint a fresh SDK smoke credential
         env:
           CI_CUSTOMER_IDENTITY: ci-customer@fleetbase.local
@@ -137,13 +161,56 @@ jobs:
           tools: composer:v2
       - name: Install SDK dependencies
         run: composer install --working-dir=.sdk --no-interaction --prefer-dist
+      - name: Start the PHP SDK contract bridge
+        run: |
+          mkdir -p .sdk/build/live-contract
+          FLEETBASE_CONTRACT_TARGET_URL=http://127.0.0.1:8000 \
+          FLEETBASE_CONTRACT_NAMESPACE=v1 \
+          FLEETBASE_CONTRACT_STATE="$GITHUB_WORKSPACE/.sdk/build/live-contract/state.json" \
+            php -S 127.0.0.1:9000 .sdk/tools/live-sdk-contract-router.php \
+            > .sdk/build/live-contract/bridge.log 2>&1 &
+          echo $! > .sdk/build/live-contract/bridge.pid
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:9000/__sdk_contract_health | grep -q '"status":"ok"'; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "The PHP SDK contract bridge did not start." >&2
+          exit 1
+      - name: Run both official Postman collections through the SDK
+        uses: ./.github/actions/postman-contract
+        with:
+          collections: |
+            Fleetbase API
+            Fleetbase Core API
+          base-url: http://127.0.0.1:9000
+          postman-ref: ${{ env.POSTMAN_REF }}
+          postman-api-key: ${{ env.POSTMAN_API_KEY }}
+          github-token: ${{ env.SOURCE_TOKEN }}
+          # Test-mode keys only; the action deliberately ignores live keys.
+          stripe-publishable-key: ${{ secrets.STRIPE_TEST_KEY }}
+          stripe-secret-key: ${{ secrets.STRIPE_TEST_SECRET }}
+      - name: Prove every locked request invoked its SDK method
+        if: always()
+        run: php .sdk/tools/check-live-sdk-contract.php --state=.sdk/build/live-contract/state.json
       - name: Run SDK cases against the same stack
         run: php .sdk/tools/run-live-contract-smoke.php
         env:
           FLEETBASE_CONTRACT_BASE_URL: http://localhost:8000
+      - name: Upload SDK live-contract evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: php-sdk-live-contract
+          path: .sdk/build/live-contract/
+          if-no-files-found: error
+          retention-days: 30
       - name: Dump stack logs on failure
         if: failure()
-        run: docker compose logs --no-color --tail=300
+        run: |
+          docker compose ps || true
+          docker compose logs --no-color --tail=300 || true
       - name: Tear down disposable stack
         if: always()
-        run: docker compose down --volumes
+        run: docker compose down --volumes || true

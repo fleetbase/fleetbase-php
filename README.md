@@ -10,9 +10,9 @@
 
 The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted installations, offers explicit methods for all 220 locked Fleetbase and Core API requests, and retains the public API used by the 1.0.x SDK.
 
-> The upcoming 1.1.0 release changes the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
+Version 1.1.0 changed the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
 
-Maintainers preparing 1.1.0 should use the [release checklist](docs/release-checklist.md) and [default-branch migration runbook](docs/default-branch-migration.md).
+Maintainers preparing a release should use the [release checklist](docs/release-checklist.md) and [default-branch migration runbook](docs/default-branch-migration.md).
 
 ## Requirements
 
@@ -105,9 +105,10 @@ $fleetbase = new Fleetbase($_ENV['FLEETBASE_API_KEY'], [
 Standard resource services retain `create()`, `update()`, `findRecord()`, `findAll()`, `query()`, `queryRecord()`, and `destroy()`. Dedicated actions use discoverable methods named after the official Postman request.
 
 ```php
-$order = $fleetbase->orders->dispatchOrder([
-    'id' => 'order_123',
-]);
+$order = $fleetbase->orders->dispatch('order_123');
+
+// The contract-named form is equivalent.
+$order = $fleetbase->orders->dispatchOrder('order_123');
 
 $response = $fleetbase->client->request('GET', 'future-endpoint', [
     'limit' => 10,
@@ -247,10 +248,12 @@ composer test:coverage
 
 Tests are hermetic by default and must not use production credentials or mutate a shared API. CI enforces PHP 7.4–8.5 with lowest/latest dependencies, PHPStan at max level, generated-contract drift, compatibility snapshots, exact 100% line and branch coverage, consumer fixtures, security checks, and archive inspection. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution requirements.
 
+The separate `Disposable API contract` workflow uses Fleetbase's canonical contract bootstrap: it pulls the published Fleetbase API image, runs the non-interactive installer with the same CI configuration used by Core API and Fleet-Ops, and invokes Fleetbase's shared Postman seed-and-mint action. Both official collections are routed through a local PHP SDK bridge, and CI then proves all 220 locked requests invoked their mapped SDK methods. This is an isolated runner-local Fleetbase instance, not a production or shared API.
+
 ## Security and support
 
 Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). Usage questions and supported-version guidance are in [SUPPORT.md](SUPPORT.md).
 
 ## License
 
-Code prepared for 1.1.0 and later is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). Previously published tags retain the license shipped with those tags.
+Version 1.1.0 and later is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). Previously published 1.0.x tags retain the MIT license shipped with those tags.

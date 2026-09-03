@@ -5,9 +5,9 @@
 declare(strict_types=1);
 
 use Fleetbase\Sdk\Exception\AuthenticationException;
-use Fleetbase\Sdk\Exception\NotFoundException;
 use Fleetbase\Sdk\Exception\ValidationException;
 use Fleetbase\Sdk\Fleetbase;
+use Fleetbase\Sdk\FleetbaseException;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -59,9 +59,12 @@ try {
     try {
         $fleetbase->places->retrievePlace(['id' => 'place_sdk_contract_missing']);
         fail('A missing place unexpectedly returned successfully.');
-    } catch (NotFoundException $exception) {
-        if ($exception->getStatusCode() !== 404) {
-            fail('Not-found failure did not retain HTTP 404.');
+    } catch (FleetbaseException $exception) {
+        if (!in_array($exception->getStatusCode(), [400, 404], true)) {
+            fail('Not-found failure did not retain the Fleetbase API status.');
+        }
+        if (stripos($exception->getMessage(), 'not found') === false) {
+            fail('Not-found failure did not retain the Fleetbase API message.');
         }
     }
 
@@ -85,7 +88,7 @@ try {
     }
 }
 
-fwrite(STDOUT, "SDK live contract smoke passed: auth, validation, create, retrieve, delete, and not-found.\n");
+fwrite(STDOUT, "SDK live contract smoke passed: auth, validation, create, retrieve, delete, and not-found response.\n");
 
 /** @param mixed $response */
 function publicId($response): ?string

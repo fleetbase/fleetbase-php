@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-08-31",
+    "generated_at": "2026-09-03",
     "sdk_baselines": {
         "required_compatibility": {
             "version": "1.0.2",
@@ -8,9 +8,9 @@
             "commit": "569fe88e0359d567f30588820243d1d69ab418ec"
         },
         "latest_published": {
-            "version": "1.0.3",
-            "git_ref": "1.0.3",
-            "commit": "97dabc53fc1c9c96ce99fb2bd88ddbd04164b450"
+            "version": "1.1.0",
+            "git_ref": "1.1.0",
+            "commit": "e48d2ca1556a383edd7b7c882ad20594311f10c2"
         }
     },
     "sources": {
@@ -24,7 +24,7 @@
         "postman": {
             "repository": "https://github.com/fleetbase/postman",
             "ref": "origin/main",
-            "commit": "43253dbf87e5030d95d12be019dc26fcb7151ed6",
+            "commit": "9a7d4d898b4e74d735d93c78d67d4d5013c1a28b",
             "scope": [
                 "Fleetbase API",
                 "Fleetbase Core API"

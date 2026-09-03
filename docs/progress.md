@@ -81,3 +81,9 @@ The disposable native Postman run requires a repository or organization `POSTMAN
 
 - Maintainer review confirmed that Fleetbase API v1 does not expose an SDK pagination contract. Removed the unreleased speculative `Service::paginate()` method, its collection metadata abstraction, tests, README example, and release claims.
 - `findAll()` and `query()` continue returning arrays for 1.0.x compatibility. They retain defensive hydration for bare arrays and recognized `data`, `results`, or `items` list envelopes, but do not page, slice, or automatically issue follow-up requests.
+
+## 2026-09-03 — canonical disposable contract bootstrap
+
+- Refactored the PHP SDK live contract to use the same published API image, clean database volume, pre-boot CI environment, non-interactive installer, health gate, and Fleetbase-owned seed-and-mint action used by the Core API and Fleet-Ops Postman workflows.
+- Retained the SDK-specific bridge on the same runner so both official collections still execute through PHP SDK methods rather than bypassing the library; the evidence gate requires every one of the 220 locked requests.
+- Added the canonical secret gate, optional Google Maps fixture configuration, test-only Stripe fixture inputs, API image digest reporting, and failure-safe stack diagnostics and teardown.
