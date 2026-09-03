@@ -22,19 +22,20 @@ trait SensorServiceEndpoints
      */
     public function createSensor(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/sensors', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/sensors', [], 'body', func_get_args());
     }
 
     /**
      * Delete a Sensor.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteSensor(array $parameters = [], array $options = [])
+    public function deleteSensor($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/sensors/{{sensor_id}}', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/sensors/{{sensor_id}}', ['sensor_id'], 'body', func_get_args());
     }
 
     /**
@@ -46,30 +47,32 @@ trait SensorServiceEndpoints
      */
     public function querySensors(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/sensors', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/sensors', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve a Sensor.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveSensor(array $parameters = [], array $options = [])
+    public function retrieveSensor($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/sensors/{{sensor_id}}', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/sensors/{{sensor_id}}', ['sensor_id'], 'query', func_get_args());
     }
 
     /**
      * Update a Sensor.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateSensor(array $parameters = [], array $options = [])
+    public function updateSensor($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/sensors/{{sensor_id}}', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/sensors/{{sensor_id}}', ['sensor_id'], 'body', func_get_args());
     }
 }

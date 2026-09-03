@@ -16,61 +16,69 @@ trait OrderServiceEndpoints
     /**
      * Cancel an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function cancelOrder(array $parameters = [], array $options = [])
+    public function cancelOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/orders/:id/cancel', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/orders/:id/cancel', ['id'], 'body', func_get_args());
     }
 
     /**
      * Capture Photo for Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function capturePhotoForOrder(array $parameters = [], array $options = [])
+    public function capturePhotoForOrder($parameters = [], $options = [], $data = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders/:id/capture-photo/:subjectId', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders/:id/capture-photo/:subjectId', ['id', 'subjectId'], 'body', func_get_args());
     }
 
     /**
      * Capture QR Code for Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function captureQrCodeForOrder(array $parameters = [], array $options = [])
+    public function captureQrCodeForOrder($parameters = [], $options = [], $data = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders/:id/capture-qr/:subject-id', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders/:id/capture-qr/:subject-id', ['id', 'subject-id'], 'body', func_get_args());
     }
 
     /**
      * Capture Signature for Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function captureSignatureForOrder(array $parameters = [], array $options = [])
+    public function captureSignatureForOrder($parameters = [], $options = [], $data = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders/:id/capture-signature/:subject-id', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders/:id/capture-signature/:subject-id', ['id', 'subject-id'], 'body', func_get_args());
     }
 
     /**
      * Complete an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function completeOrder(array $parameters = [], array $options = [])
+    public function completeOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders/:id/complete', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders/:id/complete', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -82,7 +90,7 @@ trait OrderServiceEndpoints
      */
     public function createOrder(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -94,7 +102,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingCompletePayload(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -106,7 +114,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingCoordinates(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -118,7 +126,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingGeojsonPoints(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -130,7 +138,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingOnlyPickupDropoff(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -142,7 +150,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingOnlyWaypoints(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -154,7 +162,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingPayload(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -166,7 +174,7 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingWaypointsAndEntitiesWithPhotos(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -178,121 +186,125 @@ trait OrderServiceEndpoints
      */
     public function createOrderUsingWaypointsAndEntityDestinations(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders', [], 'body', func_get_args());
     }
 
     /**
      * Delete an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteOrder(array $parameters = [], array $options = [])
+    public function deleteOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/orders/:id', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/orders/:id', ['id'], 'body', func_get_args());
     }
 
     /**
      * Dispatch an Order.
      *
-     * @param string|array<string, mixed> $idOrParameters
-     * @param array<string, mixed> $parametersOrOptions
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function dispatchOrder($idOrParameters = [], array $parametersOrOptions = [], array $options = [])
+    public function dispatchOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        if (is_array($idOrParameters)) {
-            return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/dispatch', $idOrParameters, $parametersOrOptions);
-        }
-
-        $parametersOrOptions['id'] = $idOrParameters;
-        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/dispatch', $parametersOrOptions, $options);
+        return $this->endpointFromArguments('PATCH', '{{base_url}}/{{namespace}}/orders/:id/dispatch', ['id'], 'body', func_get_args());
     }
 
     /**
      * Get Editable Entity Fields.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getEditableEntityFields(array $parameters = [], array $options = [])
+    public function getEditableEntityFields($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/editable-entity-fields', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/editable-entity-fields', ['id'], 'query', func_get_args());
     }
 
     /**
      * Get Order Distance and Time.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getOrderDistanceAndTime(array $parameters = [], array $options = [])
+    public function getOrderDistanceAndTime($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/distance-and-time', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/distance-and-time', ['id'], 'query', func_get_args());
     }
 
     /**
      * Get Order ETA.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getOrderEta(array $parameters = [], array $options = [])
+    public function getOrderEta($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/eta', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/eta', ['id'], 'query', func_get_args());
     }
 
     /**
      * Get Order Next Activity.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getOrderNextActivity(array $parameters = [], array $options = [])
+    public function getOrderNextActivity($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/next-activity', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/next-activity', ['id'], 'query', func_get_args());
     }
 
     /**
      * Get Order Tracker.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getOrderTracker(array $parameters = [], array $options = [])
+    public function getOrderTracker($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/tracker', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/tracker', ['id'], 'query', func_get_args());
     }
 
     /**
      * List Order Comments.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function listOrderComments(array $parameters = [], array $options = [])
+    public function listOrderComments($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/comments', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/comments', ['id'], 'query', func_get_args());
     }
 
     /**
      * List Order Proofs.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function listOrderProofs(array $parameters = [], array $options = [])
+    public function listOrderProofs($parameters = [], $options = [], $data = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/:id/proofs/:subjectId', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/:id/proofs/:subjectId', ['id', 'subjectId'], 'query', func_get_args());
     }
 
     /**
@@ -304,78 +316,85 @@ trait OrderServiceEndpoints
      */
     public function queryOrders(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveOrder(array $parameters = [], array $options = [])
+    public function retrieveOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/orders/{{order_id}}', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/orders/{{order_id}}', ['order_id'], 'query', func_get_args());
     }
 
     /**
      * Schedule an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function scheduleOrder(array $parameters = [], array $options = [])
+    public function scheduleOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/schedule', $parameters, $options);
+        return $this->endpointFromArguments('PATCH', '{{base_url}}/{{namespace}}/orders/:id/schedule', ['id'], 'body', func_get_args());
     }
 
     /**
      * Set Order Destination.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function setOrderDestination(array $parameters = [], array $options = [])
+    public function setOrderDestination($parameters = [], $options = [], $data = [], $requestOptions = [])
     {
-        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/set-destination/:placeId', $parameters, $options);
+        return $this->endpointFromArguments('PATCH', '{{base_url}}/{{namespace}}/orders/:id/set-destination/:placeId', ['id', 'placeId'], 'body', func_get_args());
     }
 
     /**
      * Start an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function startOrder(array $parameters = [], array $options = [])
+    public function startOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders/:id/start', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders/:id/start', ['id'], 'body', func_get_args());
     }
 
     /**
      * Update an Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateOrder(array $parameters = [], array $options = [])
+    public function updateOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/orders/:id', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/orders/:id', ['id'], 'body', func_get_args());
     }
 
     /**
      * Update Order Activity.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateOrderActivity(array $parameters = [], array $options = [])
+    public function updateOrderActivity($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orders/:id/update-activity', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orders/:id/update-activity', ['id'], 'body', func_get_args());
     }
 }

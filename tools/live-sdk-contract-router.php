@@ -45,10 +45,10 @@ try {
     $serviceClass = $implementation[0] ?? '';
     $serviceMethod = $implementation[1] ?? '';
     $service = resolveService($fleetbase, $serviceClass);
-    [$parameters, $options] = invocation($request, $relativePath, $headers);
+    $arguments = invocation($request, $relativePath, $headers);
 
     try {
-        $service->{$serviceMethod}($parameters, $options);
+        $service->{$serviceMethod}(...$arguments);
     } catch (Throwable $exception) {
         $response = $fleetbase->client->getLastPsrResponse();
         if (!$response instanceof ResponseInterface) {
@@ -285,13 +285,36 @@ function resolveService(Fleetbase $fleetbase, string $serviceClass): Service
     throw new RuntimeException('Unable to resolve SDK service ' . $serviceClass . '.');
 }
 
-/** @param array<string, mixed> $request @param array<string, string> $headers @return array{array<string, mixed>, array<string, mixed>} */
+/**
+ * Build the same positional/direct arguments shown in the public SDK examples.
+ *
+ * @param array<string, mixed> $request
+ * @param array<string, string> $headers
+ * @return array<int, mixed>
+ */
 function invocation(array $request, string $path, array $headers): array
 {
-    $parameters = matchTemplate(requiredString($request, 'url'), $path) ?? [];
+    $pathValues = matchTemplate(requiredString($request, 'url'), $path) ?? [];
+    $signature = $request['sdk_signature'] ?? null;
+    if (!is_array($signature) || !is_array($signature['path_parameters'] ?? null)) {
+        throw new RuntimeException('Missing SDK signature metadata.');
+    }
+    $requestData = requiredString($signature, 'request_data');
+    $arguments = [];
+    foreach ($signature['path_parameters'] as $name) {
+        if (!is_string($name) || !array_key_exists($name, $pathValues)) {
+            throw new RuntimeException('Unable to resolve SDK path argument.');
+        }
+        $arguments[] = $pathValues[$name];
+    }
+
     $options = requestOptions($headers);
-    if ($_GET !== []) {
-        $options['query'] = requestData();
+    $data = [];
+    $query = $_GET !== [] ? requestData() : [];
+    if ($requestData === 'query') {
+        $data = $query;
+    } elseif ($query !== []) {
+        $options['query'] = $query;
     }
 
     $contentType = strtolower(headerValue($headers, 'Content-Type'));
@@ -299,7 +322,7 @@ function invocation(array $request, string $path, array $headers): array
     if (strpos($contentType, 'application/json') !== false && $raw !== '') {
         $body = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);
         if (is_array($body)) {
-            $parameters['body'] = $body;
+            $data = $body;
             if ($body === []) {
                 $options['body'] = $raw;
             }
@@ -322,16 +345,23 @@ function invocation(array $request, string $path, array $headers): array
             }
             $parts[] = $part;
         }
-        $options['multipart'] = $parts;
+        $data = $parts;
         foreach (array_keys(is_array($options['headers'] ?? null) ? $options['headers'] : []) as $name) {
             if (is_string($name) && strcasecmp($name, 'Content-Type') === 0) {
                 unset($options['headers'][$name]);
             }
         }
     } elseif ($raw !== '') {
-        $options['body'] = $raw;
+        $decoded = json_decode($raw, true);
+        if (is_array($decoded)) {
+            $data = $decoded;
+        } else {
+            $options['body'] = $raw;
+        }
     }
-    return [$parameters, $options];
+    $arguments[] = $data;
+    $arguments[] = $options;
+    return $arguments;
 }
 
 /** @param array<string, mixed> $data */

@@ -22,7 +22,7 @@ trait OrganizationServiceEndpoints
      */
     public function getCurrentOrganization(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/organizations/current', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/organizations/current', [], 'query', func_get_args());
     }
 
     /**
@@ -34,6 +34,6 @@ trait OrganizationServiceEndpoints
      */
     public function listOrganizations(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/organizations', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/organizations', [], 'query', func_get_args());
     }
 }

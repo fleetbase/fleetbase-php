@@ -33,9 +33,23 @@ final class ApiExamplesTest extends TestCase
         $dispatchExample = $catalogExamples['fleetbase-api-orders-dispatch-an-order'] ?? null;
         self::assertIsArray($dispatchExample);
         self::assertSame(
-            '$result = $fleetbase->orders->dispatchOrder(\'order_id-fixture\');',
+            '$result = $fleetbase->orders->dispatchOrder($orderId);',
             $dispatchExample['call'] ?? null
         );
+        $passwordExample = $catalogExamples['fleetbase-api-drivers-change-driver-password'] ?? null;
+        $scheduleExample = $catalogExamples['fleetbase-api-orders-schedule-an-order'] ?? null;
+        self::assertIsArray($passwordExample);
+        self::assertIsArray($scheduleExample);
+        $passwordCall = $passwordExample['call'] ?? null;
+        $scheduleCall = $scheduleExample['call'] ?? null;
+        self::assertIsString($passwordCall);
+        self::assertIsString($scheduleCall);
+        self::assertStringContainsString("changeDriverPassword(\n    \$driverId,\n    [", $passwordCall);
+        self::assertStringContainsString("scheduleOrder(\n    \$orderId,\n    [", $scheduleCall);
+        foreach ($snippets as $snippet) {
+            self::assertStringNotContainsString("'body' =>", $snippet);
+            self::assertStringNotContainsString("\n    [],\n    []\n", $snippet);
+        }
 
         $history = [];
         $responses = array_fill(0, count($snippets), new Response(200, ['Content-Type' => 'application/json'], '{}'));
@@ -50,8 +64,17 @@ final class ApiExamplesTest extends TestCase
             'httpClient' => new Client(['handler' => $handler]),
         ]);
 
+        $exampleRows = array_values($catalogExamples);
         foreach ($snippets as $index => $snippet) {
             self::assertIsString($snippet);
+            $exampleRow = $exampleRows[$index] ?? null;
+            self::assertIsArray($exampleRow);
+            $variables = $exampleRow['variables'] ?? null;
+            self::assertIsArray($variables);
+            foreach ($variables as $name => $value) {
+                self::assertIsString($name);
+                ${$name} = $value;
+            }
             eval($snippet);
             self::assertCount($index + 1, $history);
         }

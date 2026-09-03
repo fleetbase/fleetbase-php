@@ -16,13 +16,14 @@ trait DriverServiceEndpoints
     /**
      * Change Driver Password.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function changeDriverPassword(array $parameters = [], array $options = [])
+    public function changeDriverPassword($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/:id/change-password', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/:id/change-password', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -34,55 +35,59 @@ trait DriverServiceEndpoints
      */
     public function createDriver(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers', [], 'body', func_get_args());
     }
 
     /**
      * Delete a Driver.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteDriver(array $parameters = [], array $options = [])
+    public function deleteDriver($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/drivers/:id', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/drivers/:id', ['id'], 'body', func_get_args());
     }
 
     /**
      * Get Driver Current Organization.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getDriverCurrentOrganization(array $parameters = [], array $options = [])
+    public function getDriverCurrentOrganization($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/drivers/:id/current-organization', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/drivers/:id/current-organization', ['id'], 'query', func_get_args());
     }
 
     /**
      * List Driver Manifests.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function listDriverManifests(array $parameters = [], array $options = [])
+    public function listDriverManifests($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/drivers/:id/manifests', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/drivers/:id/manifests', ['id'], 'query', func_get_args());
     }
 
     /**
      * List Driver Organizations.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function listDriverOrganizations(array $parameters = [], array $options = [])
+    public function listDriverOrganizations($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/drivers/:id/organizations', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/drivers/:id/organizations', ['id'], 'query', func_get_args());
     }
 
     /**
@@ -94,7 +99,7 @@ trait DriverServiceEndpoints
      */
     public function loginDriver(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/login', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/login', [], 'body', func_get_args());
     }
 
     /**
@@ -106,7 +111,7 @@ trait DriverServiceEndpoints
      */
     public function queryDrivers(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/drivers', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/drivers', [], 'query', func_get_args());
     }
 
     /**
@@ -118,19 +123,20 @@ trait DriverServiceEndpoints
      */
     public function registerDevice(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/register-device', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/register-device', [], 'body', func_get_args());
     }
 
     /**
      * Register Driver Device.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function registerDriverDevice(array $parameters = [], array $options = [])
+    public function registerDriverDevice($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/:id/register-device', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/:id/register-device', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -142,7 +148,7 @@ trait DriverServiceEndpoints
      */
     public function requestDriverLoginSms(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/login-with-sms', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/login-with-sms', [], 'body', func_get_args());
     }
 
     /**
@@ -154,7 +160,7 @@ trait DriverServiceEndpoints
      */
     public function requestDriverPasswordReset(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/forgot-password', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/forgot-password', [], 'body', func_get_args());
     }
 
     /**
@@ -166,79 +172,85 @@ trait DriverServiceEndpoints
      */
     public function resetDriverPassword(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/reset-password', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/reset-password', [], 'body', func_get_args());
     }
 
     /**
      * Retrieve a Driver.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveDriver(array $parameters = [], array $options = [])
+    public function retrieveDriver($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/drivers/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/drivers/:id', ['id'], 'query', func_get_args());
     }
 
     /**
      * Simulate Driver Route.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function simulateDriverRoute(array $parameters = [], array $options = [])
+    public function simulateDriverRoute($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/:id/simulate', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/:id/simulate', ['id'], 'body', func_get_args());
     }
 
     /**
      * Switch Driver Organization.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function switchDriverOrganization(array $parameters = [], array $options = [])
+    public function switchDriverOrganization($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/:id/switch-organization', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/:id/switch-organization', ['id'], 'body', func_get_args());
     }
 
     /**
      * Toggle Driver Online.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function toggleDriverOnline(array $parameters = [], array $options = [])
+    public function toggleDriverOnline($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/:id/toggle-online', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/:id/toggle-online', ['id'], 'body', func_get_args());
     }
 
     /**
      * Track Driver.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function trackDriver(array $parameters = [], array $options = [])
+    public function trackDriver($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/drivers/:id/track', $parameters, $options);
+        return $this->endpointFromArguments('PATCH', '{{base_url}}/{{namespace}}/drivers/:id/track', ['id'], 'body', func_get_args());
     }
 
     /**
      * Update a Driver.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateDriver(array $parameters = [], array $options = [])
+    public function updateDriver($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/drivers/:id', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/drivers/:id', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -250,6 +262,6 @@ trait DriverServiceEndpoints
      */
     public function verifyDriverLoginCode(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/drivers/verify-code', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/drivers/verify-code', [], 'body', func_get_args());
     }
 }

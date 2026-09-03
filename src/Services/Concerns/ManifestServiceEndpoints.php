@@ -16,36 +16,39 @@ trait ManifestServiceEndpoints
     /**
      * Optimize a Manifest.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function optimizeManifest(array $parameters = [], array $options = [])
+    public function optimizeManifest($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/manifests/:id/optimize', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/manifests/:id/optimize', ['id'], 'body', func_get_args());
     }
 
     /**
      * Retrieve a Manifest.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveManifest(array $parameters = [], array $options = [])
+    public function retrieveManifest($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/manifests/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/manifests/:id', ['id'], 'query', func_get_args());
     }
 
     /**
      * Update a Manifest Stop.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateManifestStop(array $parameters = [], array $options = [])
+    public function updateManifestStop($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/manifest-stops/:id', $parameters, $options);
+        return $this->endpointFromArguments('PATCH', '{{base_url}}/{{namespace}}/manifest-stops/:id', ['id'], 'body', func_get_args());
     }
 }

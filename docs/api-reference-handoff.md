@@ -20,3 +20,5 @@ The coordinated API-reference change should:
 6. Add a fixture test proving all 220 request IDs render a real SDK call.
 
 The coordinated `fleetbase/fleetbase.io` pull request vendors this generated catalog, retains concise calls for canonical CRUD operations, uses exact SDK methods for custom endpoints, and fails generation unless all 220 stable request IDs are consumed. It should be refreshed whenever the SDK contract changes.
+
+Each catalog row includes the variables required by its standalone `code` example. Displayed calls use positional path identifiers and direct API data arrays. Documentation consumers must render the generated call as-is and must not reconstruct the SDK's legacy internal `id`/`body`/`query` envelope.

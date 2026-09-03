@@ -71,7 +71,8 @@
         "api:compatibility": [
             "@api:snapshot",
             "@php tools/check-api-compatibility.php --baseline=contracts/public-api-1.0.2.json --current=build/contracts/public-api-current.json",
-            "@php tools/check-api-compatibility.php --baseline=contracts/public-api-1.0.3.json --current=build/contracts/public-api-current.json"
+            "@php tools/check-api-compatibility.php --baseline=contracts/public-api-1.0.3.json --current=build/contracts/public-api-current.json",
+            "@php tools/check-api-compatibility.php --baseline=contracts/public-api-1.1.0.json --current=build/contracts/public-api-current.json"
         ],
         "check": [
             "@lint",

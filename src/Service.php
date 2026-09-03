@@ -140,6 +140,176 @@ class Service
     }
 
     /**
+     * Normalize ergonomic generated-method arguments while retaining the 1.1.0
+     * endpoint-envelope form.
+     *
+     * @param array<int, string> $pathParameters
+     * @param array<int, mixed> $arguments
+     * @return mixed
+     */
+    protected function endpointFromArguments(
+        string $method,
+        string $template,
+        array $pathParameters,
+        string $requestData,
+        array $arguments
+    ) {
+        if (!in_array($requestData, ['body', 'query', 'multipart'], true)) {
+            throw new \InvalidArgumentException('Endpoint request data must be body, query, or multipart.');
+        }
+
+        if ($pathParameters === []) {
+            return $this->endpointFromCollectionArguments($method, $template, $requestData, $arguments);
+        }
+
+        $first = $arguments[0] ?? [];
+        if (is_array($first)) {
+            if (count($arguments) > 2) {
+                throw new \InvalidArgumentException('Legacy endpoint envelopes accept only parameters and request options.');
+            }
+            $legacyOptions = $arguments[1] ?? [];
+            if (!is_array($legacyOptions)) {
+                throw new \InvalidArgumentException('Legacy endpoint request options must be an array.');
+            }
+            return $this->endpoint(
+                $method,
+                $template,
+                $this->stringKeyedArray($first),
+                $this->stringKeyedArray($legacyOptions)
+            );
+        }
+
+        $parameters = [];
+        foreach ($pathParameters as $index => $name) {
+            if (!array_key_exists($index, $arguments)) {
+                throw new \InvalidArgumentException(sprintf('Endpoint path parameter "%s" is required.', $name));
+            }
+            $parameters[$name] = $this->endpointIdentifier($arguments[$index], $name);
+        }
+
+        $dataIndex = count($pathParameters);
+        if (count($arguments) > $dataIndex + 2) {
+            throw new \InvalidArgumentException('Too many endpoint arguments were provided.');
+        }
+        $data = $arguments[$dataIndex] ?? [];
+        $requestOptions = $arguments[$dataIndex + 1] ?? [];
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException('Endpoint request data must be an array.');
+        }
+        if (!is_array($requestOptions)) {
+            throw new \InvalidArgumentException('Endpoint request options must be an array.');
+        }
+        $requestOptions = $this->stringKeyedArray($requestOptions);
+
+        if ($requestData === 'query') {
+            if ($data !== [] && isset($requestOptions['query'])) {
+                throw new \InvalidArgumentException('Query parameters must be passed directly, not in both data and request options.');
+            }
+            if ($data !== []) {
+                $requestOptions['query'] = $data;
+            }
+        } elseif ($requestData === 'multipart') {
+            if ($data !== [] && isset($requestOptions['multipart'])) {
+                throw new \InvalidArgumentException('Multipart parts must be passed directly, not in both data and request options.');
+            }
+            if ($data !== []) {
+                $this->assertMultipartParts($data);
+                $requestOptions['multipart'] = $data;
+            }
+        } else {
+            foreach (['body', 'multipart', 'form_params'] as $option) {
+                if ($data !== [] && array_key_exists($option, $requestOptions)) {
+                    throw new \InvalidArgumentException('Request data conflicts with the raw or encoded body in request options.');
+                }
+            }
+            if ($data !== []) {
+                $parameters['body'] = $data;
+            }
+        }
+
+        return $this->endpoint($method, $template, $parameters, $requestOptions);
+    }
+
+    /**
+     * @param array<int, mixed> $arguments
+     * @return mixed
+     */
+    private function endpointFromCollectionArguments(string $method, string $template, string $requestData, array $arguments)
+    {
+        if (count($arguments) > 2) {
+            throw new \InvalidArgumentException('Collection endpoints accept only request data and request options.');
+        }
+        $data = $arguments[0] ?? [];
+        $requestOptions = $arguments[1] ?? [];
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException('Collection endpoint request data must be an array.');
+        }
+        if (!is_array($requestOptions)) {
+            throw new \InvalidArgumentException('Collection endpoint request options must be an array.');
+        }
+        $requestOptions = $this->stringKeyedArray($requestOptions);
+
+        if ($requestData === 'query') {
+            if ($data !== [] && isset($requestOptions['query'])) {
+                throw new \InvalidArgumentException('Query parameters must be passed directly, not in both data and request options.');
+            }
+            if ($data !== []) {
+                $requestOptions['query'] = $data;
+            }
+            return $this->endpoint($method, $template, [], $requestOptions);
+        }
+        if ($requestData === 'body') {
+            if (isset($data['body']) && is_array($data['body'])) {
+                return $this->endpoint($method, $template, $this->stringKeyedArray($data), $requestOptions);
+            }
+            foreach (['body', 'multipart', 'form_params'] as $option) {
+                if ($data !== [] && array_key_exists($option, $requestOptions)) {
+                    throw new \InvalidArgumentException('Request data conflicts with the raw or encoded body in request options.');
+                }
+            }
+            $parameters = $data === [] ? [] : ['body' => $data];
+            return $this->endpoint($method, $template, $parameters, $requestOptions);
+        }
+
+        if (isset($requestOptions['multipart'])) {
+            return $this->endpoint($method, $template, [], $requestOptions);
+        }
+        if ($data !== []) {
+            $this->assertMultipartParts($data);
+            $requestOptions['multipart'] = $data;
+        }
+        return $this->endpoint($method, $template, [], $requestOptions);
+    }
+
+    /**
+     * @param mixed $value
+     * @return bool|float|int|string
+     */
+    private function endpointIdentifier($value, string $name)
+    {
+        if ($value instanceof Resource) {
+            $value = $value->getAttribute('id');
+        }
+        if (!is_scalar($value) || (string) $value === '') {
+            throw new \InvalidArgumentException(sprintf('Endpoint path parameter "%s" must be a non-empty scalar or resource.', $name));
+        }
+        return $value;
+    }
+
+    /** @param array<mixed> $parts */
+    private function assertMultipartParts(array $parts): void
+    {
+        if (array_keys($parts) !== range(0, count($parts) - 1)) {
+            throw new \InvalidArgumentException('Multipart request data must be a list of parts.');
+        }
+        foreach ($parts as $part) {
+            if (!is_array($part) || !is_string($part['name'] ?? null) || !array_key_exists('contents', $part)) {
+                throw new \InvalidArgumentException('Each multipart part must contain a string name and contents.');
+            }
+        }
+    }
+
+    /**
      * Execute an endpoint copied from the locked official API contract.
      *
      * @param array<string, mixed> $parameters

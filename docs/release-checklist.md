@@ -5,7 +5,7 @@ The release workflow starts automatically when a semantic `release/` branch is m
 ## Maintainer decisions before publication
 
 - Fleetbase ownership and authorization to publish the new release under `AGPL-3.0-or-later` was confirmed by the maintainer.
-- An 85% minimum mutation score was approved. The final pre-release baseline measured 86.02% with 100% mutation-code coverage and no ignored source.
+- An 85% minimum mutation score was approved. The current 1.1.1 candidate measures 87.85% with 100% mutation-code coverage, four timeouts, and no ignored source.
 - Select protected `release` environment approvers and the signing/attestation identity.
 - Verify Packagist ownership and the GitHub update hook.
 - Review the coordinated Fleetbase API-reference generator update.

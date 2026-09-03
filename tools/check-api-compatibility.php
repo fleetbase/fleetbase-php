@@ -159,10 +159,13 @@ function compareMethods(array &$errors, string $className, array $baselineMethod
                 && !hasCompatibleNamedParameter($baselineParameter, $currentParameters)) {
                 $errors[] = sprintf('Class %s removed named parameter %s from method %s', $className, $baselineParameter['name'], $name);
             }
-            foreach (['type', 'by_reference', 'variadic'] as $field) {
+            foreach (['by_reference', 'variadic'] as $field) {
                 if (($baselineParameter[$field] ?? null) !== ($currentParameter[$field] ?? null)) {
                     $errors[] = sprintf('Class %s changed parameter %d %s of method %s', $className, $index + 1, $field, $name);
                 }
+            }
+            if (!isCompatibleParameterType($baselineParameter['type'] ?? null, $currentParameter['type'] ?? null)) {
+                $errors[] = sprintf('Class %s narrowed parameter %d type of method %s', $className, $index + 1, $name);
             }
             if (($baselineParameter['optional'] ?? false) !== ($currentParameter['optional'] ?? false)) {
                 $errors[] = sprintf('Class %s changed optionality of parameter %d on method %s', $className, $index + 1, $name);
@@ -181,6 +184,12 @@ function compareMethods(array &$errors, string $className, array $baselineMethod
     }
 }
 
+/** @param mixed $baselineType @param mixed $currentType */
+function isCompatibleParameterType($baselineType, $currentType): bool
+{
+    return $baselineType === $currentType || $currentType === null || $currentType === 'mixed';
+}
+
 /**
  * PHP 8 named calls remain compatible when an optional parameter moves to a
  * later optional position with the same name and declaration.
@@ -195,10 +204,13 @@ function hasCompatibleNamedParameter(array $baselineParameter, array $currentPar
             continue;
         }
 
-        foreach (['type', 'by_reference', 'variadic', 'optional'] as $field) {
+        foreach (['by_reference', 'variadic', 'optional'] as $field) {
             if (($currentParameter[$field] ?? null) !== ($baselineParameter[$field] ?? null)) {
                 return false;
             }
+        }
+        if (!isCompatibleParameterType($baselineParameter['type'] ?? null, $currentParameter['type'] ?? null)) {
+            return false;
         }
 
         return !array_key_exists('default', $baselineParameter)

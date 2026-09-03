@@ -22,7 +22,7 @@ trait PurchaseRateServiceEndpoints
      */
     public function createPurchaseRate(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/purchase-rates', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/purchase-rates', [], 'body', func_get_args());
     }
 
     /**
@@ -34,18 +34,19 @@ trait PurchaseRateServiceEndpoints
      */
     public function queryPurchaseRates(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/purchase-rates', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/purchase-rates', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve a Purchase Rate.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrievePurchaseRate(array $parameters = [], array $options = [])
+    public function retrievePurchaseRate($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/purchase-rates/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/purchase-rates/:id', ['id'], 'query', func_get_args());
     }
 }

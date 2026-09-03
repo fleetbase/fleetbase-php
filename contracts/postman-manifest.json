@@ -56,7 +56,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-contacts-delete-a-contact",
@@ -87,7 +93,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-contacts-query-contacts",
@@ -121,7 +135,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-contacts-retrieve-a-contact",
@@ -152,7 +172,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-contacts-update-a-contact",
@@ -191,7 +219,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-create-a-customer",
@@ -229,7 +265,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-create-a-customer-order",
@@ -280,7 +322,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-forgot-customer-password",
@@ -306,7 +354,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-list-customer-orders",
@@ -330,7 +384,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-list-customer-places",
@@ -354,7 +414,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-login-customer",
@@ -381,7 +447,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-logout-all-customer-sessions",
@@ -405,7 +477,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-logout-customer",
@@ -429,7 +507,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-register-customer-device",
@@ -456,7 +540,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-request-customer-creation-code",
@@ -485,7 +575,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-request-customer-login-sms",
@@ -511,7 +607,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-reset-customer-password",
@@ -539,7 +641,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-retrieve-authenticated-customer",
@@ -563,7 +671,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-retrieve-a-customer-order",
@@ -587,7 +701,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "customer_order_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-update-authenticated-customer",
@@ -615,7 +737,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-customers-verify-customer-login-code",
@@ -643,7 +771,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-attach-device",
@@ -674,7 +808,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "device_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-create-a-device",
@@ -709,7 +851,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-delete-a-device",
@@ -738,7 +886,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "device_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-detach-device",
@@ -767,7 +923,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "device_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-query-devices",
@@ -796,7 +960,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-retrieve-a-device",
@@ -825,7 +995,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "device_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-devices-update-a-device",
@@ -856,7 +1034,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "device_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-change-driver-password",
@@ -887,7 +1073,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-create-a-driver",
@@ -921,7 +1115,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-delete-a-driver",
@@ -952,7 +1152,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-get-driver-current-organization",
@@ -978,7 +1186,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-list-driver-manifests",
@@ -1004,7 +1220,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-list-driver-organizations",
@@ -1030,7 +1254,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-login-driver",
@@ -1057,7 +1289,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-query-drivers",
@@ -1088,7 +1326,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-register-device",
@@ -1115,7 +1359,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-register-driver-device",
@@ -1144,7 +1394,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-request-driver-login-sms",
@@ -1170,7 +1428,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-request-driver-password-reset",
@@ -1196,7 +1460,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-reset-driver-password",
@@ -1224,7 +1494,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-retrieve-a-driver",
@@ -1255,7 +1531,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-simulate-driver-route",
@@ -1290,7 +1574,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-switch-driver-organization",
@@ -1318,7 +1610,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-toggle-driver-online",
@@ -1346,7 +1646,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-track-driver",
@@ -1372,7 +1680,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "raw",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-update-a-driver",
@@ -1407,7 +1723,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-drivers-verify-driver-login-code",
@@ -1434,7 +1758,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-entities-create-an-entity",
@@ -1486,7 +1816,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-entities-delete-a-entity",
@@ -1517,7 +1853,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-entities-query-entities",
@@ -1546,7 +1890,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-entities-retrieve-an-entity",
@@ -1581,7 +1931,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-entities-update-a-entity",
@@ -1618,7 +1976,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-equipment-create-equipment",
@@ -1656,7 +2022,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-equipment-delete-equipment",
@@ -1685,7 +2057,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "equipment_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-equipment-query-equipment",
@@ -1714,7 +2094,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-equipment-retrieve-equipment",
@@ -1743,7 +2129,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "equipment_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-equipment-update-equipment",
@@ -1774,7 +2168,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "equipment_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fleets-create-a-fleet",
@@ -1806,7 +2208,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet",
@@ -1837,7 +2245,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fleets-query-fleets",
@@ -1870,7 +2286,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fleets-retrieve-a-fleet",
@@ -1901,7 +2323,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fleets-update-a-fleet",
@@ -1935,7 +2365,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-reports-create-a-fuel-report",
@@ -1971,7 +2409,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-reports-delete-a-fuel-report",
@@ -1997,7 +2441,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-reports-query-fuel-reports",
@@ -2025,7 +2477,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-reports-retrieve-a-fuel-report",
@@ -2051,7 +2509,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-reports-update-a-fuel-report",
@@ -2084,7 +2550,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-create-a-fuel-transaction",
@@ -2123,7 +2597,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-delete-a-fuel-transaction",
@@ -2152,7 +2632,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-match-fuel-transaction-order",
@@ -2183,7 +2671,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-match-fuel-transaction-vehicle",
@@ -2214,7 +2710,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-query-fuel-transactions",
@@ -2243,7 +2747,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-reprocess-fuel-transaction",
@@ -2272,7 +2782,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-retrieve-a-fuel-transaction",
@@ -2301,7 +2819,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-review-fuel-transaction",
@@ -2332,7 +2858,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-fuel-transactions-update-a-fuel-transaction",
@@ -2363,7 +2897,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "fuel_transaction_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-geofences-get-driver-geofence-history",
@@ -2391,7 +2933,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "driverId"
+                ],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-geofences-get-geofence-dwell-report",
@@ -2418,7 +2968,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-geofences-get-geofence-inventory",
@@ -2442,7 +2998,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-geofences-list-geofence-events",
@@ -2469,7 +3031,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-issues-create-an-issue",
@@ -2504,7 +3072,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-issues-delete-an-issue",
@@ -2530,7 +3104,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-issues-query-issues",
@@ -2558,7 +3140,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-issues-retrieve-an-issue",
@@ -2584,7 +3172,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-issues-update-an-issue",
@@ -2616,7 +3212,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-labels-render-label",
@@ -2645,7 +3249,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-manifests-optimize-a-manifest",
@@ -2674,7 +3286,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-manifests-retrieve-a-manifest",
@@ -2700,7 +3320,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-manifests-update-a-manifest-stop",
@@ -2728,7 +3356,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-onboard-get-driver-onboard-settings",
@@ -2754,7 +3390,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "companyId"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orchestrator-commit-orchestrator-plan",
@@ -2796,7 +3440,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orchestrator-run-orchestrator",
@@ -2855,7 +3505,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-order-configs-query-order-configs",
@@ -2879,7 +3535,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-order-configs-retrieve-an-order-config",
@@ -2903,7 +3565,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "order_config_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-cancel-an-order",
@@ -2934,7 +3604,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-capture-photo-for-order",
@@ -2967,7 +3645,16 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "subjectId"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-capture-qr-code-for-order",
@@ -3003,7 +3690,16 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "subject-id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-capture-signature-for-order",
@@ -3038,7 +3734,16 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "subject-id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-complete-an-order",
@@ -3064,7 +3769,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order",
@@ -3130,7 +3843,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-complete-payload",
@@ -3161,7 +3880,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-coordinates",
@@ -3194,7 +3919,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-geojson-points",
@@ -3233,7 +3964,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-payload",
@@ -3286,7 +4023,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-waypoints-and-entities-with-photos",
@@ -3347,7 +4090,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-waypoints-and-entity-destinations",
@@ -3405,7 +4154,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-only-pickup-dropoff",
@@ -3432,7 +4187,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-only-waypoints",
@@ -3468,7 +4229,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-delete-an-order",
@@ -3494,7 +4261,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-dispatch-an-order",
@@ -3525,7 +4300,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-get-editable-entity-fields",
@@ -3551,7 +4334,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-get-order-distance-and-time",
@@ -3577,7 +4368,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-get-order-eta",
@@ -3603,7 +4402,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-get-order-next-activity",
@@ -3636,7 +4443,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-get-order-tracker",
@@ -3662,7 +4477,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-list-order-comments",
@@ -3688,7 +4511,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-list-order-proofs",
@@ -3715,7 +4546,16 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "subjectId"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-query-orders",
@@ -3744,7 +4584,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-retrieve-an-order",
@@ -3773,7 +4619,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "order_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-schedule-an-order",
@@ -3808,7 +4662,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-set-order-destination",
@@ -3840,7 +4702,16 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "placeId"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-start-an-order",
@@ -3873,7 +4744,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-update-order-activity",
@@ -3907,7 +4786,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-orders-update-an-order",
@@ -3940,7 +4827,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-organizations-get-current-organization",
@@ -3964,7 +4859,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-organizations-list-organizations",
@@ -3991,7 +4892,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-parts-create-a-part",
@@ -4027,7 +4934,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-parts-delete-a-part",
@@ -4056,7 +4969,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "part_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-parts-query-parts",
@@ -4085,7 +5006,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-parts-retrieve-a-part",
@@ -4114,7 +5041,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "part_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-parts-update-a-part",
@@ -4145,7 +5080,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "part_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-payloads-create-a-payload",
@@ -4196,7 +5139,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-payloads-delete-a-payload",
@@ -4227,7 +5176,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-payloads-query-payloads",
@@ -4255,7 +5212,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-payloads-retrieve-a-payload",
@@ -4281,7 +5244,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-payloads-update-a-payload",
@@ -4345,7 +5316,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-create-a-place",
@@ -4398,7 +5377,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-delete-a-place",
@@ -4429,7 +5414,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-list-all-places",
@@ -4457,7 +5450,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-query-places",
@@ -4486,7 +5485,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-retrieve-a-place",
@@ -4512,7 +5517,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-search-places",
@@ -4540,7 +5553,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-places-update-a-place",
@@ -4583,7 +5602,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-purchase-rates-create-a-purchase-rate",
@@ -4614,7 +5641,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-purchase-rates-query-purchase-rates",
@@ -4642,7 +5675,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-purchase-rates-retrieve-a-purchase-rate",
@@ -4673,7 +5712,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-sensors-create-a-sensor",
@@ -4710,7 +5757,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-sensors-delete-a-sensor",
@@ -4739,7 +5792,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "sensor_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-sensors-query-sensors",
@@ -4768,7 +5829,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-sensors-retrieve-a-sensor",
@@ -4797,7 +5864,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "sensor_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-sensors-update-a-sensor",
@@ -4829,7 +5904,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "sensor_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-areas-create-a-service-area",
@@ -4870,7 +5953,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-areas-delete-a-service-area",
@@ -4901,7 +5990,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-areas-query-service-areas",
@@ -4927,7 +6024,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-areas-retrieve-a-service-area",
@@ -4962,7 +6065,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-areas-update-a-service-area",
@@ -4995,7 +6106,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-quotes-query-service-quotes",
@@ -5026,7 +6145,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-quotes-retrieve-a-service-quote",
@@ -5052,7 +6177,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-rates-create-a-service-rate",
@@ -5101,7 +6234,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-rates-delete-a-service-rate",
@@ -5132,7 +6271,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-rates-query-service-rates",
@@ -5160,7 +6307,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-rates-retrieve-a-service-rate",
@@ -5186,7 +6339,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-service-rates-update-a-service-rate",
@@ -5221,7 +6382,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-numbers-create-a-tracking-number",
@@ -5253,7 +6422,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-numbers-decode-tracking-number-qr",
@@ -5279,7 +6454,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-numbers-delete-a-tracking-number",
@@ -5310,7 +6491,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-numbers-query-tracking-numbers",
@@ -5344,7 +6533,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-numbers-retrieve-a-tracking-number",
@@ -5375,7 +6570,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-statuses-create-a-tracking-status",
@@ -5414,7 +6617,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-statuses-delete-a-tracking-status",
@@ -5445,7 +6654,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-statuses-query-tracking-statuses",
@@ -5477,7 +6694,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-statuses-retrieve-a-tracking-status",
@@ -5508,7 +6731,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-tracking-statuses-update-a-tracking-status",
@@ -5541,7 +6772,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vehicles-create-a-vehicle",
@@ -5579,7 +6818,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vehicles-delete-a-vehicle",
@@ -5610,7 +6855,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vehicles-query-vehicles",
@@ -5644,7 +6897,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vehicles-retrieve-a-vehicle",
@@ -5675,7 +6934,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vehicles-track-vehicle",
@@ -5701,7 +6968,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "raw",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vehicles-update-a-vehicle",
@@ -5738,7 +7013,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vendors-create-a-vendor",
@@ -5772,7 +7055,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vendors-delete-a-vendor",
@@ -5803,7 +7092,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vendors-query-vendors",
@@ -5834,7 +7131,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vendors-retrieve-a-vendor",
@@ -5865,7 +7168,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-vendors-update-a-vendor",
@@ -5901,7 +7212,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-work-orders-create-a-work-order",
@@ -5939,7 +7258,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-work-orders-delete-a-work-order",
@@ -5968,7 +7293,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "work_order_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-work-orders-query-work-orders",
@@ -5997,7 +7330,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-work-orders-retrieve-a-work-order",
@@ -6026,7 +7365,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "work_order_id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-work-orders-send-work-order",
@@ -6055,7 +7402,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "work_order_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-work-orders-update-a-work-order",
@@ -6086,7 +7441,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "work_order_id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-zones-create-a-zone",
@@ -6193,7 +7556,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-zones-delete-a-zone",
@@ -6224,7 +7593,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-zones-query-zones",
@@ -6255,7 +7632,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-zones-retrieve-a-zone",
@@ -6286,7 +7669,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-api-zones-update-a-zone",
@@ -6319,7 +7710,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-add-participant",
@@ -6347,7 +7746,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-create-chat-channel",
@@ -6376,7 +7783,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-create-read-receipt",
@@ -6404,7 +7817,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "chatMessageId"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-delete-chat-channel",
@@ -6430,7 +7851,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-delete-message",
@@ -6456,7 +7885,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "chatMessageId"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-list-available-participants",
@@ -6482,7 +7919,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-query-chat-channels",
@@ -6510,7 +7953,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-remove-participant",
@@ -6536,7 +7985,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "participantId"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-retrieve-chat-channel",
@@ -6562,7 +8019,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-send-message",
@@ -6592,7 +8057,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-chat-channels-update-chat-channel",
@@ -6620,7 +8093,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-comments-create-comment",
@@ -6650,7 +8131,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-comments-delete-comment",
@@ -6676,7 +8163,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-comments-query-comments",
@@ -6704,7 +8199,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-comments-retrieve-comment",
@@ -6730,7 +8231,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-comments-update-comment",
@@ -6758,7 +8267,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-delete-a-file",
@@ -6784,7 +8301,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-download-file",
@@ -6810,7 +8335,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-query-files",
@@ -6838,7 +8371,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-retrieve-a-file",
@@ -6864,7 +8403,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-update-file",
@@ -6893,7 +8440,15 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-upload-base64-file",
@@ -6923,7 +8478,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-files-upload-file",
@@ -6963,7 +8524,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "multipart",
+                "contract_payload": "multipart",
+                "legacy_envelope": true
+            }
         },
         {
             "id": "fleetbase-core-api-organizations-get-current-organization",
@@ -6987,7 +8554,13 @@
                 "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
             ],
             "status": "complete",
-            "exception": null
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
         }
     ]
 }

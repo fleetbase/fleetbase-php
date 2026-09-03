@@ -16,13 +16,14 @@ trait GeofenceServiceEndpoints
     /**
      * Get Driver Geofence History.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getDriverGeofenceHistory(array $parameters = [], array $options = [])
+    public function getDriverGeofenceHistory($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/geofences/driver/:driverId/history', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/geofences/driver/:driverId/history', ['driverId'], 'query', func_get_args());
     }
 
     /**
@@ -34,7 +35,7 @@ trait GeofenceServiceEndpoints
      */
     public function getGeofenceDwellReport(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/geofences/dwell-report', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/geofences/dwell-report', [], 'query', func_get_args());
     }
 
     /**
@@ -46,7 +47,7 @@ trait GeofenceServiceEndpoints
      */
     public function getGeofenceInventory(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/geofences/inventory', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/geofences/inventory', [], 'query', func_get_args());
     }
 
     /**
@@ -58,6 +59,6 @@ trait GeofenceServiceEndpoints
      */
     public function listGeofenceEvents(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/geofences/events', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/geofences/events', [], 'query', func_get_args());
     }
 }

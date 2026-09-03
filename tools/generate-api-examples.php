@@ -52,23 +52,8 @@ foreach ($manifest['requests'] as $request) {
         fail(sprintf('Fleetbase has no service property for group %s.', $group));
     }
 
-    [$parameters, $callOptions] = arguments($request);
-    if ($method === 'dispatchOrder' && is_string($parameters['id'] ?? null)) {
-        $call = sprintf(
-            '$result = $fleetbase->%s->%s(%s);',
-            $property,
-            $method,
-            var_export($parameters['id'], true)
-        );
-    } else {
-        $call = sprintf(
-            "\$result = \$fleetbase->%s->%s(\n    %s,\n    %s\n);",
-            $property,
-            $method,
-            exported($parameters, 1),
-            exported($callOptions, 1)
-        );
-    }
+    [$arguments, $variables] = arguments($request);
+    $call = renderCall($property, $method, $arguments);
 
     $id = requiredString($request, 'id');
     $catalog['examples'][$id] = [
@@ -76,8 +61,9 @@ foreach ($manifest['requests'] as $request) {
         'group' => $group,
         'name' => requiredString($request, 'name'),
         'implementation' => requiredString($request, 'implementation'),
+        'variables' => $variables,
         'call' => $call,
-        'code' => "<?php\n\n\$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n" . $call,
+        'code' => standaloneCode($variables, $call),
     ];
 
     $lines[] = '';
@@ -114,45 +100,122 @@ if (!is_string($catalogJson) || file_put_contents($catalogPath, $catalogJson . "
 
 printf("Generated %d executable API examples and the website catalog.\n", count($manifest['requests']));
 
-/** @param array<string, mixed> $request @return array{array<string, mixed>, array<string, mixed>} */
+final class PhpExpression
+{
+    public string $code;
+
+    public function __construct(string $code)
+    {
+        $this->code = $code;
+    }
+}
+
+/** @param array<string, mixed> $request @return array{array<int, mixed>, array<string, mixed>} */
 function arguments(array $request): array
 {
     $fixture = is_array($request['request_fixture'] ?? null) ? $request['request_fixture'] : [];
     $pathVariables = is_array($fixture['path_variables'] ?? null) ? $fixture['path_variables'] : [];
-    $parameters = [];
-    preg_match_all('/(?:\{\{([^}]+)\}\}|:([A-Za-z][A-Za-z0-9_-]*))/', requiredString($request, 'url'), $matches, PREG_SET_ORDER);
-    foreach ($matches as $match) {
-        $name = ($match[1] ?? '') !== '' ? $match[1] : ($match[2] ?? '');
-        if ($name === '' || in_array($name, ['base_url', 'namespace'], true)) {
-            continue;
+    $signature = is_array($request['sdk_signature'] ?? null) ? $request['sdk_signature'] : [];
+    $pathParameters = is_array($signature['path_parameters'] ?? null) ? $signature['path_parameters'] : [];
+    $arguments = [];
+    $variables = [];
+    foreach ($pathParameters as $name) {
+        if (!is_string($name) || $name === '') {
+            fail('An SDK signature has an invalid path parameter.');
         }
-        $parameters[$name] = normalized($pathVariables[$name] ?? $name . '-fixture');
+        $variable = variableName($name, requiredString($request, 'group'));
+        $fixtureValue = normalized($pathVariables[$name] ?? $name . '-fixture');
+        $variables[$variable] = $fixtureValue === '' ? $name . '-fixture' : $fixtureValue;
+        $arguments[] = new PhpExpression('$' . $variable);
     }
 
-    $callOptions = [];
     $query = normalized($fixture['query'] ?? []);
-    if (is_array($query) && $query !== []) {
-        $callOptions['query'] = $query;
-    }
     $body = normalized($fixture['body'] ?? null);
+    $data = [];
     if (($fixture['body_type'] ?? null) === 'json' && is_array($body)) {
-        $parameters['body'] = $body;
+        $data = $body;
+    } elseif (($fixture['body_type'] ?? null) === 'text' && is_string($body)) {
+        $decoded = json_decode($body, true);
+        if (is_array($decoded)) {
+            $data = $decoded;
+        }
     } elseif (($fixture['body_type'] ?? null) === 'formdata' && is_array($body)) {
         foreach ($body as $part) {
             if (!is_array($part) || !is_string($part['key'] ?? null)) {
                 continue;
             }
             $value = normalized($part['value'] ?? '');
-            $callOptions['multipart'][] = [
+            $data[] = [
                 'name' => $part['key'],
                 'contents' => ($part['type'] ?? null) === 'file'
                     ? 'replace-with-file-contents'
                     : (is_scalar($value) ? (string) $value : ''),
             ];
         }
+    } elseif (is_array($query)) {
+        $data = $query;
     }
 
-    return [$parameters, $callOptions];
+    if ($data !== []) {
+        $arguments[] = $data;
+    }
+
+    return [$arguments, $variables];
+}
+
+function variableName(string $pathParameter, string $group): string
+{
+    $source = $pathParameter === 'id'
+        ? Doctrine\Inflector\InflectorFactory::create()->build()->singularize($group) . '_id'
+        : $pathParameter;
+    $source = preg_replace('/([a-z0-9])([A-Z])/', '$1 $2', $source) ?? $source;
+    $source = preg_replace('/[^A-Za-z0-9]+/', ' ', $source) ?? $source;
+    $name = lcfirst(Doctrine\Inflector\InflectorFactory::create()->build()->classify(strtolower(trim($source))));
+    return $name !== '' ? $name : 'resourceId';
+}
+
+/** @param array<int, mixed> $arguments */
+function renderCall(string $property, string $method, array $arguments): string
+{
+    $prefix = sprintf('$result = $fleetbase->%s->%s', $property, $method);
+    if ($arguments === []) {
+        return $prefix . '();';
+    }
+
+    $containsArray = false;
+    foreach ($arguments as $argument) {
+        if (is_array($argument)) {
+            $containsArray = true;
+            break;
+        }
+    }
+    if (!$containsArray) {
+        return $prefix . '(' . implode(', ', array_map(static function ($argument): string {
+            return exported($argument, 0);
+        }, $arguments)) . ');';
+    }
+
+    $rendered = [];
+    foreach ($arguments as $argument) {
+        $rendered[] = '    ' . exported($argument, 1);
+    }
+    return $prefix . "(\n" . implode(",\n", $rendered) . "\n);";
+}
+
+/** @param array<string, mixed> $variables */
+function standaloneCode(array $variables, string $call): string
+{
+    $lines = [
+        '<?php',
+        '',
+        '$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase(\'flb_live_…\');',
+    ];
+    foreach ($variables as $name => $value) {
+        $lines[] = '$' . $name . ' = ' . exported($value, 0) . ';';
+    }
+    $lines[] = '';
+    $lines[] = $call;
+    return implode("\n", $lines);
 }
 
 /** @param mixed $value @return mixed */
@@ -175,6 +238,9 @@ function normalized($value)
 /** @param mixed $value */
 function exported($value, int $level): string
 {
+    if ($value instanceof PhpExpression) {
+        return $value->code;
+    }
     if (!is_array($value)) {
         return var_export($value, true);
     }

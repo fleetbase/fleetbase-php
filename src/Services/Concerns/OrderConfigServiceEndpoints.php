@@ -22,18 +22,19 @@ trait OrderConfigServiceEndpoints
      */
     public function queryOrderConfigs(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/order-configs', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/order-configs', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve an Order Config.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveOrderConfig(array $parameters = [], array $options = [])
+    public function retrieveOrderConfig($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/order-configs/{{order_config_id}}', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/order-configs/{{order_config_id}}', ['order_config_id'], 'query', func_get_args());
     }
 }

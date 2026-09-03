@@ -16,12 +16,13 @@ trait OnboardServiceEndpoints
     /**
      * Get Driver Onboard Settings.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function getDriverOnboardSettings(array $parameters = [], array $options = [])
+    public function getDriverOnboardSettings($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/onboard/driver-onboard-settings/:companyId', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/onboard/driver-onboard-settings/:companyId', ['companyId'], 'query', func_get_args());
     }
 }
