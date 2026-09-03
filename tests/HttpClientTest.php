@@ -64,7 +64,7 @@ final class HttpClientTest extends TestCase
         self::assertSame('Bearer test_public_key', $get->getHeaderLine('Authorization'));
         self::assertSame('yes', $get->getHeaderLine('X-String'));
         self::assertSame('one, two', $get->getHeaderLine('X-Many'));
-        self::assertStringStartsWith('fleetbase-php/1.1.0 PHP/', $get->getHeaderLine('User-Agent'));
+        self::assertStringStartsWith('fleetbase-php/1.1.1 PHP/', $get->getHeaderLine('User-Agent'));
 
         $json = $this->requestAt(1);
         self::assertSame('application/json', $json->getHeaderLine('Content-Type'));

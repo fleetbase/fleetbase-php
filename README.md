@@ -10,9 +10,9 @@
 
 The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted installations, offers explicit methods for all 220 locked Fleetbase and Core API requests, and retains the public API used by the 1.0.x SDK.
 
-> The upcoming 1.1.0 release changes the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
+Version 1.1.0 changed the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
 
-Maintainers preparing 1.1.0 should use the [release checklist](docs/release-checklist.md) and [default-branch migration runbook](docs/default-branch-migration.md).
+Maintainers preparing a release should use the [release checklist](docs/release-checklist.md) and [default-branch migration runbook](docs/default-branch-migration.md).
 
 ## Requirements
 
@@ -254,4 +254,4 @@ Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). Usa
 
 ## License
 
-Code prepared for 1.1.0 and later is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). Previously published tags retain the license shipped with those tags.
+Version 1.1.0 and later is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). Previously published 1.0.x tags retain the MIT license shipped with those tags.
