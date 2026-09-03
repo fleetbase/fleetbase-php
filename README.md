@@ -56,6 +56,31 @@ Never commit an API key. Load it from your runtime secret manager or environment
 
 Existing property access remains supported (`$fleetbase->orders`). Explicit accessors such as `$fleetbase->orders()` are available for static analysis and dependency injection. Browse [all 220 generated PHP examples](docs/api-examples.md); CI executes each exact snippet against a hermetic transport.
 
+### Endpoint arguments
+
+Generated endpoint methods use the resource identifiers that appear in the URL as positional arguments, followed by the API data and optional request options. Body and query fields are passed directly; callers do not need to know the SDK's internal `body` or `query` transport keys.
+
+```php
+$driver = $fleetbase->drivers->changeDriverPassword($driverId, [
+    'current_password' => $currentPassword,
+    'password' => $newPassword,
+    'password_confirmation' => $newPassword,
+    'device_name' => 'navigator',
+]);
+
+$order = $fleetbase->orders->scheduleOrder($orderId, [
+    'date' => '2026-09-10',
+    'time' => '8am',
+    'timezone' => 'Asia/Singapore',
+]);
+
+$manifests = $fleetbase->drivers->listDriverManifests($driverId, [
+    'page' => 1,
+]);
+```
+
+Methods with two URL identifiers take both identifiers before the data array, for example `capturePhotoForOrder($orderId, $subjectId, $data, $requestOptions)`. Collection methods take data first and request options second. The published 1.1.0 envelope form remains supported, including named `parameters:` and `options:` arguments, but new documentation uses the positional/direct form.
+
 ## Configuration
 
 The second constructor argument accepts client configuration. The third legacy argument retains the debug flag without printing requests or credentials.
@@ -148,20 +173,16 @@ Exception URLs are sanitized and never include credentials or query strings. Avo
 Multipart actions accept standard Guzzle multipart parts. The Core file service also exposes the official base64 upload action.
 
 ```php
-$file = $fleetbase->files->uploadFile([], [
-    'multipart' => [
-        [
-            'name' => 'file',
-            'contents' => file_get_contents('/path/to/document.pdf'),
-            'filename' => 'document.pdf',
-        ],
-        ['name' => 'path', 'contents' => 'documents'],
+$file = $fleetbase->files->uploadFile([
+    [
+        'name' => 'file',
+        'contents' => file_get_contents('/path/to/document.pdf'),
+        'filename' => 'document.pdf',
     ],
+    ['name' => 'path', 'contents' => 'documents'],
 ]);
 
-$contents = $fleetbase->files->downloadFile([
-    'id' => 'file_123',
-]);
+$contents = $fleetbase->files->downloadFile('file_123');
 ```
 
 Non-JSON successful responses are returned as strings. The underlying PSR-7 response is available from `$fleetbase->client->getLastPsrResponse()` when headers or streaming behavior are needed.
@@ -172,7 +193,7 @@ Retries are opt-in. GET, HEAD, OPTIONS, PUT, and DELETE requests may retry on tr
 
 ```php
 $order = $fleetbase->orders->createOrder(
-    ['body' => $attributes],
+    $attributes,
     [
         'idempotency_key' => $operationId,
         'max_retries' => 2,

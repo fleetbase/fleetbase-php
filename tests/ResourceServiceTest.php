@@ -9,6 +9,7 @@ use Fleetbase\Sdk\Resources\Place;
 use Fleetbase\Sdk\Service;
 use GuzzleHttp\Psr7\Response;
 use JsonSerializable;
+use Psr\Http\Message\RequestInterface;
 
 final class ResourceServiceTest extends TestCase
 {
@@ -263,6 +264,7 @@ final class ResourceServiceTest extends TestCase
             {
                 return $this->endpoint($method, $template, $parameters, $options);
             }
+
         };
 
         $all = $service->findAll();
@@ -297,6 +299,81 @@ final class ResourceServiceTest extends TestCase
             self::fail('Expected a required endpoint parameter.');
         } catch (\InvalidArgumentException $exception) {
             self::assertStringContainsString('missing', $exception->getMessage());
+        }
+    }
+
+    public function testGeneratedEndpointArgumentNormalizationRejectsAmbiguityAndInvalidValues(): void
+    {
+        $client = $this->mockHttpClient([
+            $this->jsonResponse(['ok' => true]),
+            $this->jsonResponse(['ok' => true]),
+        ]);
+        $service = new class ('Place', $client) extends Service {
+            /**
+             * @param array<int, string> $pathParameters
+             * @param array<int, mixed> $arguments
+             * @return mixed
+             */
+            public function callArguments(
+                string $method,
+                string $template,
+                array $pathParameters,
+                string $requestData,
+                array $arguments
+            ) {
+                return $this->endpointFromArguments($method, $template, $pathParameters, $requestData, $arguments);
+            }
+        };
+
+        $service->callArguments('GET', 'places/:id', ['id'], 'query', [new Resource(['id' => 'resource/id']), []]);
+        $resourceTransaction = $this->history[0] ?? null;
+        self::assertIsArray($resourceTransaction);
+        $resourceRequest = $resourceTransaction['request'] ?? null;
+        self::assertInstanceOf(RequestInterface::class, $resourceRequest);
+        self::assertSame('/v1/places/resource%2Fid', $resourceRequest->getUri()->getPath());
+        $service->callArguments('POST', 'places/:id/files', ['id'], 'multipart', [
+            'place_1',
+            [['name' => 'file', 'contents' => 'contents']],
+        ]);
+        $multipartTransaction = $this->history[1] ?? null;
+        self::assertIsArray($multipartTransaction);
+        $multipartRequest = $multipartTransaction['request'] ?? null;
+        self::assertInstanceOf(RequestInterface::class, $multipartRequest);
+        self::assertStringContainsString('name="file"', (string) $multipartRequest->getBody());
+
+        $invalidCases = [
+            ['body', 'places', [], 'unsupported', []],
+            ['accept only', 'places', [], 'body', [[], [], []]],
+            ['request data', 'places', [], 'body', ['invalid']],
+            ['request options', 'places', [], 'body', [[], 'invalid']],
+            ['both data and request options', 'places', [], 'query', [['page' => 1], ['query' => ['page' => 2]]]],
+            ['conflicts', 'places', [], 'body', [['name' => 'x'], ['body' => '{}']]],
+            ['conflicts', 'places', [], 'body', [['name' => 'x'], ['multipart' => []]]],
+            ['conflicts', 'places', [], 'body', [['name' => 'x'], ['form_params' => []]]],
+            ['parameters and request options', 'places/:id', ['id'], 'body', [['id' => 'place_1'], [], []]],
+            ['request options', 'places/:id', ['id'], 'body', [['id' => 'place_1'], 'invalid']],
+            ['child', 'places/:id/children/:child', ['id', 'child'], 'body', ['place_1']],
+            ['non-empty scalar', 'places/:id', ['id'], 'body', [new \stdClass()]],
+            ['non-empty scalar', 'places/:id', ['id'], 'body', ['']],
+            ['Too many', 'places/:id', ['id'], 'body', ['place_1', [], [], []]],
+            ['request data', 'places/:id', ['id'], 'body', ['place_1', 'invalid']],
+            ['request options', 'places/:id', ['id'], 'body', ['place_1', [], 'invalid']],
+            ['both data and request options', 'places/:id', ['id'], 'query', ['place_1', ['page' => 1], ['query' => ['page' => 2]]]],
+            ['both data and request options', 'places/:id', ['id'], 'multipart', ['place_1', [['name' => 'file', 'contents' => 'x']], ['multipart' => []]]],
+            ['conflicts', 'places/:id', ['id'], 'body', ['place_1', ['name' => 'x'], ['body' => '{}']]],
+            ['conflicts', 'places/:id', ['id'], 'body', ['place_1', ['name' => 'x'], ['multipart' => []]]],
+            ['conflicts', 'places/:id', ['id'], 'body', ['place_1', ['name' => 'x'], ['form_params' => []]]],
+            ['list of parts', 'files', [], 'multipart', [['file' => 'x']]],
+            ['string name and contents', 'files', [], 'multipart', [[['name' => 1, 'contents' => 'x']]]],
+        ];
+
+        foreach ($invalidCases as [$message, $template, $pathParameters, $requestData, $arguments]) {
+            try {
+                $service->callArguments('POST', $template, $pathParameters, $requestData, $arguments);
+                self::fail('Expected invalid generated endpoint arguments.');
+            } catch (\InvalidArgumentException $exception) {
+                self::assertStringContainsString($message, $exception->getMessage());
+            }
         }
     }
 

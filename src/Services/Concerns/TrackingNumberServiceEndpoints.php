@@ -22,7 +22,7 @@ trait TrackingNumberServiceEndpoints
      */
     public function createTrackingNumber(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/tracking-numbers', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/tracking-numbers', [], 'body', func_get_args());
     }
 
     /**
@@ -34,19 +34,20 @@ trait TrackingNumberServiceEndpoints
      */
     public function decodeTrackingNumberQr(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/tracking-numbers/from-qr', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/tracking-numbers/from-qr', [], 'body', func_get_args());
     }
 
     /**
      * Delete a Tracking Number.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteTrackingNumber(array $parameters = [], array $options = [])
+    public function deleteTrackingNumber($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/tracking-numbers/:id', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/tracking-numbers/:id', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -58,18 +59,19 @@ trait TrackingNumberServiceEndpoints
      */
     public function queryTrackingNumbers(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/tracking-numbers', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/tracking-numbers', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve a Tracking Number.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveTrackingNumber(array $parameters = [], array $options = [])
+    public function retrieveTrackingNumber($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/tracking-numbers/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/tracking-numbers/:id', ['id'], 'query', func_get_args());
     }
 }

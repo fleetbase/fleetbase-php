@@ -30,6 +30,7 @@ foreach ($requests as $index => $request) {
     $group = requiredString($request, 'group');
     $service = serviceName($group);
     $method = methodName(requiredString($request, 'name'));
+    $request['sdk_signature'] = signatureForRequest($request);
     $key = $service . '::' . $method;
     if (isset($groups[$service]['methods'][$method])) {
         $existing = $groups[$service]['methods'][$method];
@@ -41,10 +42,11 @@ foreach ($requests as $index => $request) {
         $groups[$service]['methods'][$method] = $request;
     }
 
-    $requests[$index]['implementation'] = 'Fleetbase\\Sdk\\Services\\' . $service . '::' . $method;
-    $requests[$index]['tests'] = ['tests/Contract/EndpointContractTest.php::testEveryEndpointContract'];
-    $requests[$index]['status'] = 'complete';
-    $requests[$index]['exception'] = null;
+    $request['implementation'] = 'Fleetbase\\Sdk\\Services\\' . $service . '::' . $method;
+    $request['tests'] = ['tests/Contract/EndpointContractTest.php::testEveryEndpointContract'];
+    $request['status'] = 'complete';
+    $request['exception'] = null;
+    $requests[$index] = $request;
 }
 
 ksort($groups);
@@ -133,6 +135,53 @@ function methodName(string $name): string
     return lcfirst($classified);
 }
 
+/** @param array<string, mixed> $request @return array<string, mixed> */
+function signatureForRequest(array $request): array
+{
+    $pathParameters = pathParameters(requiredString($request, 'url'));
+    $fixture = is_array($request['request_fixture'] ?? null) ? $request['request_fixture'] : [];
+    $bodyType = is_string($fixture['body_type'] ?? null) ? $fixture['body_type'] : null;
+    $body = $fixture['body'] ?? null;
+    $query = $fixture['query'] ?? [];
+    $contractPayload = 'none';
+    if ($bodyType === 'formdata' && is_array($body)) {
+        $contractPayload = 'multipart';
+    } elseif ($bodyType === 'text' && is_string($body) && $body !== '') {
+        $contractPayload = 'raw';
+    } elseif ($bodyType === 'json' && is_array($body)) {
+        $contractPayload = 'json';
+    } elseif (is_array($query) && $query !== []) {
+        $contractPayload = 'query';
+    }
+
+    $method = strtoupper(requiredString($request, 'method'));
+    $requestData = in_array($method, ['GET', 'HEAD'], true) ? 'query' : 'body';
+    if ($bodyType === 'formdata') {
+        $requestData = 'multipart';
+    }
+
+    return [
+        'path_parameters' => $pathParameters,
+        'request_data' => $requestData,
+        'contract_payload' => $contractPayload,
+        'legacy_envelope' => true,
+    ];
+}
+
+/** @return array<int, string> */
+function pathParameters(string $url): array
+{
+    preg_match_all('/(?:\{\{([^}]+)\}\}|:([A-Za-z][A-Za-z0-9_-]*))/', $url, $matches, PREG_SET_ORDER);
+    $parameters = [];
+    foreach ($matches as $match) {
+        $name = ($match[1] ?? '') !== '' ? $match[1] : ($match[2] ?? '');
+        if ($name !== '' && !in_array($name, ['base_url', 'namespace'], true) && !in_array($name, $parameters, true)) {
+            $parameters[] = $name;
+        }
+    }
+    return $parameters;
+}
+
 /** @param array<string, array<mixed, mixed>> $methods */
 function renderTrait(string $trait, array $methods): string
 {
@@ -142,34 +191,47 @@ function renderTrait(string $trait, array $methods): string
         $verb = var_export(requiredString($request, 'method'), true);
         $url = var_export(requiredString($request, 'url'), true);
         $description = str_replace('*/', '* /', requiredString($request, 'name'));
+        $signature = is_array($request['sdk_signature'] ?? null) ? $request['sdk_signature'] : signatureForRequest($request);
+        $pathParameters = is_array($signature['path_parameters'] ?? null) ? $signature['path_parameters'] : [];
+        $requestData = var_export(is_string($signature['request_data'] ?? null) ? $signature['request_data'] : 'body', true);
         $code .= "    /**\n";
         $code .= "     * {$description}.\n";
         $code .= "     *\n";
-        if ($method === 'dispatchOrder') {
-            $code .= "     * @param string|array<string, mixed> \$idOrParameters\n";
-            $code .= "     * @param array<string, mixed> \$parametersOrOptions\n";
+        if ($pathParameters !== []) {
+            $code .= "     * @param scalar|\\Fleetbase\\Sdk\\Resource|array<string, mixed> \$parameters First path value, or the legacy endpoint envelope.\n";
+            $code .= "     * @param mixed \$options Request data, a second path value, or legacy request options.\n";
+            if (count($pathParameters) === 1) {
+                $code .= "     * @param array<string, mixed> \$requestOptions\n";
+            } else {
+                $code .= "     * @param array<string, mixed> \$data\n";
+                $code .= "     * @param array<string, mixed> \$requestOptions\n";
+            }
         } else {
             $code .= "     * @param array<string, mixed> \$parameters\n";
+            $code .= "     * @param array<string, mixed> \$options\n";
         }
-        $code .= "     * @param array<string, mixed> \$options\n";
         $code .= "     * @return mixed\n";
         $code .= "     */\n";
-        if ($method === 'dispatchOrder') {
-            $code .= "    public function {$method}(\$idOrParameters = [], array \$parametersOrOptions = [], array \$options = [])\n";
-            $code .= "    {\n";
-            $code .= "        if (is_array(\$idOrParameters)) {\n";
-            $code .= "            return \$this->endpoint({$verb}, {$url}, \$idOrParameters, \$parametersOrOptions);\n";
-            $code .= "        }\n\n";
-            $code .= "        \$parametersOrOptions['id'] = \$idOrParameters;\n";
-            $code .= "        return \$this->endpoint({$verb}, {$url}, \$parametersOrOptions, \$options);\n";
+        if (count($pathParameters) === 1) {
+            $code .= "    public function {$method}(\$parameters = [], \$options = [], \$requestOptions = [])\n";
+        } elseif (count($pathParameters) === 2) {
+            $code .= "    public function {$method}(\$parameters = [], \$options = [], \$data = [], \$requestOptions = [])\n";
         } else {
             $code .= "    public function {$method}(array \$parameters = [], array \$options = [])\n";
-            $code .= "    {\n";
-            $code .= "        return \$this->endpoint({$verb}, {$url}, \$parameters, \$options);\n";
         }
+        $code .= "    {\n";
+        $code .= '        return $this->endpointFromArguments(' . $verb . ', ' . $url . ', ' . exportedStringList($pathParameters) . ", {$requestData}, func_get_args());\n";
         $code .= "    }\n\n";
     }
     return rtrim($code) . "\n}\n";
+}
+
+/** @param array<int, string> $values */
+function exportedStringList(array $values): string
+{
+    return '[' . implode(', ', array_map(static function (string $value): string {
+        return var_export($value, true);
+    }, $values)) . ']';
 }
 
 function renderService(string $service, string $trait, string $resource, string $namespace): string
@@ -238,70 +300,119 @@ function renderContractTest(): string
             public function testEveryEndpointContract(): void
             {
                 foreach (self::endpointCases() as $case) {
-                    [$serviceClass, $method, $httpMethod, $urlTemplate, $parameters, $requestFixture] = $case;
-                    $options = [];
-                    $query = self::normalizeFixture($requestFixture['query'] ?? []);
-                    if (is_array($query) && $query !== []) {
-                        $options['query'] = $query;
-                    }
-                    $bodyType = $requestFixture['body_type'] ?? null;
-                    $body = self::normalizeFixture($requestFixture['body'] ?? null);
-                    $expectedBody = null;
-                    $expectedMultipart = [];
-                    if ($bodyType === 'json' && is_array($body)) {
-                        $parameters['body'] = $body;
-                        $expectedBody = $body;
-                    } elseif ($bodyType === 'formdata' && is_array($body)) {
-                        foreach ($body as $part) {
-                            if (!is_array($part) || !is_string($part['key'] ?? null)) {
-                                continue;
-                            }
-                            $normalizedValue = self::normalizeFixture($part['value'] ?? '');
-                            $contents = ($part['type'] ?? null) === 'file'
-                                ? 'fixture-file-content'
-                                : (is_scalar($normalizedValue) ? (string) $normalizedValue : '');
-                            $options['multipart'][] = ['name' => $part['key'], 'contents' => $contents];
-                            $expectedMultipart[$part['key']] = $contents;
-                        }
-                    }
-                    $client = $this->mockHttpClient([new Response(200, ['Content-Type' => 'application/json'], '{}')]);
+                    [$serviceClass, $method, $httpMethod, $urlTemplate, $pathValues, $requestFixture] = $case;
+                    [$legacyArguments, $ergonomicArguments, $query, $expectedBody, $expectedMultipart] =
+                        self::invocations($pathValues, $requestFixture);
+                    $client = $this->mockHttpClient([
+                        new Response(200, ['Content-Type' => 'application/json'], '{}'),
+                        new Response(200, ['Content-Type' => 'application/json'], '{}'),
+                    ]);
                     $reflection = new ReflectionClass($serviceClass);
                     $service = $reflection->newInstance($client);
-                    $service->{$method}($parameters, $options);
+                    $service->{$method}(...$legacyArguments);
+                    $service->{$method}(...$ergonomicArguments);
 
-                    $transaction = $this->history[0] ?? null;
-                    self::assertIsArray($transaction);
-                    $request = $transaction['request'] ?? null;
-                    self::assertInstanceOf(RequestInterface::class, $request);
-                    self::assertSame($httpMethod, $request->getMethod());
+                    $legacyRequest = self::requestFrom($this->history, 0);
+                    $ergonomicRequest = self::requestFrom($this->history, 1);
+                    self::assertSame($httpMethod, $legacyRequest->getMethod());
+                    self::assertSame($httpMethod, $ergonomicRequest->getMethod());
+                    self::assertSame('legacy', $legacyRequest->getHeaderLine('X-SDK-Invocation'));
+                    self::assertSame('ergonomic', $ergonomicRequest->getHeaderLine('X-SDK-Invocation'));
 
                     $expected = preg_replace('#^\{\{base_url\}\}/\{\{namespace\}\}/?#i', '', $urlTemplate);
                     self::assertIsString($expected);
-                    foreach ($parameters as $name => $value) {
-                        if ($name === 'body') {
-                            continue;
-                        }
-                        if (!is_scalar($value)) {
-                            throw new \RuntimeException('Endpoint path parameters must be scalar.');
-                        }
+                    foreach ($pathValues as $name => $value) {
                         $expected = str_replace('{{' . $name . '}}', rawurlencode((string) $value), $expected);
                         $expected = preg_replace('/:' . preg_quote($name, '/') . '(?![A-Za-z0-9_-])/', rawurlencode((string) $value), $expected);
                         self::assertIsString($expected);
                     }
-                    if (is_array($query) && $query !== []) {
+                    if ($query !== []) {
                         $expected .= (strpos($expected, '?') === false ? '?' : '&')
                             . http_build_query($query, '', '&', PHP_QUERY_RFC3986);
                     }
-                    self::assertSame('/v1/' . ltrim($expected, '/'), $request->getUri()->getPath()
-                        . ($request->getUri()->getQuery() !== '' ? '?' . $request->getUri()->getQuery() : ''));
+                    $expectedUri = '/v1/' . ltrim($expected, '/');
+                    self::assertSame($expectedUri, self::pathAndQuery($legacyRequest));
+                    self::assertSame($expectedUri, self::pathAndQuery($ergonomicRequest));
                     if (is_array($expectedBody)) {
-                        self::assertSame($expectedBody, json_decode((string) $request->getBody(), true, 512, JSON_THROW_ON_ERROR));
+                        self::assertSame($expectedBody, json_decode((string) $legacyRequest->getBody(), true, 512, JSON_THROW_ON_ERROR));
+                        self::assertSame($expectedBody, json_decode((string) $ergonomicRequest->getBody(), true, 512, JSON_THROW_ON_ERROR));
                     }
                     foreach ($expectedMultipart as $name => $contents) {
-                        self::assertStringContainsString('name="' . $name . '"', (string) $request->getBody());
-                        self::assertStringContainsString($contents, (string) $request->getBody());
+                        self::assertStringContainsString('name="' . $name . '"', (string) $legacyRequest->getBody());
+                        self::assertStringContainsString('name="' . $name . '"', (string) $ergonomicRequest->getBody());
+                        self::assertStringContainsString($contents, (string) $legacyRequest->getBody());
+                        self::assertStringContainsString($contents, (string) $ergonomicRequest->getBody());
                     }
                 }
+            }
+
+            /**
+             * @param array<string, scalar> $pathValues
+             * @param array<string, mixed> $requestFixture
+             * @return array{array<int, mixed>, array<int, mixed>, array<mixed>, array<mixed>|null, array<string, string>}
+             */
+            private static function invocations(array $pathValues, array $requestFixture): array
+            {
+                $query = self::normalizeFixture($requestFixture['query'] ?? []);
+                $query = is_array($query) ? $query : [];
+                $bodyType = $requestFixture['body_type'] ?? null;
+                $body = self::normalizeFixture($requestFixture['body'] ?? null);
+                $data = $query;
+                $legacyParameters = $pathValues;
+                $legacyOptions = ['headers' => ['X-SDK-Invocation' => 'legacy']];
+                $expectedBody = null;
+                $expectedMultipart = [];
+                if ($bodyType === 'json' && is_array($body)) {
+                    $data = $body;
+                    $legacyParameters['body'] = $body;
+                    $expectedBody = $body;
+                } elseif ($bodyType === 'text' && is_string($body)) {
+                    $decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+                    if (!is_array($decoded)) {
+                        throw new \RuntimeException('Raw endpoint fixture must decode to an object.');
+                    }
+                    $data = $decoded;
+                    $legacyOptions['body'] = $body;
+                    $expectedBody = $decoded;
+                } elseif ($bodyType === 'formdata' && is_array($body)) {
+                    $data = [];
+                    foreach ($body as $part) {
+                        if (!is_array($part) || !is_string($part['key'] ?? null)) {
+                            continue;
+                        }
+                        $normalizedValue = self::normalizeFixture($part['value'] ?? '');
+                        $contents = ($part['type'] ?? null) === 'file'
+                            ? 'fixture-file-content'
+                            : (is_scalar($normalizedValue) ? (string) $normalizedValue : '');
+                        $data[] = ['name' => $part['key'], 'contents' => $contents];
+                        $legacyOptions['multipart'][] = ['name' => $part['key'], 'contents' => $contents];
+                        $expectedMultipart[$part['key']] = $contents;
+                    }
+                } elseif ($query !== []) {
+                    $legacyOptions['query'] = $query;
+                }
+
+                $legacyArguments = [$legacyParameters, $legacyOptions];
+                $ergonomicArguments = array_values($pathValues);
+                $ergonomicArguments[] = $data;
+                $ergonomicArguments[] = ['headers' => ['X-SDK-Invocation' => 'ergonomic']];
+                return [$legacyArguments, $ergonomicArguments, $query, $expectedBody, $expectedMultipart];
+            }
+
+            /** @param array<mixed> $history */
+            private static function requestFrom(array $history, int $index): RequestInterface
+            {
+                $transaction = $history[$index] ?? null;
+                if (!is_array($transaction) || !($transaction['request'] ?? null) instanceof RequestInterface) {
+                    throw new \RuntimeException('Endpoint invocation did not issue an HTTP request.');
+                }
+                return $transaction['request'];
+            }
+
+            private static function pathAndQuery(RequestInterface $request): string
+            {
+                return $request->getUri()->getPath()
+                    . ($request->getUri()->getQuery() !== '' ? '?' . $request->getUri()->getQuery() : '');
             }
 
             /** @return iterable<string, array{class-string<Service>, string, string, string, array<string, scalar>, array<string, mixed>}> */
@@ -345,8 +456,8 @@ function renderContractTest(): string
                         $bracedName = $match[1] ?? '';
                         $colonName = $match[2] ?? '';
                         $name = $bracedName !== '' ? $bracedName : $colonName;
-                        if (!in_array($name, ['base_url', 'namespace'], true)) {
-                            $parameters[$name] = $name . '-fixture';
+                        if (!in_array($name, ['base_url', 'namespace'], true) && !array_key_exists($name, $parameters)) {
+                            $parameters[$name] = $name . '/fixture';
                         }
                     }
                     yield $id => [

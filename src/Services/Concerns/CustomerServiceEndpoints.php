@@ -22,7 +22,7 @@ trait CustomerServiceEndpoints
      */
     public function createCustomer(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers', [], 'body', func_get_args());
     }
 
     /**
@@ -34,7 +34,7 @@ trait CustomerServiceEndpoints
      */
     public function createCustomerOrder(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/orders', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/orders', [], 'body', func_get_args());
     }
 
     /**
@@ -46,7 +46,7 @@ trait CustomerServiceEndpoints
      */
     public function forgotCustomerPassword(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/forgot-password', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/forgot-password', [], 'body', func_get_args());
     }
 
     /**
@@ -58,7 +58,7 @@ trait CustomerServiceEndpoints
      */
     public function listCustomerOrders(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/customers/orders', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/customers/orders', [], 'query', func_get_args());
     }
 
     /**
@@ -70,7 +70,7 @@ trait CustomerServiceEndpoints
      */
     public function listCustomerPlaces(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/customers/places', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/customers/places', [], 'query', func_get_args());
     }
 
     /**
@@ -82,7 +82,7 @@ trait CustomerServiceEndpoints
      */
     public function loginCustomer(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/login', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/login', [], 'body', func_get_args());
     }
 
     /**
@@ -94,7 +94,7 @@ trait CustomerServiceEndpoints
      */
     public function logoutAllCustomerSessions(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/logout-all', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/logout-all', [], 'body', func_get_args());
     }
 
     /**
@@ -106,7 +106,7 @@ trait CustomerServiceEndpoints
      */
     public function logoutCustomer(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/logout', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/logout', [], 'body', func_get_args());
     }
 
     /**
@@ -118,7 +118,7 @@ trait CustomerServiceEndpoints
      */
     public function registerCustomerDevice(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/register-device', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/register-device', [], 'body', func_get_args());
     }
 
     /**
@@ -130,7 +130,7 @@ trait CustomerServiceEndpoints
      */
     public function requestCustomerCreationCode(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/request-creation-code', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/request-creation-code', [], 'body', func_get_args());
     }
 
     /**
@@ -142,7 +142,7 @@ trait CustomerServiceEndpoints
      */
     public function requestCustomerLoginSms(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/login-with-sms', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/login-with-sms', [], 'body', func_get_args());
     }
 
     /**
@@ -154,7 +154,7 @@ trait CustomerServiceEndpoints
      */
     public function resetCustomerPassword(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/reset-password', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/reset-password', [], 'body', func_get_args());
     }
 
     /**
@@ -166,19 +166,20 @@ trait CustomerServiceEndpoints
      */
     public function retrieveAuthenticatedCustomer(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/customers/me', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/customers/me', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve a Customer Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveCustomerOrder(array $parameters = [], array $options = [])
+    public function retrieveCustomerOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/customers/orders/{{customer_order_id}}', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/customers/orders/{{customer_order_id}}', ['customer_order_id'], 'query', func_get_args());
     }
 
     /**
@@ -190,7 +191,7 @@ trait CustomerServiceEndpoints
      */
     public function updateAuthenticatedCustomer(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/customers/me', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/customers/me', [], 'body', func_get_args());
     }
 
     /**
@@ -202,6 +203,6 @@ trait CustomerServiceEndpoints
      */
     public function verifyCustomerLoginCode(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/customers/verify-code', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/customers/verify-code', [], 'body', func_get_args());
     }
 }

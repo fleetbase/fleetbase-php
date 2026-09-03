@@ -15,15 +15,12 @@ Creates a contact for the current company. Contacts are used as customers, facil
 ```php
 $result = $fleetbase->contacts->createContact(
     [
-        'body' => [
-            'name' => 'John Doe',
-            'type' => 'customer',
-            'title' => 'Mr',
-            'email' => 'john@exampleco.com',
-            'phone' => '+1 563-920-4264',
-        ],
-    ],
-    []
+        'name' => 'John Doe',
+        'type' => 'customer',
+        'title' => 'Mr',
+        'email' => 'john@exampleco.com',
+        'phone' => '+1 563-920-4264',
+    ]
 );
 ```
 
@@ -34,12 +31,7 @@ Delete a Contact.
 `DELETE {{base_url}}/{{namespace}}/contacts/:id`
 
 ```php
-$result = $fleetbase->contacts->deleteContact(
-    [
-        'id' => 'contact_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->contacts->deleteContact($contactId);
 ```
 
 ### Query Contacts
@@ -50,14 +42,11 @@ Returns a paginated list of contacts for the current organization. Use filters s
 
 ```php
 $result = $fleetbase->contacts->queryContacts(
-    [],
     [
-        'query' => [
-            'query' => 'contact_name-fixture',
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'query' => 'contact_name-fixture',
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -69,12 +58,7 @@ Retrieve a Contact.
 `GET {{base_url}}/{{namespace}}/contacts/:id`
 
 ```php
-$result = $fleetbase->contacts->retrieveContact(
-    [
-        'id' => 'contact_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->contacts->retrieveContact($contactId);
 ```
 
 ### Update a Contact
@@ -85,19 +69,16 @@ Updates a contact's profile, type, primary place, photo, or metadata.
 
 ```php
 $result = $fleetbase->contacts->updateContact(
+    $contactId,
     [
-        'id' => 'contact_id-fixture',
-        'body' => [
-            'name' => 'John Doe',
-            'title' => 'Mr',
-            'email' => 'john@exampleco.com',
-            'phone' => '563-920-4264',
-            'meta' => [
-                'external_ref' => 'john-doe',
-            ],
+        'name' => 'John Doe',
+        'title' => 'Mr',
+        'email' => 'john@exampleco.com',
+        'phone' => '563-920-4264',
+        'meta' => [
+            'external_ref' => 'john-doe',
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -112,23 +93,20 @@ Creates a customer account (Contact + linked User) after verifying the code from
 ```php
 $result = $fleetbase->customers->createCustomer(
     [
-        'body' => [
-            'identity' => 'customer_identity-fixture',
-            'code' => 'verification_code-fixture',
-            'name' => 'Jane Customer',
-            'password' => 'customer_password-fixture',
-            'phone' => 'randomPhoneNumber-fixture',
-            'place' => [
-                'name' => 'Home',
-                'street1' => '123 Main Street',
-                'city' => 'Kingston',
-                'province' => 'Kingston',
-                'postal_code' => '00000',
-                'country' => 'JM',
-            ],
+        'identity' => 'customer_identity-fixture',
+        'code' => 'verification_code-fixture',
+        'name' => 'Jane Customer',
+        'password' => 'customer_password-fixture',
+        'phone' => 'randomPhoneNumber-fixture',
+        'place' => [
+            'name' => 'Home',
+            'street1' => '123 Main Street',
+            'city' => 'Kingston',
+            'province' => 'Kingston',
+            'postal_code' => '00000',
+            'country' => 'JM',
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -141,36 +119,33 @@ Creates an Order on behalf of the authenticated customer. Accepts the canonical 
 ```php
 $result = $fleetbase->customers->createCustomerOrder(
     [
-        'body' => [
-            'type' => 'transport',
-            'scheduled_at' => '2026-05-25T10:00:00Z',
-            'notes' => 'Handle with care.',
-            'pickup' => [
-                'name' => 'Pickup',
-                'street1' => '4169 N State RD 7',
-                'city' => 'Lauderdale Lakes',
-                'province' => 'FL',
-                'postal_code' => '33319',
-                'country' => 'US',
-            ],
-            'dropoff' => [
-                'name' => 'Dropoff',
-                'city' => 'Kingston',
-                'country' => 'JM',
-            ],
-            'entities' => [
-                [
-                    'name' => 'Wireless Headphones',
-                    'description' => 'Electronics',
-                    'weight' => 2.5,
-                    'weight_unit' => 'lb',
-                    'declared_value' => 150,
-                    'currency' => 'USD',
-                ],
+        'type' => 'transport',
+        'scheduled_at' => '2026-05-25T10:00:00Z',
+        'notes' => 'Handle with care.',
+        'pickup' => [
+            'name' => 'Pickup',
+            'street1' => '4169 N State RD 7',
+            'city' => 'Lauderdale Lakes',
+            'province' => 'FL',
+            'postal_code' => '33319',
+            'country' => 'US',
+        ],
+        'dropoff' => [
+            'name' => 'Dropoff',
+            'city' => 'Kingston',
+            'country' => 'JM',
+        ],
+        'entities' => [
+            [
+                'name' => 'Wireless Headphones',
+                'description' => 'Electronics',
+                'weight' => 2.5,
+                'weight_unit' => 'lb',
+                'declared_value' => 150,
+                'currency' => 'USD',
             ],
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -183,11 +158,8 @@ Sends a password-reset verification code to the customer's email or phone. Alway
 ```php
 $result = $fleetbase->customers->forgotCustomerPassword(
     [
-        'body' => [
-            'identity' => 'customer_identity-fixture',
-        ],
-    ],
-    []
+        'identity' => 'customer_identity-fixture',
+    ]
 );
 ```
 
@@ -198,10 +170,7 @@ Lists orders owned by the authenticated customer (scoped to `orders.customer_uui
 `GET {{base_url}}/{{namespace}}/customers/orders`
 
 ```php
-$result = $fleetbase->customers->listCustomerOrders(
-    [],
-    []
-);
+$result = $fleetbase->customers->listCustomerOrders();
 ```
 
 ### List Customer Places
@@ -211,10 +180,7 @@ Lists the authenticated customer's saved Places (delivery addresses, etc.).
 `GET {{base_url}}/{{namespace}}/customers/places`
 
 ```php
-$result = $fleetbase->customers->listCustomerPlaces(
-    [],
-    []
-);
+$result = $fleetbase->customers->listCustomerPlaces();
 ```
 
 ### Login Customer
@@ -226,12 +192,9 @@ Authenticates a customer with email/phone + password. Returns the customer with 
 ```php
 $result = $fleetbase->customers->loginCustomer(
     [
-        'body' => [
-            'identity' => 'customer_identity-fixture',
-            'password' => 'customer_password-fixture',
-        ],
-    ],
-    []
+        'identity' => 'customer_identity-fixture',
+        'password' => 'customer_password-fixture',
+    ]
 );
 ```
 
@@ -242,10 +205,7 @@ Revokes every Sanctum token issued to the customer's linked user (sign out every
 `POST {{base_url}}/{{namespace}}/customers/logout-all`
 
 ```php
-$result = $fleetbase->customers->logoutAllCustomerSessions(
-    [],
-    []
-);
+$result = $fleetbase->customers->logoutAllCustomerSessions();
 ```
 
 ### Logout Customer
@@ -255,10 +215,7 @@ Revokes the Sanctum token used to make this request. The customer's other active
 `POST {{base_url}}/{{namespace}}/customers/logout`
 
 ```php
-$result = $fleetbase->customers->logoutCustomer(
-    [],
-    []
-);
+$result = $fleetbase->customers->logoutCustomer();
 ```
 
 ### Register Customer Device
@@ -270,12 +227,9 @@ Registers a push-notification device token against the authenticated customer's 
 ```php
 $result = $fleetbase->customers->registerCustomerDevice(
     [
-        'body' => [
-            'token' => 'push_token-fixture',
-            'platform' => 'ios',
-        ],
-    ],
-    []
+        'token' => 'push_token-fixture',
+        'platform' => 'ios',
+    ]
 );
 ```
 
@@ -288,14 +242,11 @@ Sends an email or SMS verification code to start a customer signup. Required bef
 ```php
 $result = $fleetbase->customers->requestCustomerCreationCode(
     [
-        'body' => [
-            'identity' => 'customer_identity-fixture',
-            'mode' => 'email',
-            'name' => 'customer_name-fixture',
-            'phone' => 'customer_phone-fixture',
-        ],
-    ],
-    []
+        'identity' => 'customer_identity-fixture',
+        'mode' => 'email',
+        'name' => 'customer_name-fixture',
+        'phone' => 'customer_phone-fixture',
+    ]
 );
 ```
 
@@ -308,11 +259,8 @@ Starts SMS-based passwordless login by sending a verification code to the custom
 ```php
 $result = $fleetbase->customers->requestCustomerLoginSms(
     [
-        'body' => [
-            'phone' => 'customer_phone-fixture',
-        ],
-    ],
-    []
+        'phone' => 'customer_phone-fixture',
+    ]
 );
 ```
 
@@ -325,13 +273,10 @@ Verifies the reset code from `Forgot Customer Password` and sets a new password.
 ```php
 $result = $fleetbase->customers->resetCustomerPassword(
     [
-        'body' => [
-            'identity' => 'customer_identity-fixture',
-            'code' => 'verification_code-fixture',
-            'password' => 'customer_password-fixture',
-        ],
-    ],
-    []
+        'identity' => 'customer_identity-fixture',
+        'code' => 'verification_code-fixture',
+        'password' => 'customer_password-fixture',
+    ]
 );
 ```
 
@@ -342,10 +287,7 @@ Returns the profile of the customer identified by the `Customer-Token` header.
 `GET {{base_url}}/{{namespace}}/customers/me`
 
 ```php
-$result = $fleetbase->customers->retrieveAuthenticatedCustomer(
-    [],
-    []
-);
+$result = $fleetbase->customers->retrieveAuthenticatedCustomer();
 ```
 
 ### Retrieve a Customer Order
@@ -355,12 +297,7 @@ Fetches a single order by id, public id, or tracking number. Returns 404 if the 
 `GET {{base_url}}/{{namespace}}/customers/orders/{{customer_order_id}}`
 
 ```php
-$result = $fleetbase->customers->retrieveCustomerOrder(
-    [
-        'customer_order_id' => 'customer_order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->customers->retrieveCustomerOrder($customerOrderId);
 ```
 
 ### Update Authenticated Customer
@@ -372,13 +309,10 @@ Updates the authenticated customer's profile. Changes to `name`, `email`, and `p
 ```php
 $result = $fleetbase->customers->updateAuthenticatedCustomer(
     [
-        'body' => [
-            'name' => 'customer_name-fixture',
-            'phone' => 'customer_phone-fixture',
-            'email' => 'customer_email-fixture',
-        ],
-    ],
-    []
+        'name' => 'customer_name-fixture',
+        'phone' => 'customer_phone-fixture',
+        'email' => 'customer_email-fixture',
+    ]
 );
 ```
 
@@ -391,13 +325,10 @@ Verifies the SMS/email code from `Request Customer Login SMS` and returns the cu
 ```php
 $result = $fleetbase->customers->verifyCustomerLoginCode(
     [
-        'body' => [
-            'identity' => 'customer_identity-fixture',
-            'code' => 'verification_code-fixture',
-            'for' => 'fleetops_customer_login',
-        ],
-    ],
-    []
+        'identity' => 'customer_identity-fixture',
+        'code' => 'verification_code-fixture',
+        'for' => 'fleetops_customer_login',
+    ]
 );
 ```
 
@@ -411,13 +342,10 @@ Attach this device to a vehicle.
 
 ```php
 $result = $fleetbase->devices->attachDevice(
+    $deviceId,
     [
-        'device_id' => 'device_id-fixture',
-        'body' => [
-            'vehicle' => 'vehicle_id-fixture',
-        ],
-    ],
-    []
+        'vehicle' => 'vehicle_id-fixture',
+    ]
 );
 ```
 
@@ -430,15 +358,12 @@ Create a device.
 ```php
 $result = $fleetbase->devices->createDevice(
     [
-        'body' => [
-            'name' => 'OBD Tracker 12',
-            'type' => 'obd',
-            'device_id' => 'OBD-12',
-            'serial_number' => 'SN-10001',
-            'status' => 'active',
-        ],
-    ],
-    []
+        'name' => 'OBD Tracker 12',
+        'type' => 'obd',
+        'device_id' => 'OBD-12',
+        'serial_number' => 'SN-10001',
+        'status' => 'active',
+    ]
 );
 ```
 
@@ -449,12 +374,7 @@ Delete a device.
 `DELETE {{base_url}}/{{namespace}}/devices/{{device_id}}`
 
 ```php
-$result = $fleetbase->devices->deleteDevice(
-    [
-        'device_id' => 'device_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->devices->deleteDevice($deviceId);
 ```
 
 ### Detach Device
@@ -464,12 +384,7 @@ Detach this device from its current resource.
 `POST {{base_url}}/{{namespace}}/devices/{{device_id}}/detach`
 
 ```php
-$result = $fleetbase->devices->detachDevice(
-    [
-        'device_id' => 'device_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->devices->detachDevice($deviceId);
 ```
 
 ### Query Devices
@@ -479,10 +394,7 @@ Query devices.
 `GET {{base_url}}/{{namespace}}/devices`
 
 ```php
-$result = $fleetbase->devices->queryDevices(
-    [],
-    []
-);
+$result = $fleetbase->devices->queryDevices();
 ```
 
 ### Retrieve a Device
@@ -492,12 +404,7 @@ Retrieve a device.
 `GET {{base_url}}/{{namespace}}/devices/{{device_id}}`
 
 ```php
-$result = $fleetbase->devices->retrieveDevice(
-    [
-        'device_id' => 'device_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->devices->retrieveDevice($deviceId);
 ```
 
 ### Update a Device
@@ -508,13 +415,10 @@ Update a device.
 
 ```php
 $result = $fleetbase->devices->updateDevice(
+    $deviceId,
     [
-        'device_id' => 'device_id-fixture',
-        'body' => [
-            'status' => 'maintenance',
-        ],
-    ],
-    []
+        'status' => 'maintenance',
+    ]
 );
 ```
 
@@ -528,16 +432,13 @@ Changes the password of a driver who is signed in, proving the current one. A pa
 
 ```php
 $result = $fleetbase->drivers->changeDriverPassword(
+    $driverId,
     [
-        'id' => 'driver_id-fixture',
-        'body' => [
-            'current_password' => 'created_driver_password-fixture',
-            'password' => 'driver_new_password-fixture',
-            'password_confirmation' => 'driver_new_password-fixture',
-            'device_name' => 'navigator',
-        ],
-    ],
-    []
+        'current_password' => 'created_driver_password-fixture',
+        'password' => 'driver_new_password-fixture',
+        'password_confirmation' => 'driver_new_password-fixture',
+        'device_name' => 'navigator',
+    ]
 );
 ```
 
@@ -550,14 +451,11 @@ Creates a driver profile and linked user account. Provide a unique email and pho
 ```php
 $result = $fleetbase->drivers->createDriver(
     [
-        'body' => [
-            'name' => 'John Doe',
-            'email' => 'randomEmail-fixture',
-            'phone' => 'randomPhoneNumber-fixture',
-            'password' => 'driver_seed_password-fixture',
-        ],
-    ],
-    []
+        'name' => 'John Doe',
+        'email' => 'randomEmail-fixture',
+        'phone' => 'randomPhoneNumber-fixture',
+        'password' => 'driver_seed_password-fixture',
+    ]
 );
 ```
 
@@ -568,12 +466,7 @@ Use this endpoint to delete a driver.
 `DELETE {{base_url}}/{{namespace}}/drivers/:id`
 
 ```php
-$result = $fleetbase->drivers->deleteDriver(
-    [
-        'id' => 'driver_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->drivers->deleteDriver($driverId);
 ```
 
 ### Get Driver Current Organization
@@ -583,12 +476,7 @@ Returns the driver current organization.
 `GET {{base_url}}/{{namespace}}/drivers/:id/current-organization`
 
 ```php
-$result = $fleetbase->drivers->getDriverCurrentOrganization(
-    [
-        'id' => 'driver_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->drivers->getDriverCurrentOrganization($driverId);
 ```
 
 ### List Driver Manifests
@@ -598,12 +486,7 @@ Lists the manifests assigned to a driver, newest first. A manifest is a driver's
 `GET {{base_url}}/{{namespace}}/drivers/:id/manifests`
 
 ```php
-$result = $fleetbase->drivers->listDriverManifests(
-    [
-        'id' => 'driver_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->drivers->listDriverManifests($driverId);
 ```
 
 ### List Driver Organizations
@@ -613,12 +496,7 @@ Lists organizations a driver belongs to.
 `GET {{base_url}}/{{namespace}}/drivers/:id/organizations`
 
 ```php
-$result = $fleetbase->drivers->listDriverOrganizations(
-    [
-        'id' => 'driver_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->drivers->listDriverOrganizations($driverId);
 ```
 
 ### Login Driver
@@ -630,12 +508,9 @@ Authenticates a driver with email/phone and password.
 ```php
 $result = $fleetbase->drivers->loginDriver(
     [
-        'body' => [
-            'identity' => 'driver_identity-fixture',
-            'password' => 'driver_password-fixture',
-        ],
-    ],
-    []
+        'identity' => 'driver_identity-fixture',
+        'password' => 'driver_password-fixture',
+    ]
 );
 ```
 
@@ -647,11 +522,8 @@ Returns drivers for the current company. Use filters such as `vendor`, search, p
 
 ```php
 $result = $fleetbase->drivers->queryDrivers(
-    [],
     [
-        'query' => [
-            'id' => 'driver_id-fixture',
-        ],
+        'id' => 'driver_id-fixture',
     ]
 );
 ```
@@ -665,12 +537,9 @@ Registers a driver device token through the non-id route.
 ```php
 $result = $fleetbase->drivers->registerDevice(
     [
-        'body' => [
-            'token' => 'device_token-fixture',
-            'platform' => 'ios',
-        ],
-    ],
-    []
+        'token' => 'device_token-fixture',
+        'platform' => 'ios',
+    ]
 );
 ```
 
@@ -682,14 +551,11 @@ Registers a device token for a specific driver.
 
 ```php
 $result = $fleetbase->drivers->registerDriverDevice(
+    $driverId,
     [
-        'id' => 'driver_id-fixture',
-        'body' => [
-            'token' => 'device_token-fixture',
-            'platform' => 'ios',
-        ],
-    ],
-    []
+        'token' => 'device_token-fixture',
+        'platform' => 'ios',
+    ]
 );
 ```
 
@@ -702,11 +568,8 @@ Starts driver SMS verification login.
 ```php
 $result = $fleetbase->drivers->requestDriverLoginSms(
     [
-        'body' => [
-            'phone' => 'driver_phone-fixture',
-        ],
-    ],
-    []
+        'phone' => 'driver_phone-fixture',
+    ]
 );
 ```
 
@@ -719,11 +582,8 @@ Sends a password reset code to a driver who cannot sign in. The code goes by ema
 ```php
 $result = $fleetbase->drivers->requestDriverPasswordReset(
     [
-        'body' => [
-            'identity' => 'driver_reset_identity-fixture',
-        ],
-    ],
-    []
+        'identity' => 'driver_reset_identity-fixture',
+    ]
 );
 ```
 
@@ -736,13 +596,10 @@ Sets a new password using the code sent by `POST /drivers/forgot-password`. A wr
 ```php
 $result = $fleetbase->drivers->resetDriverPassword(
     [
-        'body' => [
-            'identity' => 'driver_identity-fixture',
-            'code' => 'driver_password_reset_code-fixture',
-            'password' => 'driver_password-fixture',
-        ],
-    ],
-    []
+        'identity' => 'driver_identity-fixture',
+        'code' => 'driver_password_reset_code-fixture',
+        'password' => 'driver_password-fixture',
+    ]
 );
 ```
 
@@ -753,12 +610,7 @@ This endpoint allows you to retrieve a driver object to view it's details.
 `GET {{base_url}}/{{namespace}}/drivers/:id`
 
 ```php
-$result = $fleetbase->drivers->retrieveDriver(
-    [
-        'id' => 'driver_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->drivers->retrieveDriver($driverId);
 ```
 
 ### Simulate Driver Route
@@ -769,20 +621,17 @@ Simulates driver movement between two resolvable points, or pass order to simula
 
 ```php
 $result = $fleetbase->drivers->simulateDriverRoute(
+    $driverId,
     [
-        'id' => 'driver_id-fixture',
-        'body' => [
-            'start' => [
-                'latitude' => 1.3521,
-                'longitude' => 103.8198,
-            ],
-            'end' => [
-                'latitude' => 1.2903,
-                'longitude' => 103.8519,
-            ],
+        'start' => [
+            'latitude' => 1.3521,
+            'longitude' => 103.8198,
         ],
-    ],
-    []
+        'end' => [
+            'latitude' => 1.2903,
+            'longitude' => 103.8519,
+        ],
+    ]
 );
 ```
 
@@ -794,13 +643,10 @@ Switches the driver session to another organization. The driver must already bel
 
 ```php
 $result = $fleetbase->drivers->switchDriverOrganization(
+    $driverId,
     [
-        'id' => 'multi_org_driver_id-fixture',
-        'body' => [
-            'next' => 'secondary_organization_id-fixture',
-        ],
-    ],
-    []
+        'next' => 'secondary_organization_id-fixture',
+    ]
 );
 ```
 
@@ -812,13 +658,10 @@ Toggles or sets driver online status.
 
 ```php
 $result = $fleetbase->drivers->toggleDriverOnline(
+    $driverId,
     [
-        'id' => 'driver_id-fixture',
-        'body' => [
-            'online' => true,
-        ],
-    ],
-    []
+        'online' => true,
+    ]
 );
 ```
 
@@ -828,10 +671,12 @@ $result = $fleetbase->drivers->toggleDriverOnline(
 
 ```php
 $result = $fleetbase->drivers->trackDriver(
+    $driverId,
     [
-        'id' => 'driver_id-fixture',
-    ],
-    []
+        'latitude' => -19.288195,
+        'longitude' => 146.795965,
+        'speed' => 100,
+    ]
 );
 ```
 
@@ -843,15 +688,12 @@ Updates a driver's account fields, assignment, status, location, photo, or metad
 
 ```php
 $result = $fleetbase->drivers->updateDriver(
+    $driverId,
     [
-        'id' => 'driver_id-fixture',
-        'body' => [
-            'name' => 'John Doe',
-            'email' => 'randomEmail-fixture',
-            'phone' => 'randomPhoneNumber-fixture',
-        ],
-    ],
-    []
+        'name' => 'John Doe',
+        'email' => 'randomEmail-fixture',
+        'phone' => 'randomPhoneNumber-fixture',
+    ]
 );
 ```
 
@@ -864,12 +706,9 @@ Verifies driver login code and returns a driver token.
 ```php
 $result = $fleetbase->drivers->verifyDriverLoginCode(
     [
-        'body' => [
-            'identity' => 'driver_identity-fixture',
-            'code' => 'verification_code-fixture',
-        ],
-    ],
-    []
+        'identity' => 'driver_identity-fixture',
+        'code' => 'verification_code-fixture',
+    ]
 );
 ```
 
@@ -884,32 +723,29 @@ Creates an entity such as a parcel, package, or item. Attach it to a payload and
 ```php
 $result = $fleetbase->entities->createEntity(
     [
-        'body' => [
-            'name' => 'SampleEntity',
-            'type' => 'parcel',
-            'payload' => 'payload_id-fixture',
-            'customer' => 'ACustomer',
-            'internal_id' => 'ENTITY001',
-            'description' => 'Sample description',
-            'meta' => [
-                'warehouse_bin' => '1',
-                'warehouse_rack' => '3',
-                'warehouse_section' => '4',
-            ],
-            'weight' => 2.5,
-            'weight_unit' => 'kg',
-            'length' => 10,
-            'width' => 5,
-            'height' => 8,
-            'dimensions_unit' => 'mm',
-            'declared_value' => 1500,
-            'price' => 1200,
-            'sale_price' => 900,
-            'sku' => 'SKU123',
-            'currency' => 'USD',
+        'name' => 'SampleEntity',
+        'type' => 'parcel',
+        'payload' => 'payload_id-fixture',
+        'customer' => 'ACustomer',
+        'internal_id' => 'ENTITY001',
+        'description' => 'Sample description',
+        'meta' => [
+            'warehouse_bin' => '1',
+            'warehouse_rack' => '3',
+            'warehouse_section' => '4',
         ],
-    ],
-    []
+        'weight' => 2.5,
+        'weight_unit' => 'kg',
+        'length' => 10,
+        'width' => 5,
+        'height' => 8,
+        'dimensions_unit' => 'mm',
+        'declared_value' => 1500,
+        'price' => 1200,
+        'sale_price' => 900,
+        'sku' => 'SKU123',
+        'currency' => 'USD',
+    ]
 );
 ```
 
@@ -920,12 +756,7 @@ Delete an Entity.
 `DELETE {{base_url}}/{{namespace}}/entities/:id`
 
 ```php
-$result = $fleetbase->entities->deleteEntity(
-    [
-        'id' => 'entity_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->entities->deleteEntity($entityId);
 ```
 
 ### Query Entities
@@ -936,14 +767,11 @@ Returns entities for the current company. Use filters such as `type`, `payload`,
 
 ```php
 $result = $fleetbase->entities->queryEntities(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-            'type' => 'parcel',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
+        'type' => 'parcel',
     ]
 );
 ```
@@ -955,12 +783,7 @@ Retrieve an Entity.
 `GET {{base_url}}/{{namespace}}/entities/:id`
 
 ```php
-$result = $fleetbase->entities->retrieveEntity(
-    [
-        'id' => 'entity_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->entities->retrieveEntity($entityId);
 ```
 
 ### Update a Entity
@@ -971,17 +794,14 @@ Updates an entity's descriptive fields, payload assignment, destination, dimensi
 
 ```php
 $result = $fleetbase->entities->updateEntity(
+    $entityId,
     [
-        'id' => 'entity_id-fixture',
-        'body' => [
-            'internal_id' => 'ENTITY001-1',
-            'description' => 'New entity description',
-            'destination' => '',
-            'sku' => 'SKUABC123',
-            'currency' => 'SGD',
-        ],
-    ],
-    []
+        'internal_id' => 'ENTITY001-1',
+        'description' => 'New entity description',
+        'destination' => '',
+        'sku' => 'SKUABC123',
+        'currency' => 'SGD',
+    ]
 );
 ```
 
@@ -996,18 +816,15 @@ Create equipment.
 ```php
 $result = $fleetbase->equipment->createEquipment(
     [
-        'body' => [
-            'name' => 'Liftgate LG-12',
-            'code' => 'LG-12',
-            'type' => 'liftgate',
-            'status' => 'available',
-            'serial_number' => 'LG120045',
-            'manufacturer' => 'Maxon',
-            'model' => 'BMR',
-            'currency' => 'USD',
-        ],
-    ],
-    []
+        'name' => 'Liftgate LG-12',
+        'code' => 'LG-12',
+        'type' => 'liftgate',
+        'status' => 'available',
+        'serial_number' => 'LG120045',
+        'manufacturer' => 'Maxon',
+        'model' => 'BMR',
+        'currency' => 'USD',
+    ]
 );
 ```
 
@@ -1018,12 +835,7 @@ Delete equipment.
 `DELETE {{base_url}}/{{namespace}}/equipment/{{equipment_id}}`
 
 ```php
-$result = $fleetbase->equipment->deleteEquipment(
-    [
-        'equipment_id' => 'equipment_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->equipment->deleteEquipment($equipmentId);
 ```
 
 ### Query Equipment
@@ -1033,10 +845,7 @@ Query equipment.
 `GET {{base_url}}/{{namespace}}/equipment`
 
 ```php
-$result = $fleetbase->equipment->queryEquipment(
-    [],
-    []
-);
+$result = $fleetbase->equipment->queryEquipment();
 ```
 
 ### Retrieve Equipment
@@ -1046,12 +855,7 @@ Retrieve equipment.
 `GET {{base_url}}/{{namespace}}/equipment/{{equipment_id}}`
 
 ```php
-$result = $fleetbase->equipment->retrieveEquipment(
-    [
-        'equipment_id' => 'equipment_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->equipment->retrieveEquipment($equipmentId);
 ```
 
 ### Update Equipment
@@ -1062,13 +866,10 @@ Update equipment.
 
 ```php
 $result = $fleetbase->equipment->updateEquipment(
+    $equipmentId,
     [
-        'equipment_id' => 'equipment_id-fixture',
-        'body' => [
-            'status' => 'maintenance',
-        ],
-    ],
-    []
+        'status' => 'maintenance',
+    ]
 );
 ```
 
@@ -1083,12 +884,9 @@ Creates a fleet for grouping drivers and vehicles. Assign a service area when th
 ```php
 $result = $fleetbase->fleets->createFleet(
     [
-        'body' => [
-            'name' => 'Haulers',
-            'service_area' => 'service_area_id-fixture',
-        ],
-    ],
-    []
+        'name' => 'Haulers',
+        'service_area' => 'service_area_id-fixture',
+    ]
 );
 ```
 
@@ -1099,12 +897,7 @@ Deletes a fleet.
 `DELETE {{base_url}}/{{namespace}}/fleets/:id`
 
 ```php
-$result = $fleetbase->fleets->deleteFleet(
-    [
-        'id' => 'fleet_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fleets->deleteFleet($fleetId);
 ```
 
 ### Query Fleets
@@ -1115,13 +908,10 @@ Returns a paginated list of fleets for the current organization. Use pagination 
 
 ```php
 $result = $fleetbase->fleets->queryFleets(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -1133,12 +923,7 @@ Retrieves a fleet.
 `GET {{base_url}}/{{namespace}}/fleets/:id`
 
 ```php
-$result = $fleetbase->fleets->retrieveFleet(
-    [
-        'id' => 'fleet_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fleets->retrieveFleet($fleetId);
 ```
 
 ### Update a Fleet
@@ -1149,14 +934,11 @@ Updates a fleet's name or assigned service area.
 
 ```php
 $result = $fleetbase->fleets->updateFleet(
+    $fleetId,
     [
-        'id' => 'fleet_id-fixture',
-        'body' => [
-            'name' => 'Haulers',
-            'service_area' => 'service_area_id-fixture',
-        ],
-    ],
-    []
+        'name' => 'Haulers',
+        'service_area' => 'service_area_id-fixture',
+    ]
 );
 ```
 
@@ -1171,21 +953,18 @@ Create a Fuel Report
 ```php
 $result = $fleetbase->fuelReports->createFuelReport(
     [
-        'body' => [
-            'driver' => 'driver_id-fixture',
-            'odometer' => 12042,
-            'volume' => 42.5,
-            'metric_unit' => 'liter',
-            'location' => [
-                'latitude' => 1.3521,
-                'longitude' => 103.8198,
-            ],
-            'amount' => 120.5,
-            'currency' => 'USD',
-            'status' => 'submitted',
+        'driver' => 'driver_id-fixture',
+        'odometer' => 12042,
+        'volume' => 42.5,
+        'metric_unit' => 'liter',
+        'location' => [
+            'latitude' => 1.3521,
+            'longitude' => 103.8198,
         ],
-    ],
-    []
+        'amount' => 120.5,
+        'currency' => 'USD',
+        'status' => 'submitted',
+    ]
 );
 ```
 
@@ -1196,12 +975,7 @@ Delete a Fuel Report
 `DELETE {{base_url}}/{{namespace}}/fuel-reports/:id`
 
 ```php
-$result = $fleetbase->fuelReports->deleteFuelReport(
-    [
-        'id' => 'fuel_report_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fuelReports->deleteFuelReport($fuelReportId);
 ```
 
 ### Query Fuel Reports
@@ -1212,13 +986,10 @@ Query Fuel Reports
 
 ```php
 $result = $fleetbase->fuelReports->queryFuelReports(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -1230,12 +1001,7 @@ Retrieve a Fuel Report
 `GET {{base_url}}/{{namespace}}/fuel-reports/:id`
 
 ```php
-$result = $fleetbase->fuelReports->retrieveFuelReport(
-    [
-        'id' => 'fuel_report_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fuelReports->retrieveFuelReport($fuelReportId);
 ```
 
 ### Update a Fuel Report
@@ -1246,18 +1012,15 @@ Update a Fuel Report
 
 ```php
 $result = $fleetbase->fuelReports->updateFuelReport(
+    $fuelReportId,
     [
-        'id' => 'fuel_report_id-fixture',
-        'body' => [
-            'odometer' => 12050,
-            'volume' => 43.1,
-            'metric_unit' => 'liter',
-            'amount' => 122.75,
-            'currency' => 'USD',
-            'status' => 'approved',
-        ],
-    ],
-    []
+        'odometer' => 12050,
+        'volume' => 43.1,
+        'metric_unit' => 'liter',
+        'amount' => 122.75,
+        'currency' => 'USD',
+        'status' => 'approved',
+    ]
 );
 ```
 
@@ -1272,19 +1035,16 @@ Create a fuel transaction.
 ```php
 $result = $fleetbase->fuelTransactions->createFuelTransaction(
     [
-        'body' => [
-            'provider' => 'petroapp',
-            'provider_transaction_id' => 'TX-timestamp-fixture',
-            'vehicle' => 'vehicle_id-fixture',
-            'station_name' => 'North Depot Fuel',
-            'transaction_at' => '2026-05-07T08:30:00Z',
-            'volume' => 42.5,
-            'metric_unit' => 'liter',
-            'amount' => 6500,
-            'currency' => 'USD',
-        ],
-    ],
-    []
+        'provider' => 'petroapp',
+        'provider_transaction_id' => 'TX-timestamp-fixture',
+        'vehicle' => 'vehicle_id-fixture',
+        'station_name' => 'North Depot Fuel',
+        'transaction_at' => '2026-05-07T08:30:00Z',
+        'volume' => 42.5,
+        'metric_unit' => 'liter',
+        'amount' => 6500,
+        'currency' => 'USD',
+    ]
 );
 ```
 
@@ -1295,12 +1055,7 @@ Delete a fuel transaction.
 `DELETE {{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}`
 
 ```php
-$result = $fleetbase->fuelTransactions->deleteFuelTransaction(
-    [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fuelTransactions->deleteFuelTransaction($fuelTransactionId);
 ```
 
 ### Match Fuel Transaction Order
@@ -1311,13 +1066,10 @@ Match this fuel transaction to an order.
 
 ```php
 $result = $fleetbase->fuelTransactions->matchFuelTransactionOrder(
+    $fuelTransactionId,
     [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-        'body' => [
-            'order' => 'order_id-fixture',
-        ],
-    ],
-    []
+        'order' => 'order_id-fixture',
+    ]
 );
 ```
 
@@ -1329,13 +1081,10 @@ Match this fuel transaction to a vehicle.
 
 ```php
 $result = $fleetbase->fuelTransactions->matchFuelTransactionVehicle(
+    $fuelTransactionId,
     [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-        'body' => [
-            'vehicle' => 'vehicle_id-fixture',
-        ],
-    ],
-    []
+        'vehicle' => 'vehicle_id-fixture',
+    ]
 );
 ```
 
@@ -1346,10 +1095,7 @@ Query fuel transactions.
 `GET {{base_url}}/{{namespace}}/fuel-transactions`
 
 ```php
-$result = $fleetbase->fuelTransactions->queryFuelTransactions(
-    [],
-    []
-);
+$result = $fleetbase->fuelTransactions->queryFuelTransactions();
 ```
 
 ### Reprocess Fuel Transaction
@@ -1359,12 +1105,7 @@ Reprocess matching and fuel report generation for this fuel transaction.
 `POST {{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/reprocess`
 
 ```php
-$result = $fleetbase->fuelTransactions->reprocessFuelTransaction(
-    [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fuelTransactions->reprocessFuelTransaction($fuelTransactionId);
 ```
 
 ### Retrieve a Fuel Transaction
@@ -1374,12 +1115,7 @@ Retrieve a fuel transaction.
 `GET {{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}`
 
 ```php
-$result = $fleetbase->fuelTransactions->retrieveFuelTransaction(
-    [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->fuelTransactions->retrieveFuelTransaction($fuelTransactionId);
 ```
 
 ### Review Fuel Transaction
@@ -1390,13 +1126,10 @@ Mark this fuel transaction as reviewed or ignored.
 
 ```php
 $result = $fleetbase->fuelTransactions->reviewFuelTransaction(
+    $fuelTransactionId,
     [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-        'body' => [
-            'status' => 'reviewed',
-        ],
-    ],
-    []
+        'status' => 'reviewed',
+    ]
 );
 ```
 
@@ -1408,13 +1141,10 @@ Update a fuel transaction.
 
 ```php
 $result = $fleetbase->fuelTransactions->updateFuelTransaction(
+    $fuelTransactionId,
     [
-        'fuel_transaction_id' => 'fuel_transaction_id-fixture',
-        'body' => [
-            'sync_status' => 'reviewed',
-        ],
-    ],
-    []
+        'sync_status' => 'reviewed',
+    ]
 );
 ```
 
@@ -1428,13 +1158,9 @@ Get Driver Geofence History
 
 ```php
 $result = $fleetbase->geofences->getDriverGeofenceHistory(
+    $driverId,
     [
-        'driverId' => 'driver_id-fixture',
-    ],
-    [
-        'query' => [
-            'per_page' => '50',
-        ],
+        'per_page' => '50',
     ]
 );
 ```
@@ -1447,12 +1173,9 @@ Get Geofence Dwell Report
 
 ```php
 $result = $fleetbase->geofences->getGeofenceDwellReport(
-    [],
     [
-        'query' => [
-            'from' => 'from_datetime-fixture',
-            'to' => 'to_datetime-fixture',
-        ],
+        'from' => 'from_datetime-fixture',
+        'to' => 'to_datetime-fixture',
     ]
 );
 ```
@@ -1464,10 +1187,7 @@ Get Geofence Inventory
 `GET {{base_url}}/{{namespace}}/geofences/inventory`
 
 ```php
-$result = $fleetbase->geofences->getGeofenceInventory(
-    [],
-    []
-);
+$result = $fleetbase->geofences->getGeofenceInventory();
 ```
 
 ### List Geofence Events
@@ -1478,12 +1198,9 @@ List Geofence Events
 
 ```php
 $result = $fleetbase->geofences->listGeofenceEvents(
-    [],
     [
-        'query' => [
-            'per_page' => '50',
-            'event_type' => 'entered',
-        ],
+        'per_page' => '50',
+        'event_type' => 'entered',
     ]
 );
 ```
@@ -1499,20 +1216,17 @@ Create an Issue
 ```php
 $result = $fleetbase->issues->createIssue(
     [
-        'body' => [
-            'driver' => 'driver_id-fixture',
-            'location' => [
-                'latitude' => 1.3521,
-                'longitude' => 103.8198,
-            ],
-            'report' => 'Vehicle tire pressure warning',
-            'category' => 'vehicle',
-            'type' => 'maintenance',
-            'priority' => 'medium',
-            'status' => 'open',
+        'driver' => 'driver_id-fixture',
+        'location' => [
+            'latitude' => 1.3521,
+            'longitude' => 103.8198,
         ],
-    ],
-    []
+        'report' => 'Vehicle tire pressure warning',
+        'category' => 'vehicle',
+        'type' => 'maintenance',
+        'priority' => 'medium',
+        'status' => 'open',
+    ]
 );
 ```
 
@@ -1523,12 +1237,7 @@ Delete an Issue
 `DELETE {{base_url}}/{{namespace}}/issues/:id`
 
 ```php
-$result = $fleetbase->issues->deleteIssue(
-    [
-        'id' => 'issue_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->issues->deleteIssue($issueId);
 ```
 
 ### Query Issues
@@ -1539,13 +1248,10 @@ Query Issues
 
 ```php
 $result = $fleetbase->issues->queryIssues(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -1557,12 +1263,7 @@ Retrieve an Issue
 `GET {{base_url}}/{{namespace}}/issues/:id`
 
 ```php
-$result = $fleetbase->issues->retrieveIssue(
-    [
-        'id' => 'issue_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->issues->retrieveIssue($issueId);
 ```
 
 ### Update an Issue
@@ -1573,17 +1274,14 @@ Update an Issue
 
 ```php
 $result = $fleetbase->issues->updateIssue(
+    $issueId,
     [
-        'id' => 'issue_id-fixture',
-        'body' => [
-            'report' => 'Updated issue report',
-            'category' => 'vehicle',
-            'type' => 'maintenance',
-            'priority' => 'high',
-            'status' => 'resolved',
-        ],
-    ],
-    []
+        'report' => 'Updated issue report',
+        'category' => 'vehicle',
+        'type' => 'maintenance',
+        'priority' => 'high',
+        'status' => 'resolved',
+    ]
 );
 ```
 
@@ -1597,14 +1295,10 @@ Renders a PDF, text, or base64 label for an order, waypoint, or entity id.
 
 ```php
 $result = $fleetbase->labels->renderLabel(
+    $labelId,
     [
-        'id' => 'order_id-fixture',
-    ],
-    [
-        'query' => [
-            'format' => 'stream',
-            'type' => 'order',
-        ],
+        'format' => 'stream',
+        'type' => 'order',
     ]
 );
 ```
@@ -1619,14 +1313,11 @@ Re-sequences the stops a driver has not done yet, nearest first. This is the dri
 
 ```php
 $result = $fleetbase->manifests->optimizeManifest(
+    $manifestId,
     [
-        'id' => 'manifest_id-fixture',
-        'body' => [
-            'latitude' => 1.3521,
-            'longitude' => 103.8198,
-        ],
-    ],
-    []
+        'latitude' => 1.3521,
+        'longitude' => 103.8198,
+    ]
 );
 ```
 
@@ -1637,12 +1328,7 @@ Retrieves a manifest with its stops, in the sequence they are to be driven. Each
 `GET {{base_url}}/{{namespace}}/manifests/:id`
 
 ```php
-$result = $fleetbase->manifests->retrieveManifest(
-    [
-        'id' => 'manifest_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->manifests->retrieveManifest($manifestId);
 ```
 
 ### Update a Manifest Stop
@@ -1653,13 +1339,10 @@ Marks a stop on a manifest as arrived, completed or skipped. Status changes run 
 
 ```php
 $result = $fleetbase->manifests->updateManifestStop(
+    $manifestId,
     [
-        'id' => 'manifest_stop_id-fixture',
-        'body' => [
-            'status' => 'arrived',
-        ],
-    ],
-    []
+        'status' => 'arrived',
+    ]
 );
 ```
 
@@ -1672,12 +1355,7 @@ Returns driver onboarding settings for an organization.
 `GET {{base_url}}/{{namespace}}/onboard/driver-onboard-settings/:companyId`
 
 ```php
-$result = $fleetbase->onboard->getDriverOnboardSettings(
-    [
-        'companyId' => 'organization_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->onboard->getDriverOnboardSettings($companyId);
 ```
 
 ## Orchestrator
@@ -1691,22 +1369,19 @@ Commits a proposed orchestrator plan by creating manifests and applying vehicle 
 ```php
 $result = $fleetbase->orchestrator->commitOrchestratorPlan(
     [
-        'body' => [
-            'scheduled_date' => '2026-05-16',
-            'assignments' => [
-                [
-                    'order_id' => 'order_id-fixture',
-                    'vehicle_id' => 'vehicle_id-fixture',
-                    'driver_id' => 'driver_id-fixture',
-                    'sequence' => 1,
-                    'arrival' => 1778918400,
-                    'duration' => 900,
-                    'distance' => 4200,
-                ],
+        'scheduled_date' => '2026-05-16',
+        'assignments' => [
+            [
+                'order_id' => 'order_id-fixture',
+                'vehicle_id' => 'vehicle_id-fixture',
+                'driver_id' => 'driver_id-fixture',
+                'sequence' => 1,
+                'arrival' => 1778918400,
+                'duration' => 900,
+                'distance' => 4200,
             ],
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -1719,27 +1394,24 @@ Runs an orchestration phase and returns a proposed assignment plan without commi
 ```php
 $result = $fleetbase->orchestrator->runOrchestrator(
     [
-        'body' => [
-            'mode' => 'assign_vehicles',
-            'order_ids' => [
-                'order_id-fixture',
-            ],
-            'vehicle_ids' => [
-                'vehicle_id-fixture',
-            ],
-            'driver_ids' => [],
-            'prior_assignments' => [],
-            'options' => [
-                'engine' => 'greedy',
-                'allocation_strategy' => 'route_aware',
-                'geometry' => false,
-                'respect_capacity' => true,
-                'respect_skills' => true,
-                'return_to_depot' => false,
-            ],
+        'mode' => 'assign_vehicles',
+        'order_ids' => [
+            'order_id-fixture',
         ],
-    ],
-    []
+        'vehicle_ids' => [
+            'vehicle_id-fixture',
+        ],
+        'driver_ids' => [],
+        'prior_assignments' => [],
+        'options' => [
+            'engine' => 'greedy',
+            'allocation_strategy' => 'route_aware',
+            'geometry' => false,
+            'respect_capacity' => true,
+            'respect_skills' => true,
+            'return_to_depot' => false,
+        ],
+    ]
 );
 ```
 
@@ -1752,10 +1424,7 @@ Lists OrderConfigs available to the company resolved from the API credential.
 `GET {{base_url}}/{{namespace}}/order-configs`
 
 ```php
-$result = $fleetbase->orderConfigs->queryOrderConfigs(
-    [],
-    []
-);
+$result = $fleetbase->orderConfigs->queryOrderConfigs();
 ```
 
 ### Retrieve an Order Config
@@ -1765,12 +1434,7 @@ Fetches a single OrderConfig. The `{id}` segment accepts any identifier supporte
 `GET {{base_url}}/{{namespace}}/order-configs/{{order_config_id}}`
 
 ```php
-$result = $fleetbase->orderConfigs->retrieveOrderConfig(
-    [
-        'order_config_id' => 'order_config_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->orderConfigs->retrieveOrderConfig($orderConfigId);
 ```
 
 ## Orders
@@ -1782,12 +1446,7 @@ Cancels an order without deleting the order resource.
 `DELETE {{base_url}}/{{namespace}}/orders/:id/cancel`
 
 ```php
-$result = $fleetbase->orders->cancelOrder(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->orders->cancelOrder($orderId);
 ```
 
 ### Capture Photo for Order
@@ -1798,18 +1457,15 @@ Captures proof photos for an order or order subject.
 
 ```php
 $result = $fleetbase->orders->capturePhotoForOrder(
+    $orderId,
+    $subjectId,
     [
-        'id' => 'order_id-fixture',
-        'subjectId' => 'subject_id-fixture',
-        'body' => [
-            'photos' => [
-                'proof_photo_base64-fixture',
-            ],
-            'remarks' => 'Verified by Photo',
-            'data' => [],
+        'photos' => [
+            'proof_photo_base64-fixture',
         ],
-    ],
-    []
+        'remarks' => 'Verified by Photo',
+        'data' => [],
+    ]
 );
 ```
 
@@ -1821,16 +1477,13 @@ Captures a QR code proof for an order or order subject. The response includes th
 
 ```php
 $result = $fleetbase->orders->captureQrCodeForOrder(
+    $orderId,
+    $subjectId,
     [
-        'id' => 'order_id-fixture',
-        'subject-id' => '',
-        'body' => [
-            'code' => 'qr_code-fixture',
-            'data' => [],
-            'raw_data' => [],
-        ],
-    ],
-    []
+        'code' => 'qr_code-fixture',
+        'data' => [],
+        'raw_data' => [],
+    ]
 );
 ```
 
@@ -1842,15 +1495,12 @@ Captures a signature proof for an order or order subject. Use this when a workfl
 
 ```php
 $result = $fleetbase->orders->captureSignatureForOrder(
+    $orderId,
+    $subjectId,
     [
-        'id' => 'order_id-fixture',
-        'subject-id' => '',
-        'body' => [
-            'signature' => 'proof_signature_base64-fixture',
-            'data' => [],
-        ],
-    ],
-    []
+        'signature' => 'proof_signature_base64-fixture',
+        'data' => [],
+    ]
 );
 ```
 
@@ -1861,12 +1511,7 @@ Completes an order after all waypoints are complete.
 `POST {{base_url}}/{{namespace}}/orders/:id/complete`
 
 ```php
-$result = $fleetbase->orders->completeOrder(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->orders->completeOrder($orderId);
 ```
 
 ### Create an Order
@@ -1878,26 +1523,23 @@ Creates a new order for the current company. Provide an existing payload ID, an 
 ```php
 $result = $fleetbase->orders->createOrder(
     [
-        'body' => [
-            'pickup' => 'Singapore 018971',
-            'dropoff' => '321 Orchard Rd, Singapore',
-            'waypoints' => [
-                '10 Bayfront Avenue, Singapore 018956',
-                '18 Marina Gardens Drive, Singapore 018953',
-                '80 Mandai Lake Rd, Singapore 729826',
-                '1 Beach Road, Singapore 189673',
-            ],
-            'dispatch' => false,
-            'driver' => 'driver_id-fixture',
-            'facilitator' => 'vendor_id-fixture',
-            'customer' => 'contact_id-fixture',
-            'meta' => [
-                'Warehouse' => 'WAREHOUSE-123',
-            ],
-            'notes' => 'Order notes',
+        'pickup' => 'Singapore 018971',
+        'dropoff' => '321 Orchard Rd, Singapore',
+        'waypoints' => [
+            '10 Bayfront Avenue, Singapore 018956',
+            '18 Marina Gardens Drive, Singapore 018953',
+            '80 Mandai Lake Rd, Singapore 729826',
+            '1 Beach Road, Singapore 189673',
         ],
-    ],
-    []
+        'dispatch' => false,
+        'driver' => 'driver_id-fixture',
+        'facilitator' => 'vendor_id-fixture',
+        'customer' => 'contact_id-fixture',
+        'meta' => [
+            'Warehouse' => 'WAREHOUSE-123',
+        ],
+        'notes' => 'Order notes',
+    ]
 );
 ```
 
@@ -1910,16 +1552,13 @@ Creates an order using the Complete Payload payload shape. Promoted from a store
 ```php
 $result = $fleetbase->orders->createOrderUsingCompletePayload(
     [
-        'body' => [
-            'pickup' => 'Singapore 018971',
-            'dropoff' => '321 Orchard Rd, Singapore',
-            'dispatch' => false,
-            'driver' => 'driver_id-fixture',
-            'customer' => 'contact_id-fixture',
-            'notes' => 'Deliver through receiving bay.',
-        ],
-    ],
-    []
+        'pickup' => 'Singapore 018971',
+        'dropoff' => '321 Orchard Rd, Singapore',
+        'dispatch' => false,
+        'driver' => 'driver_id-fixture',
+        'customer' => 'contact_id-fixture',
+        'notes' => 'Deliver through receiving bay.',
+    ]
 );
 ```
 
@@ -1932,18 +1571,15 @@ Creates an order with `pickup` and `dropoff` given as coordinate objects. `Place
 ```php
 $result = $fleetbase->orders->createOrderUsingCoordinates(
     [
-        'body' => [
-            'pickup' => [
-                'latitude' => 1.2830632,
-                'longitude' => 103.8579965,
-            ],
-            'dropoff' => [
-                'lat' => 1.4043,
-                'lng' => 103.793,
-            ],
+        'pickup' => [
+            'latitude' => 1.2830632,
+            'longitude' => 103.8579965,
         ],
-    ],
-    []
+        'dropoff' => [
+            'lat' => 1.4043,
+            'lng' => 103.793,
+        ],
+    ]
 );
 ```
 
@@ -1956,24 +1592,21 @@ Creates an order with `pickup` and `dropoff` given as GeoJSON Point objects. `Pl
 ```php
 $result = $fleetbase->orders->createOrderUsingGeojsonPoints(
     [
-        'body' => [
-            'pickup' => [
-                'type' => 'Point',
-                'coordinates' => [
-                    103.8579965,
-                    1.2830632,
-                ],
-            ],
-            'dropoff' => [
-                'type' => 'Point',
-                'coordinates' => [
-                    103.793,
-                    1.4043,
-                ],
+        'pickup' => [
+            'type' => 'Point',
+            'coordinates' => [
+                103.8579965,
+                1.2830632,
             ],
         ],
-    ],
-    []
+        'dropoff' => [
+            'type' => 'Point',
+            'coordinates' => [
+                103.793,
+                1.4043,
+            ],
+        ],
+    ]
 );
 ```
 
@@ -1986,669 +1619,9 @@ Creates an order using the Payload payload shape. Promoted from a stored example
 ```php
 $result = $fleetbase->orders->createOrderUsingPayload(
     [
-        'body' => [
-            'payload' => [
-                'pickup' => 'Singapore 018971',
-                'dropoff' => '321 Orchard Rd, Singapore',
-                'entities' => [
-                    [
-                        'name' => 'UltraHD 4K Smart TV',
-                        'description' => '65-inch high-definition smart TV with vibrant colors and a sleek design.',
-                        'currency' => 'USD',
-                        'price' => 1200,
-                    ],
-                    [
-                        'name' => 'Bluetooth Wireless Headphones',
-                        'description' => 'Noise-cancelling, over-ear headphones with long-lasting battery life.',
-                        'currency' => 'USD',
-                        'price' => 250,
-                    ],
-                    [
-                        'name' => 'Smart Fitness Watch',
-                        'description' => 'Water-resistant fitness watch with heart rate monitor and GPS tracking.',
-                        'currency' => 'USD',
-                        'price' => 199.99,
-                    ],
-                ],
-            ],
-            'meta' => [
-                'Warehouse' => 'WAREHOUSE-123',
-            ],
-            'notes' => 'Order notes',
-        ],
-    ],
-    []
-);
-```
-
-### Create an Order using Waypoints and Entities with Photos
-
-Creates an order using the Waypoints and Entities with Photos payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
-
-`POST {{base_url}}/{{namespace}}/orders`
-
-```php
-$result = $fleetbase->orders->createOrderUsingWaypointsAndEntitiesWithPhotos(
-    [
-        'body' => [
-            'payload' => [
-                'waypoints' => [
-                    'Singapore 018971',
-                    '321 Orchard Rd, Singapore',
-                ],
-                'entities' => [
-                    [
-                        'destination' => 0,
-                        'name' => 'UltraHD 4K Smart TV',
-                        'description' => '65-inch high-definition smart TV with vibrant colors and a sleek design.',
-                        'currency' => 'USD',
-                        'price' => 1200,
-                        'photo' => 'https://cdn.thewirecutter.com/wp-content/media/2025/07/BEST-BUDGET-4K-TV-2048px-3185-2x1-1.jpg?width=1024&quality=75&crop=2:1&auto=webp',
-                    ],
-                    [
-                        'destination' => 0,
-                        'name' => 'Bluetooth Wireless Headphones',
-                        'description' => 'Noise-cancelling, over-ear headphones with long-lasting battery life.',
-                        'currency' => 'USD',
-                        'price' => 250,
-                        'photo' => 'https://cdn.thewirecutter.com/wp-content/media/2025/07/BEST-BUDGET-4K-TV-2048px-3185-2x1-1.jpg?width=1024&quality=75&crop=2:1&auto=webp',
-                    ],
-                    [
-                        'destination' => 1,
-                        'name' => 'Smart Fitness Watch',
-                        'description' => 'Water-resistant fitness watch with heart rate monitor and GPS tracking.',
-                        'currency' => 'USD',
-                        'price' => 199.99,
-                        'photo' => 'https://cdn.thewirecutter.com/wp-content/media/2025/07/BEST-BUDGET-4K-TV-2048px-3185-2x1-1.jpg?width=1024&quality=75&crop=2:1&auto=webp',
-                    ],
-                ],
-            ],
-            'meta' => [
-                'Warehouse' => 'WAREHOUSE-123',
-            ],
-            'notes' => 'Order notes',
-        ],
-    ],
-    []
-);
-```
-
-### Create an Order using Waypoints and Entity Destinations
-
-Creates an order using the Waypoints and Entity Destinations payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
-
-`POST {{base_url}}/{{namespace}}/orders`
-
-```php
-$result = $fleetbase->orders->createOrderUsingWaypointsAndEntityDestinations(
-    [
-        'body' => [
-            'payload' => [
-                'waypoints' => [
-                    'Singapore 018971',
-                    '321 Orchard Rd, Singapore',
-                ],
-                'entities' => [
-                    [
-                        'destination' => 0,
-                        'name' => 'UltraHD 4K Smart TV',
-                        'description' => '65-inch high-definition smart TV with vibrant colors and a sleek design.',
-                        'currency' => 'USD',
-                        'price' => 1200,
-                    ],
-                    [
-                        'destination' => 0,
-                        'name' => 'Bluetooth Wireless Headphones',
-                        'description' => 'Noise-cancelling, over-ear headphones with long-lasting battery life.',
-                        'currency' => 'USD',
-                        'price' => 250,
-                    ],
-                    [
-                        'destination' => 1,
-                        'name' => 'Smart Fitness Watch',
-                        'description' => 'Water-resistant fitness watch with heart rate monitor and GPS tracking.',
-                        'currency' => 'USD',
-                        'price' => 199.99,
-                    ],
-                ],
-            ],
-            'meta' => [
-                'Warehouse' => 'WAREHOUSE-123',
-            ],
-            'notes' => 'Order notes',
-        ],
-    ],
-    []
-);
-```
-
-### Create an Order using only Pickup Dropoff
-
-Creates an order using the only Pickup Dropoff payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
-
-`POST {{base_url}}/{{namespace}}/orders`
-
-```php
-$result = $fleetbase->orders->createOrderUsingOnlyPickupDropoff(
-    [
-        'body' => [
+        'payload' => [
             'pickup' => 'Singapore 018971',
             'dropoff' => '321 Orchard Rd, Singapore',
-        ],
-    ],
-    []
-);
-```
-
-### Create an Order using only Waypoints
-
-Creates an order using the only Waypoints payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
-
-`POST {{base_url}}/{{namespace}}/orders`
-
-```php
-$result = $fleetbase->orders->createOrderUsingOnlyWaypoints(
-    [
-        'body' => [
-            'waypoints' => [
-                [
-                    1.3521,
-                    103.8198,
-                ],
-                '10 Bayfront Avenue, Singapore 018956',
-                '18 Marina Gardens Drive, Singapore 018953',
-                '80 Mandai Lake Rd, Singapore 729826',
-                '1 Beach Road, Singapore 189673',
-                'Sentosa, Singapore',
-            ],
-        ],
-    ],
-    []
-);
-```
-
-### Delete an Order
-
-Deletes an order resource.
-
-`DELETE {{base_url}}/{{namespace}}/orders/:id`
-
-```php
-$result = $fleetbase->orders->deleteOrder(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### Dispatch an Order
-
-Dispatches an order to an assigned or eligible driver. The response returns the order after dispatch state has been applied.
-
-`PATCH {{base_url}}/{{namespace}}/orders/:id/dispatch`
-
-```php
-$result = $fleetbase->orders->dispatchOrder('order_id-fixture');
-```
-
-### Get Editable Entity Fields
-
-Returns configured editable entity fields for an order.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/editable-entity-fields`
-
-```php
-$result = $fleetbase->orders->getEditableEntityFields(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### Get Order Distance and Time
-
-Returns and updates the order distance/time matrix.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/distance-and-time`
-
-```php
-$result = $fleetbase->orders->getOrderDistanceAndTime(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### Get Order ETA
-
-Returns ETA data for an order.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/eta`
-
-```php
-$result = $fleetbase->orders->getOrderEta(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### Get Order Next Activity
-
-Returns the next workflow activity for an order. Use it to determine the next operational step available to the assigned driver or dispatcher.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/next-activity`
-
-```php
-$result = $fleetbase->orders->getOrderNextActivity(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    [
-        'query' => [
-            'waypoint' => 'current_waypoint_id-fixture',
-        ],
-    ]
-);
-```
-
-### Get Order Tracker
-
-Returns public tracking data for an order.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/tracker`
-
-```php
-$result = $fleetbase->orders->getOrderTracker(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### List Order Comments
-
-Lists comments attached to an order.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/comments`
-
-```php
-$result = $fleetbase->orders->listOrderComments(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### List Order Proofs
-
-Lists proof of delivery resources for an order or subject.
-
-`GET {{base_url}}/{{namespace}}/orders/:id/proofs/:subjectId`
-
-```php
-$result = $fleetbase->orders->listOrderProofs(
-    [
-        'id' => 'order_id-fixture',
-        'subjectId' => 'subject_id-fixture',
-    ],
-    []
-);
-```
-
-### Query Orders
-
-Returns orders for the current company. Use filters such as `status`, `payload`, `customer`, `facilitator`, or `nearby` to narrow the result set.
-
-`GET {{base_url}}/{{namespace}}/orders`
-
-```php
-$result = $fleetbase->orders->queryOrders(
-    [],
-    [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-            'status' => 'created',
-        ],
-    ]
-);
-```
-
-### Retrieve an Order
-
-Retrieves a single order by ID. The response includes the public order fields plus loaded payload, tracking, assignment, customer, and facilitator data when available.
-
-`GET {{base_url}}/{{namespace}}/orders/{{order_id}}`
-
-```php
-$result = $fleetbase->orders->retrieveOrder(
-    [
-        'order_id' => 'order_id-fixture',
-    ],
-    []
-);
-```
-
-### Schedule an Order
-
-Schedules an order for a specific date and optional time. Fleetbase parses the schedule using the supplied timezone or the company timezone.
-
-`PATCH {{base_url}}/{{namespace}}/orders/:id/schedule`
-
-```php
-$result = $fleetbase->orders->scheduleOrder(
-    [
-        'id' => 'order_id-fixture',
-        'body' => [
-            'date' => '2024-02-11',
-            'time' => '8am',
-            'timezone' => 'Asia/Singapore',
-        ],
-    ],
-    []
-);
-```
-
-### Set Order Destination
-
-Sets the destination waypoint or place for an order. The response returns the updated order after the destination is changed.
-
-`PATCH {{base_url}}/{{namespace}}/orders/:id/set-destination/:placeId`
-
-```php
-$result = $fleetbase->orders->setOrderDestination(
-    [
-        'id' => 'order_id-fixture',
-        'placeId' => 'waypoint_id-fixture',
-    ],
-    []
-);
-```
-
-### Start an Order
-
-Starts an order and transitions it into active execution. Use this when a driver or dispatcher begins fulfillment.
-
-`POST {{base_url}}/{{namespace}}/orders/:id/start`
-
-```php
-$result = $fleetbase->orders->startOrder(
-    [
-        'id' => 'order_id-fixture',
-        'body' => [
-            'skip_dispatch' => false,
-        ],
-    ],
-    []
-);
-```
-
-### Update Order Activity
-
-Updates the current activity state for an order. The response returns the order with the latest workflow activity applied.
-
-`POST {{base_url}}/{{namespace}}/orders/:id/update-activity`
-
-```php
-$result = $fleetbase->orders->updateOrderActivity(
-    [
-        'id' => 'order_id-fixture',
-        'body' => [
-            'activity' => 'next_activity-fixture',
-            'skip_dispatch' => false,
-        ],
-    ],
-    []
-);
-```
-
-### Update an Order
-
-Updates an order and returns the updated order resource. You can update order metadata, notes, status, assignment fields, scheduling fields, proof-of-delivery settings, and payload details.
-
-`PUT {{base_url}}/{{namespace}}/orders/:id`
-
-```php
-$result = $fleetbase->orders->updateOrder(
-    [
-        'id' => 'order_id-fixture',
-        'body' => [
-            'service_quote' => 'service_quote_id-fixture',
-        ],
-    ],
-    []
-);
-```
-
-## Organizations
-
-### Get Current Organization
-
-Returns the organization associated with the API key on the request. Use it to confirm which account a credential belongs to, and to obtain the organization's id for endpoints that address an organization by path.
-
-`GET {{base_url}}/{{namespace}}/organizations/current`
-
-```php
-$result = $fleetbase->organizations->getCurrentOrganization(
-    [],
-    []
-);
-```
-
-### List Organizations
-
-Lists organizations available for driver onboarding and organization selection.
-
-`GET {{base_url}}/{{namespace}}/organizations`
-
-```php
-$result = $fleetbase->organizations->listOrganizations(
-    [],
-    [
-        'query' => [
-            'limit' => '10',
-            'with_driver_onboard' => 'false',
-        ],
-    ]
-);
-```
-
-## Parts
-
-### Create a Part
-
-Create a part.
-
-`POST {{base_url}}/{{namespace}}/parts`
-
-```php
-$result = $fleetbase->parts->createPart(
-    [
-        'body' => [
-            'sku' => 'FLT-OIL-timestamp-fixture',
-            'name' => 'Oil Filter',
-            'quantity_on_hand' => 24,
-            'unit_cost' => 1200,
-            'currency' => 'USD',
-            'status' => 'in_stock',
-        ],
-    ],
-    []
-);
-```
-
-### Delete a Part
-
-Delete a part.
-
-`DELETE {{base_url}}/{{namespace}}/parts/{{part_id}}`
-
-```php
-$result = $fleetbase->parts->deletePart(
-    [
-        'part_id' => 'part_id-fixture',
-    ],
-    []
-);
-```
-
-### Query Parts
-
-Query parts.
-
-`GET {{base_url}}/{{namespace}}/parts`
-
-```php
-$result = $fleetbase->parts->queryParts(
-    [],
-    []
-);
-```
-
-### Retrieve a Part
-
-Retrieve a part.
-
-`GET {{base_url}}/{{namespace}}/parts/{{part_id}}`
-
-```php
-$result = $fleetbase->parts->retrievePart(
-    [
-        'part_id' => 'part_id-fixture',
-    ],
-    []
-);
-```
-
-### Update a Part
-
-Update a part.
-
-`PUT {{base_url}}/{{namespace}}/parts/{{part_id}}`
-
-```php
-$result = $fleetbase->parts->updatePart(
-    [
-        'part_id' => 'part_id-fixture',
-        'body' => [
-            'quantity_on_hand' => 18,
-        ],
-    ],
-    []
-);
-```
-
-## Payloads
-
-### Create a Payload
-
-Creates a payload containing route endpoints and optional entities. Provide either pickup/dropoff endpoints or a waypoint list, then attach entities as needed.
-
-`POST {{base_url}}/{{namespace}}/payloads`
-
-```php
-$result = $fleetbase->payloads->createPayload(
-    [
-        'body' => [
-            'pickup' => [
-                'street1' => '10 Bayfront Avenue',
-                'city' => 'Singapore',
-                'postal_code' => '018956',
-                'country' => 'SG',
-            ],
-            'dropoff' => [
-                'street1' => '80 Mandai Lake Rd',
-                'city' => 'Singapore',
-                'postal_code' => '729826',
-                'country' => 'SG',
-            ],
-            'type' => 'food_delivery',
-        ],
-    ],
-    []
-);
-```
-
-### Delete a Payload
-
-Delete a Payload.
-
-`DELETE {{base_url}}/{{namespace}}/payloads/:id`
-
-```php
-$result = $fleetbase->payloads->deletePayload(
-    [
-        'id' => 'payload_id-fixture',
-    ],
-    []
-);
-```
-
-### Query Payloads
-
-Returns payloads for the current company. Use pagination and sort parameters to page through payload records.
-
-`GET {{base_url}}/{{namespace}}/payloads`
-
-```php
-$result = $fleetbase->payloads->queryPayloads(
-    [],
-    [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
-    ]
-);
-```
-
-### Retrieve a Payload
-
-Retrieve a Payload.
-
-`GET {{base_url}}/{{namespace}}/payloads/:id`
-
-```php
-$result = $fleetbase->payloads->retrievePayload(
-    [
-        'id' => 'payload_id-fixture',
-    ],
-    []
-);
-```
-
-### Update a Payload
-
-Updates a payload's route endpoints, waypoints, entities, cash-on-delivery settings, or metadata. The response returns the updated payload with route and entity data.
-
-`PUT {{base_url}}/{{namespace}}/payloads/:id`
-
-```php
-$result = $fleetbase->payloads->updatePayload(
-    [
-        'id' => 'payload_id-fixture',
-        'body' => [
-            'pickup' => [
-                'street1' => '10 Bayfront Avenue',
-                'city' => 'Singapore',
-                'postal_code' => '018956',
-                'country' => 'SG',
-            ],
-            'dropoff' => [
-                'street1' => '80 Mandai Lake Rd',
-                'city' => 'Singapore',
-                'postal_code' => '729826',
-                'country' => 'SG',
-            ],
             'entities' => [
                 [
                     'name' => 'UltraHD 4K Smart TV',
@@ -2670,8 +1643,543 @@ $result = $fleetbase->payloads->updatePayload(
                 ],
             ],
         ],
-    ],
-    []
+        'meta' => [
+            'Warehouse' => 'WAREHOUSE-123',
+        ],
+        'notes' => 'Order notes',
+    ]
+);
+```
+
+### Create an Order using Waypoints and Entities with Photos
+
+Creates an order using the Waypoints and Entities with Photos payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
+
+`POST {{base_url}}/{{namespace}}/orders`
+
+```php
+$result = $fleetbase->orders->createOrderUsingWaypointsAndEntitiesWithPhotos(
+    [
+        'payload' => [
+            'waypoints' => [
+                'Singapore 018971',
+                '321 Orchard Rd, Singapore',
+            ],
+            'entities' => [
+                [
+                    'destination' => 0,
+                    'name' => 'UltraHD 4K Smart TV',
+                    'description' => '65-inch high-definition smart TV with vibrant colors and a sleek design.',
+                    'currency' => 'USD',
+                    'price' => 1200,
+                    'photo' => 'https://cdn.thewirecutter.com/wp-content/media/2025/07/BEST-BUDGET-4K-TV-2048px-3185-2x1-1.jpg?width=1024&quality=75&crop=2:1&auto=webp',
+                ],
+                [
+                    'destination' => 0,
+                    'name' => 'Bluetooth Wireless Headphones',
+                    'description' => 'Noise-cancelling, over-ear headphones with long-lasting battery life.',
+                    'currency' => 'USD',
+                    'price' => 250,
+                    'photo' => 'https://cdn.thewirecutter.com/wp-content/media/2025/07/BEST-BUDGET-4K-TV-2048px-3185-2x1-1.jpg?width=1024&quality=75&crop=2:1&auto=webp',
+                ],
+                [
+                    'destination' => 1,
+                    'name' => 'Smart Fitness Watch',
+                    'description' => 'Water-resistant fitness watch with heart rate monitor and GPS tracking.',
+                    'currency' => 'USD',
+                    'price' => 199.99,
+                    'photo' => 'https://cdn.thewirecutter.com/wp-content/media/2025/07/BEST-BUDGET-4K-TV-2048px-3185-2x1-1.jpg?width=1024&quality=75&crop=2:1&auto=webp',
+                ],
+            ],
+        ],
+        'meta' => [
+            'Warehouse' => 'WAREHOUSE-123',
+        ],
+        'notes' => 'Order notes',
+    ]
+);
+```
+
+### Create an Order using Waypoints and Entity Destinations
+
+Creates an order using the Waypoints and Entity Destinations payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
+
+`POST {{base_url}}/{{namespace}}/orders`
+
+```php
+$result = $fleetbase->orders->createOrderUsingWaypointsAndEntityDestinations(
+    [
+        'payload' => [
+            'waypoints' => [
+                'Singapore 018971',
+                '321 Orchard Rd, Singapore',
+            ],
+            'entities' => [
+                [
+                    'destination' => 0,
+                    'name' => 'UltraHD 4K Smart TV',
+                    'description' => '65-inch high-definition smart TV with vibrant colors and a sleek design.',
+                    'currency' => 'USD',
+                    'price' => 1200,
+                ],
+                [
+                    'destination' => 0,
+                    'name' => 'Bluetooth Wireless Headphones',
+                    'description' => 'Noise-cancelling, over-ear headphones with long-lasting battery life.',
+                    'currency' => 'USD',
+                    'price' => 250,
+                ],
+                [
+                    'destination' => 1,
+                    'name' => 'Smart Fitness Watch',
+                    'description' => 'Water-resistant fitness watch with heart rate monitor and GPS tracking.',
+                    'currency' => 'USD',
+                    'price' => 199.99,
+                ],
+            ],
+        ],
+        'meta' => [
+            'Warehouse' => 'WAREHOUSE-123',
+        ],
+        'notes' => 'Order notes',
+    ]
+);
+```
+
+### Create an Order using only Pickup Dropoff
+
+Creates an order using the only Pickup Dropoff payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
+
+`POST {{base_url}}/{{namespace}}/orders`
+
+```php
+$result = $fleetbase->orders->createOrderUsingOnlyPickupDropoff(
+    [
+        'pickup' => 'Singapore 018971',
+        'dropoff' => '321 Orchard Rd, Singapore',
+    ]
+);
+```
+
+### Create an Order using only Waypoints
+
+Creates an order using the only Waypoints payload shape. Promoted from a stored example so the shape is actually exercised: the Postman CLI runs requests, never examples, so these shapes had no coverage at all.
+
+`POST {{base_url}}/{{namespace}}/orders`
+
+```php
+$result = $fleetbase->orders->createOrderUsingOnlyWaypoints(
+    [
+        'waypoints' => [
+            [
+                1.3521,
+                103.8198,
+            ],
+            '10 Bayfront Avenue, Singapore 018956',
+            '18 Marina Gardens Drive, Singapore 018953',
+            '80 Mandai Lake Rd, Singapore 729826',
+            '1 Beach Road, Singapore 189673',
+            'Sentosa, Singapore',
+        ],
+    ]
+);
+```
+
+### Delete an Order
+
+Deletes an order resource.
+
+`DELETE {{base_url}}/{{namespace}}/orders/:id`
+
+```php
+$result = $fleetbase->orders->deleteOrder($orderId);
+```
+
+### Dispatch an Order
+
+Dispatches an order to an assigned or eligible driver. The response returns the order after dispatch state has been applied.
+
+`PATCH {{base_url}}/{{namespace}}/orders/:id/dispatch`
+
+```php
+$result = $fleetbase->orders->dispatchOrder($orderId);
+```
+
+### Get Editable Entity Fields
+
+Returns configured editable entity fields for an order.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/editable-entity-fields`
+
+```php
+$result = $fleetbase->orders->getEditableEntityFields($orderId);
+```
+
+### Get Order Distance and Time
+
+Returns and updates the order distance/time matrix.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/distance-and-time`
+
+```php
+$result = $fleetbase->orders->getOrderDistanceAndTime($orderId);
+```
+
+### Get Order ETA
+
+Returns ETA data for an order.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/eta`
+
+```php
+$result = $fleetbase->orders->getOrderEta($orderId);
+```
+
+### Get Order Next Activity
+
+Returns the next workflow activity for an order. Use it to determine the next operational step available to the assigned driver or dispatcher.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/next-activity`
+
+```php
+$result = $fleetbase->orders->getOrderNextActivity(
+    $orderId,
+    [
+        'waypoint' => 'current_waypoint_id-fixture',
+    ]
+);
+```
+
+### Get Order Tracker
+
+Returns public tracking data for an order.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/tracker`
+
+```php
+$result = $fleetbase->orders->getOrderTracker($orderId);
+```
+
+### List Order Comments
+
+Lists comments attached to an order.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/comments`
+
+```php
+$result = $fleetbase->orders->listOrderComments($orderId);
+```
+
+### List Order Proofs
+
+Lists proof of delivery resources for an order or subject.
+
+`GET {{base_url}}/{{namespace}}/orders/:id/proofs/:subjectId`
+
+```php
+$result = $fleetbase->orders->listOrderProofs($orderId, $subjectId);
+```
+
+### Query Orders
+
+Returns orders for the current company. Use filters such as `status`, `payload`, `customer`, `facilitator`, or `nearby` to narrow the result set.
+
+`GET {{base_url}}/{{namespace}}/orders`
+
+```php
+$result = $fleetbase->orders->queryOrders(
+    [
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
+        'status' => 'created',
+    ]
+);
+```
+
+### Retrieve an Order
+
+Retrieves a single order by ID. The response includes the public order fields plus loaded payload, tracking, assignment, customer, and facilitator data when available.
+
+`GET {{base_url}}/{{namespace}}/orders/{{order_id}}`
+
+```php
+$result = $fleetbase->orders->retrieveOrder($orderId);
+```
+
+### Schedule an Order
+
+Schedules an order for a specific date and optional time. Fleetbase parses the schedule using the supplied timezone or the company timezone.
+
+`PATCH {{base_url}}/{{namespace}}/orders/:id/schedule`
+
+```php
+$result = $fleetbase->orders->scheduleOrder(
+    $orderId,
+    [
+        'date' => '2024-02-11',
+        'time' => '8am',
+        'timezone' => 'Asia/Singapore',
+    ]
+);
+```
+
+### Set Order Destination
+
+Sets the destination waypoint or place for an order. The response returns the updated order after the destination is changed.
+
+`PATCH {{base_url}}/{{namespace}}/orders/:id/set-destination/:placeId`
+
+```php
+$result = $fleetbase->orders->setOrderDestination($orderId, $placeId);
+```
+
+### Start an Order
+
+Starts an order and transitions it into active execution. Use this when a driver or dispatcher begins fulfillment.
+
+`POST {{base_url}}/{{namespace}}/orders/:id/start`
+
+```php
+$result = $fleetbase->orders->startOrder(
+    $orderId,
+    [
+        'skip_dispatch' => false,
+    ]
+);
+```
+
+### Update Order Activity
+
+Updates the current activity state for an order. The response returns the order with the latest workflow activity applied.
+
+`POST {{base_url}}/{{namespace}}/orders/:id/update-activity`
+
+```php
+$result = $fleetbase->orders->updateOrderActivity(
+    $orderId,
+    [
+        'activity' => 'next_activity-fixture',
+        'skip_dispatch' => false,
+    ]
+);
+```
+
+### Update an Order
+
+Updates an order and returns the updated order resource. You can update order metadata, notes, status, assignment fields, scheduling fields, proof-of-delivery settings, and payload details.
+
+`PUT {{base_url}}/{{namespace}}/orders/:id`
+
+```php
+$result = $fleetbase->orders->updateOrder(
+    $orderId,
+    [
+        'service_quote' => 'service_quote_id-fixture',
+    ]
+);
+```
+
+## Organizations
+
+### Get Current Organization
+
+Returns the organization associated with the API key on the request. Use it to confirm which account a credential belongs to, and to obtain the organization's id for endpoints that address an organization by path.
+
+`GET {{base_url}}/{{namespace}}/organizations/current`
+
+```php
+$result = $fleetbase->organizations->getCurrentOrganization();
+```
+
+### List Organizations
+
+Lists organizations available for driver onboarding and organization selection.
+
+`GET {{base_url}}/{{namespace}}/organizations`
+
+```php
+$result = $fleetbase->organizations->listOrganizations(
+    [
+        'limit' => '10',
+        'with_driver_onboard' => 'false',
+    ]
+);
+```
+
+## Parts
+
+### Create a Part
+
+Create a part.
+
+`POST {{base_url}}/{{namespace}}/parts`
+
+```php
+$result = $fleetbase->parts->createPart(
+    [
+        'sku' => 'FLT-OIL-timestamp-fixture',
+        'name' => 'Oil Filter',
+        'quantity_on_hand' => 24,
+        'unit_cost' => 1200,
+        'currency' => 'USD',
+        'status' => 'in_stock',
+    ]
+);
+```
+
+### Delete a Part
+
+Delete a part.
+
+`DELETE {{base_url}}/{{namespace}}/parts/{{part_id}}`
+
+```php
+$result = $fleetbase->parts->deletePart($partId);
+```
+
+### Query Parts
+
+Query parts.
+
+`GET {{base_url}}/{{namespace}}/parts`
+
+```php
+$result = $fleetbase->parts->queryParts();
+```
+
+### Retrieve a Part
+
+Retrieve a part.
+
+`GET {{base_url}}/{{namespace}}/parts/{{part_id}}`
+
+```php
+$result = $fleetbase->parts->retrievePart($partId);
+```
+
+### Update a Part
+
+Update a part.
+
+`PUT {{base_url}}/{{namespace}}/parts/{{part_id}}`
+
+```php
+$result = $fleetbase->parts->updatePart(
+    $partId,
+    [
+        'quantity_on_hand' => 18,
+    ]
+);
+```
+
+## Payloads
+
+### Create a Payload
+
+Creates a payload containing route endpoints and optional entities. Provide either pickup/dropoff endpoints or a waypoint list, then attach entities as needed.
+
+`POST {{base_url}}/{{namespace}}/payloads`
+
+```php
+$result = $fleetbase->payloads->createPayload(
+    [
+        'pickup' => [
+            'street1' => '10 Bayfront Avenue',
+            'city' => 'Singapore',
+            'postal_code' => '018956',
+            'country' => 'SG',
+        ],
+        'dropoff' => [
+            'street1' => '80 Mandai Lake Rd',
+            'city' => 'Singapore',
+            'postal_code' => '729826',
+            'country' => 'SG',
+        ],
+        'type' => 'food_delivery',
+    ]
+);
+```
+
+### Delete a Payload
+
+Delete a Payload.
+
+`DELETE {{base_url}}/{{namespace}}/payloads/:id`
+
+```php
+$result = $fleetbase->payloads->deletePayload($payloadId);
+```
+
+### Query Payloads
+
+Returns payloads for the current company. Use pagination and sort parameters to page through payload records.
+
+`GET {{base_url}}/{{namespace}}/payloads`
+
+```php
+$result = $fleetbase->payloads->queryPayloads(
+    [
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
+    ]
+);
+```
+
+### Retrieve a Payload
+
+Retrieve a Payload.
+
+`GET {{base_url}}/{{namespace}}/payloads/:id`
+
+```php
+$result = $fleetbase->payloads->retrievePayload($payloadId);
+```
+
+### Update a Payload
+
+Updates a payload's route endpoints, waypoints, entities, cash-on-delivery settings, or metadata. The response returns the updated payload with route and entity data.
+
+`PUT {{base_url}}/{{namespace}}/payloads/:id`
+
+```php
+$result = $fleetbase->payloads->updatePayload(
+    $payloadId,
+    [
+        'pickup' => [
+            'street1' => '10 Bayfront Avenue',
+            'city' => 'Singapore',
+            'postal_code' => '018956',
+            'country' => 'SG',
+        ],
+        'dropoff' => [
+            'street1' => '80 Mandai Lake Rd',
+            'city' => 'Singapore',
+            'postal_code' => '729826',
+            'country' => 'SG',
+        ],
+        'entities' => [
+            [
+                'name' => 'UltraHD 4K Smart TV',
+                'description' => '65-inch high-definition smart TV with vibrant colors and a sleek design.',
+                'currency' => 'USD',
+                'price' => 1200,
+            ],
+            [
+                'name' => 'Bluetooth Wireless Headphones',
+                'description' => 'Noise-cancelling, over-ear headphones with long-lasting battery life.',
+                'currency' => 'USD',
+                'price' => 250,
+            ],
+            [
+                'name' => 'Smart Fitness Watch',
+                'description' => 'Water-resistant fitness watch with heart rate monitor and GPS tracking.',
+                'currency' => 'USD',
+                'price' => 199.99,
+            ],
+        ],
+    ]
 );
 ```
 
@@ -2686,21 +2194,18 @@ Creates a place for the current company. Provide structured address fields, a fr
 ```php
 $result = $fleetbase->places->createPlace(
     [
-        'body' => [
-            'name' => 'Central Park',
-            'street1' => '830 5th Ave',
-            'city' => 'New York',
-            'province' => 'New York',
-            'postal_code' => '10065',
-            'neighborhood' => 'Manhattan',
-            'district' => 'Midtown',
-            'building' => 'Park Area',
-            'country' => 'US',
-            'phone' => '+12123106600',
-            'type' => 'Park',
-        ],
-    ],
-    []
+        'name' => 'Central Park',
+        'street1' => '830 5th Ave',
+        'city' => 'New York',
+        'province' => 'New York',
+        'postal_code' => '10065',
+        'neighborhood' => 'Manhattan',
+        'district' => 'Midtown',
+        'building' => 'Park Area',
+        'country' => 'US',
+        'phone' => '+12123106600',
+        'type' => 'Park',
+    ]
 );
 ```
 
@@ -2711,12 +2216,7 @@ Permanently deletes a place. It cannot be undone.
 `DELETE {{base_url}}/{{namespace}}/places/:id`
 
 ```php
-$result = $fleetbase->places->deletePlace(
-    [
-        'id' => 'place_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->places->deletePlace($placeId);
 ```
 
 ### List all Places
@@ -2727,13 +2227,10 @@ Returns a paginated list of places for the current organization. Places are sort
 
 ```php
 $result = $fleetbase->places->listAllPlaces(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -2746,14 +2243,11 @@ Searches and filters places for the current organization. Use query and paginati
 
 ```php
 $result = $fleetbase->places->queryPlaces(
-    [],
     [
-        'query' => [
-            'query' => 'place_name-fixture',
-            'limit' => '25',
-            'offset' => '<string>',
-            'sort' => 'created_at',
-        ],
+        'query' => 'place_name-fixture',
+        'limit' => '25',
+        'offset' => '<string>',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -2765,12 +2259,7 @@ This endpoint allows you to retrieve a place object to view it's details.
 `GET {{base_url}}/{{namespace}}/places/:id`
 
 ```php
-$result = $fleetbase->places->retrievePlace(
-    [
-        'id' => 'place_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->places->retrievePlace($placeId);
 ```
 
 ### Search Places
@@ -2781,13 +2270,10 @@ Searches places by free-form query and optional lat/lng locale context.
 
 ```php
 $result = $fleetbase->places->searchPlaces(
-    [],
     [
-        'query' => [
-            'query' => 'place_query-fixture',
-            'll' => 'place_ll-fixture',
-            'locale' => 'locale-fixture',
-        ],
+        'query' => 'place_query-fixture',
+        'll' => 'place_ll-fixture',
+        'locale' => 'locale-fixture',
     ]
 );
 ```
@@ -2800,23 +2286,20 @@ Updates a place by setting the fields included in the request. Send address fiel
 
 ```php
 $result = $fleetbase->places->updatePlace(
+    $placeId,
     [
-        'id' => 'place_id-fixture',
-        'body' => [
-            'name' => 'Central Park Edit',
-            'street1' => '830 5th Ave a ',
-            'city' => 'New York',
-            'province' => 'New York',
-            'postal_code' => '10065',
-            'neighborhood' => 'Manhattan',
-            'district' => 'Midtown',
-            'building' => 'Park Area',
-            'country' => 'US',
-            'phone' => '+12123106600',
-            'type' => 'Park',
-        ],
-    ],
-    []
+        'name' => 'Central Park Edit',
+        'street1' => '830 5th Ave a ',
+        'city' => 'New York',
+        'province' => 'New York',
+        'postal_code' => '10065',
+        'neighborhood' => 'Manhattan',
+        'district' => 'Midtown',
+        'building' => 'Park Area',
+        'country' => 'US',
+        'phone' => '+12123106600',
+        'type' => 'Park',
+    ]
 );
 ```
 
@@ -2831,11 +2314,8 @@ Only ServiceQuote objects generated using a Payload object may be used to create
 ```php
 $result = $fleetbase->purchaseRates->createPurchaseRate(
     [
-        'body' => [
-            'service_quote' => 'service_quote_id-fixture',
-        ],
-    ],
-    []
+        'service_quote' => 'service_quote_id-fixture',
+    ]
 );
 ```
 
@@ -2847,13 +2327,10 @@ This endpoint allows you to query purchase-rates you have created, it also provi
 
 ```php
 $result = $fleetbase->purchaseRates->queryPurchaseRates(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -2865,12 +2342,7 @@ This endpoint allows you to retrieve a purchase-rate object to view it's details
 `GET {{base_url}}/{{namespace}}/purchase-rates/:id`
 
 ```php
-$result = $fleetbase->purchaseRates->retrievePurchaseRate(
-    [
-        'id' => 'purchase_rate_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->purchaseRates->retrievePurchaseRate($purchaseRateId);
 ```
 
 ## Sensors
@@ -2884,17 +2356,14 @@ Create a sensor.
 ```php
 $result = $fleetbase->sensors->createSensor(
     [
-        'body' => [
-            'name' => 'Cargo Temperature',
-            'type' => 'temperature',
-            'device' => 'device_id-fixture',
-            'unit' => 'celsius',
-            'status' => 'active',
-            'min_threshold' => 0,
-            'max_threshold' => 8,
-        ],
-    ],
-    []
+        'name' => 'Cargo Temperature',
+        'type' => 'temperature',
+        'device' => 'device_id-fixture',
+        'unit' => 'celsius',
+        'status' => 'active',
+        'min_threshold' => 0,
+        'max_threshold' => 8,
+    ]
 );
 ```
 
@@ -2905,12 +2374,7 @@ Delete a sensor.
 `DELETE {{base_url}}/{{namespace}}/sensors/{{sensor_id}}`
 
 ```php
-$result = $fleetbase->sensors->deleteSensor(
-    [
-        'sensor_id' => 'sensor_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->sensors->deleteSensor($sensorId);
 ```
 
 ### Query Sensors
@@ -2920,10 +2384,7 @@ Query sensors.
 `GET {{base_url}}/{{namespace}}/sensors`
 
 ```php
-$result = $fleetbase->sensors->querySensors(
-    [],
-    []
-);
+$result = $fleetbase->sensors->querySensors();
 ```
 
 ### Retrieve a Sensor
@@ -2933,12 +2394,7 @@ Retrieve a sensor.
 `GET {{base_url}}/{{namespace}}/sensors/{{sensor_id}}`
 
 ```php
-$result = $fleetbase->sensors->retrieveSensor(
-    [
-        'sensor_id' => 'sensor_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->sensors->retrieveSensor($sensorId);
 ```
 
 ### Update a Sensor
@@ -2949,14 +2405,11 @@ Update a sensor.
 
 ```php
 $result = $fleetbase->sensors->updateSensor(
+    $sensorId,
     [
-        'sensor_id' => 'sensor_id-fixture',
-        'body' => [
-            'last_value' => '4.2',
-            'last_reading_at' => '2026-05-07T08:30:00Z',
-        ],
-    ],
-    []
+        'last_value' => '4.2',
+        'last_reading_at' => '2026-05-07T08:30:00Z',
+    ]
 );
 ```
 
@@ -2971,17 +2424,14 @@ A service area is created by simply providing a city, province or country in whi
 ```php
 $result = $fleetbase->serviceAreas->createServiceArea(
     [
-        'body' => [
-            'name' => 'Singapore',
-            'type' => 'city',
-            'latitude' => '1.3521',
-            'longitude' => '103.8198',
-            'radius' => '30000',
-            'country' => 'SG',
-            'status' => 'active',
-        ],
-    ],
-    []
+        'name' => 'Singapore',
+        'type' => 'city',
+        'latitude' => '1.3521',
+        'longitude' => '103.8198',
+        'radius' => '30000',
+        'country' => 'SG',
+        'status' => 'active',
+    ]
 );
 ```
 
@@ -2992,12 +2442,7 @@ Use this endpoint to delete a service area, deleting a service area will also de
 `DELETE {{base_url}}/{{namespace}}/service-areas/:id`
 
 ```php
-$result = $fleetbase->serviceAreas->deleteServiceArea(
-    [
-        'id' => 'service_area_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->serviceAreas->deleteServiceArea($serviceAreaId);
 ```
 
 ### Query Service Areas
@@ -3008,11 +2453,8 @@ Returns service areas matching the supplied filters. Use this to find configured
 
 ```php
 $result = $fleetbase->serviceAreas->queryServiceAreas(
-    [],
     [
-        'query' => [
-            'name' => 'service_area_name-fixture',
-        ],
+        'name' => 'service_area_name-fixture',
     ]
 );
 ```
@@ -3024,12 +2466,7 @@ This endpoint allows you to retrieve a service area object to view it's details.
 `GET {{base_url}}/{{namespace}}/service-areas/:id`
 
 ```php
-$result = $fleetbase->serviceAreas->retrieveServiceArea(
-    [
-        'id' => 'service_area_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->serviceAreas->retrieveServiceArea($serviceAreaId);
 ```
 
 ### Update a Service Area
@@ -3040,13 +2477,10 @@ You are only able to update the service area status
 
 ```php
 $result = $fleetbase->serviceAreas->updateServiceArea(
+    $serviceAreaId,
     [
-        'id' => 'service_area_id-fixture',
-        'body' => [
-            'status' => 'active',
-        ],
-    ],
-    []
+        'status' => 'active',
+    ]
 );
 ```
 
@@ -3060,11 +2494,8 @@ This endpoint is used to get the ServiceRate quotes based on pickup point locati
 
 ```php
 $result = $fleetbase->serviceQuotes->queryServiceQuotes(
-    [],
     [
-        'query' => [
-            'payload' => 'payload_id-fixture',
-        ],
+        'payload' => 'payload_id-fixture',
     ]
 );
 ```
@@ -3076,12 +2507,7 @@ Retrieves a service quote by id.
 `GET {{base_url}}/{{namespace}}/service-quotes/:id`
 
 ```php
-$result = $fleetbase->serviceQuotes->retrieveServiceQuote(
-    [
-        'id' => 'service_quote_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->serviceQuotes->retrieveServiceQuote($serviceQuoteId);
 ```
 
 ## Service Rates
@@ -3095,29 +2521,26 @@ Create a Service Rate.
 ```php
 $result = $fleetbase->serviceRates->createServiceRate(
     [
-        'body' => [
-            'service_name' => 'Food Delivery',
-            'service_type' => 'food_delivery',
-            'rate_calculation_method' => 'per_meter',
-            'currency' => 'USD',
-            'base_fee' => 10,
-            'per_meter_unit' => 'km',
-            'per_meter_flat_rate_fee' => 25,
-            'has_cod_fee' => true,
-            'cod_calculation_method' => 'percentage',
-            'cod_flat_fee' => 1,
-            'cod_percent' => 0,
-            'has_peak_hours_fee' => true,
-            'peak_hours_calculation_method' => 'percentage',
-            'peak_hours_flat_fee' => 3,
-            'peak_hours_percent' => 0,
-            'peak_hours_start' => '17:00',
-            'peak_hours_end' => '18:45',
-            'duration_terms' => 'Standard',
-            'estimated_days' => 3,
-        ],
-    ],
-    []
+        'service_name' => 'Food Delivery',
+        'service_type' => 'food_delivery',
+        'rate_calculation_method' => 'per_meter',
+        'currency' => 'USD',
+        'base_fee' => 10,
+        'per_meter_unit' => 'km',
+        'per_meter_flat_rate_fee' => 25,
+        'has_cod_fee' => true,
+        'cod_calculation_method' => 'percentage',
+        'cod_flat_fee' => 1,
+        'cod_percent' => 0,
+        'has_peak_hours_fee' => true,
+        'peak_hours_calculation_method' => 'percentage',
+        'peak_hours_flat_fee' => 3,
+        'peak_hours_percent' => 0,
+        'peak_hours_start' => '17:00',
+        'peak_hours_end' => '18:45',
+        'duration_terms' => 'Standard',
+        'estimated_days' => 3,
+    ]
 );
 ```
 
@@ -3128,12 +2551,7 @@ Delete a Service Rate.
 `DELETE {{base_url}}/{{namespace}}/service-rates/:id`
 
 ```php
-$result = $fleetbase->serviceRates->deleteServiceRate(
-    [
-        'id' => 'service_rate_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->serviceRates->deleteServiceRate($serviceRateId);
 ```
 
 ### Query Service Rates
@@ -3144,13 +2562,10 @@ List all service rates.
 
 ```php
 $result = $fleetbase->serviceRates->queryServiceRates(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'currency' => 'USD',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'currency' => 'USD',
     ]
 );
 ```
@@ -3162,12 +2577,7 @@ Retrieves a service rate by ID.
 `GET {{base_url}}/{{namespace}}/service-rates/:id`
 
 ```php
-$result = $fleetbase->serviceRates->retrieveServiceRate(
-    [
-        'id' => 'service_rate_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->serviceRates->retrieveServiceRate($serviceRateId);
 ```
 
 ### Update a Service Rate
@@ -3178,15 +2588,12 @@ Update a Service Rate.
 
 ```php
 $result = $fleetbase->serviceRates->updateServiceRate(
+    $serviceRateId,
     [
-        'id' => 'service_rate_id-fixture',
-        'body' => [
-            'currency' => 'SGD',
-            'base_fee' => 12.66,
-            'estimated_days' => 6,
-        ],
-    ],
-    []
+        'currency' => 'SGD',
+        'base_fee' => 12.66,
+        'estimated_days' => 6,
+    ]
 );
 ```
 
@@ -3201,12 +2608,9 @@ This endpoint allows you to retrieve a tracking-number object to view it's detai
 ```php
 $result = $fleetbase->trackingNumbers->createTrackingNumber(
     [
-        'body' => [
-            'region' => 'SG',
-            'owner' => 'order_id-fixture',
-        ],
-    ],
-    []
+        'region' => 'SG',
+        'owner' => 'order_id-fixture',
+    ]
 );
 ```
 
@@ -3219,11 +2623,8 @@ Decodes a tracking/entity/order QR code UUID and returns the matching resource.
 ```php
 $result = $fleetbase->trackingNumbers->decodeTrackingNumberQr(
     [
-        'body' => [
-            'code' => 'qr_code-fixture',
-        ],
-    ],
-    []
+        'code' => 'qr_code-fixture',
+    ]
 );
 ```
 
@@ -3234,12 +2635,7 @@ Deletes a tracking number by ID.
 `DELETE {{base_url}}/{{namespace}}/tracking-numbers/:id`
 
 ```php
-$result = $fleetbase->trackingNumbers->deleteTrackingNumber(
-    [
-        'id' => 'tracking_number_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->trackingNumbers->deleteTrackingNumber($trackingNumberId);
 ```
 
 ### Query Tracking Numbers
@@ -3250,14 +2646,11 @@ This endpoint allows you to query tracking-numbers you have created, it also pro
 
 ```php
 $result = $fleetbase->trackingNumbers->queryTrackingNumbers(
-    [],
     [
-        'query' => [
-            'query' => 'SG',
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'query' => 'SG',
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -3269,12 +2662,7 @@ This endpoint allows you to retrieve a tracking-number object to view it's detai
 `GET {{base_url}}/{{namespace}}/tracking-numbers/:id`
 
 ```php
-$result = $fleetbase->trackingNumbers->retrieveTrackingNumber(
-    [
-        'id' => 'tracking_number_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->trackingNumbers->retrieveTrackingNumber($trackingNumberId);
 ```
 
 ## Tracking Statuses
@@ -3288,19 +2676,16 @@ Create a new Tracking Status.
 ```php
 $result = $fleetbase->trackingStatuses->createTrackingStatus(
     [
-        'body' => [
-            'status' => 'Delivery is en-route',
-            'code' => 'delivery-en-route',
-            'details' => 'Our driver has picked up your order and is on the way to your address!',
-            'tracking_number' => 'tracking_number_id-fixture',
-            'location' => [
-                1.3521,
-                103.8198,
-            ],
-            'city' => 'Singapore',
+        'status' => 'Delivery is en-route',
+        'code' => 'delivery-en-route',
+        'details' => 'Our driver has picked up your order and is on the way to your address!',
+        'tracking_number' => 'tracking_number_id-fixture',
+        'location' => [
+            1.3521,
+            103.8198,
         ],
-    ],
-    []
+        'city' => 'Singapore',
+    ]
 );
 ```
 
@@ -3311,12 +2696,7 @@ Delete a Tracking Status.
 `DELETE {{base_url}}/{{namespace}}/tracking-statuses/:id`
 
 ```php
-$result = $fleetbase->trackingStatuses->deleteTrackingStatus(
-    [
-        'id' => 'tracking_status_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->trackingStatuses->deleteTrackingStatus($trackingStatusId);
 ```
 
 ### Query Tracking Statuses
@@ -3327,12 +2707,9 @@ List all Tracking Statuses
 
 ```php
 $result = $fleetbase->trackingStatuses->queryTrackingStatuses(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'tracking_number' => 'tracking_number_id-fixture',
-        ],
+        'limit' => '25',
+        'tracking_number' => 'tracking_number_id-fixture',
     ]
 );
 ```
@@ -3344,12 +2721,7 @@ Retrieve a Tracking Status.
 `GET {{base_url}}/{{namespace}}/tracking-statuses/:id`
 
 ```php
-$result = $fleetbase->trackingStatuses->retrieveTrackingStatus(
-    [
-        'id' => 'tracking_status_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->trackingStatuses->retrieveTrackingStatus($trackingStatusId);
 ```
 
 ### Update a Tracking Status
@@ -3360,13 +2732,10 @@ Updates an existing tracking status. The response returns the tracking status wi
 
 ```php
 $result = $fleetbase->trackingStatuses->updateTrackingStatus(
+    $trackingStatusId,
     [
-        'id' => 'tracking_status_id-fixture',
-        'body' => [
-            'country' => 'SG',
-        ],
-    ],
-    []
+        'country' => 'SG',
+    ]
 );
 ```
 
@@ -3381,18 +2750,15 @@ Creates a vehicle for the current company. Send VIN, make/model fields, assignme
 ```php
 $result = $fleetbase->vehicles->createVehicle(
     [
-        'body' => [
-            'vin' => '1GCGSBEA0G1111111',
-            'year' => 2023,
-            'make' => 'Toyota',
-            'model' => 'Camry',
-            'trim' => 'SE',
-            'plate_number' => 'ABC123',
-            'status' => 'maintenance',
-            'online' => false,
-        ],
-    ],
-    []
+        'vin' => '1GCGSBEA0G1111111',
+        'year' => 2023,
+        'make' => 'Toyota',
+        'model' => 'Camry',
+        'trim' => 'SE',
+        'plate_number' => 'ABC123',
+        'status' => 'maintenance',
+        'online' => false,
+    ]
 );
 ```
 
@@ -3403,12 +2769,7 @@ Permanently deletes a `Vehicle`. It cannot be undone.
 `DELETE {{base_url}}/{{namespace}}/vehicles/:id`
 
 ```php
-$result = $fleetbase->vehicles->deleteVehicle(
-    [
-        'id' => 'vehicle_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->vehicles->deleteVehicle($vehicleId);
 ```
 
 ### Query Vehicles
@@ -3419,14 +2780,11 @@ This endpoint allows you to query vehicles you have created, it also provides pa
 
 ```php
 $result = $fleetbase->vehicles->queryVehicles(
-    [],
     [
-        'query' => [
-            'query' => 'vehicle_name-fixture',
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'query' => 'vehicle_name-fixture',
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -3438,12 +2796,7 @@ Retrieve details for a specific `Vehicle`.
 `GET {{base_url}}/{{namespace}}/vehicles/:id`
 
 ```php
-$result = $fleetbase->vehicles->retrieveVehicle(
-    [
-        'id' => 'vehicle_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->vehicles->retrieveVehicle($vehicleId);
 ```
 
 ### Track Vehicle
@@ -3452,10 +2805,12 @@ $result = $fleetbase->vehicles->retrieveVehicle(
 
 ```php
 $result = $fleetbase->vehicles->trackVehicle(
+    $vehicleId,
     [
-        'id' => 'vehicle_id-fixture',
-    ],
-    []
+        'latitude' => -19.288195,
+        'longitude' => 146.795965,
+        'speed' => 100,
+    ]
 );
 ```
 
@@ -3467,17 +2822,14 @@ Updates a vehicle's identity, operational status, vendor assignment, location, c
 
 ```php
 $result = $fleetbase->vehicles->updateVehicle(
+    $vehicleId,
     [
-        'id' => 'vehicle_id-fixture',
-        'body' => [
-            'plate_number' => 'ABC123',
-            'status' => 'operational',
-            'latitude' => 40.7484,
-            'longitude' => -73.9857,
-            'speed' => 90,
-        ],
-    ],
-    []
+        'plate_number' => 'ABC123',
+        'status' => 'operational',
+        'latitude' => 40.7484,
+        'longitude' => -73.9857,
+        'speed' => 90,
+    ]
 );
 ```
 
@@ -3492,14 +2844,11 @@ Creates a vendor for the current company. Vendors can be assigned to orders, veh
 ```php
 $result = $fleetbase->vendors->createVendor(
     [
-        'body' => [
-            'name' => 'ABC Corporation',
-            'type' => 'Supplier',
-            'email' => 'abc@example.com',
-            'phone' => '1234567890',
-        ],
-    ],
-    []
+        'name' => 'ABC Corporation',
+        'type' => 'Supplier',
+        'email' => 'abc@example.com',
+        'phone' => '1234567890',
+    ]
 );
 ```
 
@@ -3510,12 +2859,7 @@ Use this endpoint to delete a vendor.
 `DELETE {{base_url}}/{{namespace}}/vendors/:id`
 
 ```php
-$result = $fleetbase->vendors->deleteVendor(
-    [
-        'id' => 'vendor_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->vendors->deleteVendor($vendorId);
 ```
 
 ### Query Vendors
@@ -3526,11 +2870,8 @@ Returns vendors for the current company. Use search, pagination, and sort parame
 
 ```php
 $result = $fleetbase->vendors->queryVendors(
-    [],
     [
-        'query' => [
-            'id' => 'vendor_id-fixture',
-        ],
+        'id' => 'vendor_id-fixture',
     ]
 );
 ```
@@ -3542,12 +2883,7 @@ This endpoint allows you to retrieve a vendor object to view it's details.
 `GET {{base_url}}/{{namespace}}/vendors/:id`
 
 ```php
-$result = $fleetbase->vendors->retrieveVendor(
-    [
-        'id' => 'vendor_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->vendors->retrieveVendor($vendorId);
 ```
 
 ### Update a Vendor
@@ -3558,16 +2894,13 @@ Updates a vendor's profile, primary address, type, contact fields, or metadata.
 
 ```php
 $result = $fleetbase->vendors->updateVendor(
+    $vendorId,
     [
-        'id' => 'vendor_id-fixture',
-        'body' => [
-            'name' => 'ABC Corporation',
-            'type' => 'Supplier',
-            'email' => 'abc@example.com',
-            'phone' => '1234567890',
-        ],
-    ],
-    []
+        'name' => 'ABC Corporation',
+        'type' => 'Supplier',
+        'email' => 'abc@example.com',
+        'phone' => '1234567890',
+    ]
 );
 ```
 
@@ -3582,18 +2915,15 @@ Create a work order.
 ```php
 $result = $fleetbase->workOrders->createWorkOrder(
     [
-        'body' => [
-            'subject' => 'Replace rear tire',
-            'category' => 'corrective_maintenance',
-            'status' => 'open',
-            'priority' => 'high',
-            'target_type' => 'fleet-ops:vehicle',
-            'target' => 'vehicle_id-fixture',
-            'assignee_type' => 'fleet-ops:vendor',
-            'assignee' => 'vendor_id-fixture',
-        ],
-    ],
-    []
+        'subject' => 'Replace rear tire',
+        'category' => 'corrective_maintenance',
+        'status' => 'open',
+        'priority' => 'high',
+        'target_type' => 'fleet-ops:vehicle',
+        'target' => 'vehicle_id-fixture',
+        'assignee_type' => 'fleet-ops:vendor',
+        'assignee' => 'vendor_id-fixture',
+    ]
 );
 ```
 
@@ -3604,12 +2934,7 @@ Delete a work order.
 `DELETE {{base_url}}/{{namespace}}/work-orders/{{work_order_id}}`
 
 ```php
-$result = $fleetbase->workOrders->deleteWorkOrder(
-    [
-        'work_order_id' => 'work_order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->workOrders->deleteWorkOrder($workOrderId);
 ```
 
 ### Query Work Orders
@@ -3619,10 +2944,7 @@ Query work orders.
 `GET {{base_url}}/{{namespace}}/work-orders`
 
 ```php
-$result = $fleetbase->workOrders->queryWorkOrders(
-    [],
-    []
-);
+$result = $fleetbase->workOrders->queryWorkOrders();
 ```
 
 ### Retrieve a Work Order
@@ -3632,12 +2954,7 @@ Retrieve a work order.
 `GET {{base_url}}/{{namespace}}/work-orders/{{work_order_id}}`
 
 ```php
-$result = $fleetbase->workOrders->retrieveWorkOrder(
-    [
-        'work_order_id' => 'work_order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->workOrders->retrieveWorkOrder($workOrderId);
 ```
 
 ### Send Work Order
@@ -3647,12 +2964,7 @@ Send this work order to its assigned vendor or contact.
 `POST {{base_url}}/{{namespace}}/work-orders/{{work_order_id}}/send`
 
 ```php
-$result = $fleetbase->workOrders->sendWorkOrder(
-    [
-        'work_order_id' => 'work_order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->workOrders->sendWorkOrder($workOrderId);
 ```
 
 ### Update a Work Order
@@ -3663,13 +2975,10 @@ Update a work order.
 
 ```php
 $result = $fleetbase->workOrders->updateWorkOrder(
+    $workOrderId,
     [
-        'work_order_id' => 'work_order_id-fixture',
-        'body' => [
-            'status' => 'in_progress',
-        ],
-    ],
-    []
+        'status' => 'in_progress',
+    ]
 );
 ```
 
@@ -3684,83 +2993,80 @@ Creates a zone inside a service area. Provide either a GeoJSON boundary or a cen
 ```php
 $result = $fleetbase->zones->createZone(
     [
-        'body' => [
-            'name' => 'Center of Singapore',
-            'service_area' => 'service_area_id-fixture',
-            'color' => '#66e0ff',
-            'stroke_color' => '#00bfff',
-            'border' => [
-                'type' => 'Polygon',
-                'bbox' => [
-                    103.867493,
-                    1.35085,
-                    103.912125,
-                    1.383113,
-                ],
-                'coordinates' => [
+        'name' => 'Center of Singapore',
+        'service_area' => 'service_area_id-fixture',
+        'color' => '#66e0ff',
+        'stroke_color' => '#00bfff',
+        'border' => [
+            'type' => 'Polygon',
+            'bbox' => [
+                103.867493,
+                1.35085,
+                103.912125,
+                1.383113,
+            ],
+            'coordinates' => [
+                [
                     [
-                        [
-                            103.907661,
-                            1.362863,
-                        ],
-                        [
-                            103.892555,
-                            1.357714,
-                        ],
-                        [
-                            103.891525,
-                            1.353252,
-                        ],
-                        [
-                            103.883629,
-                            1.35085,
-                        ],
-                        [
-                            103.874702,
-                            1.351193,
-                        ],
-                        [
-                            103.870583,
-                            1.358744,
-                        ],
-                        [
-                            103.867493,
-                            1.368354,
-                        ],
-                        [
-                            103.870926,
-                            1.377621,
-                        ],
-                        [
-                            103.875732,
-                            1.38174,
-                        ],
-                        [
-                            103.886032,
-                            1.383113,
-                        ],
-                        [
-                            103.900452,
-                            1.383113,
-                        ],
-                        [
-                            103.909721,
-                            1.381397,
-                        ],
-                        [
-                            103.912125,
-                            1.374189,
-                        ],
-                        [
-                            103.907661,
-                            1.362863,
-                        ],
+                        103.907661,
+                        1.362863,
+                    ],
+                    [
+                        103.892555,
+                        1.357714,
+                    ],
+                    [
+                        103.891525,
+                        1.353252,
+                    ],
+                    [
+                        103.883629,
+                        1.35085,
+                    ],
+                    [
+                        103.874702,
+                        1.351193,
+                    ],
+                    [
+                        103.870583,
+                        1.358744,
+                    ],
+                    [
+                        103.867493,
+                        1.368354,
+                    ],
+                    [
+                        103.870926,
+                        1.377621,
+                    ],
+                    [
+                        103.875732,
+                        1.38174,
+                    ],
+                    [
+                        103.886032,
+                        1.383113,
+                    ],
+                    [
+                        103.900452,
+                        1.383113,
+                    ],
+                    [
+                        103.909721,
+                        1.381397,
+                    ],
+                    [
+                        103.912125,
+                        1.374189,
+                    ],
+                    [
+                        103.907661,
+                        1.362863,
                     ],
                 ],
             ],
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -3771,12 +3077,7 @@ Use this endpoint to delete a zone.
 `DELETE {{base_url}}/{{namespace}}/zones/:id`
 
 ```php
-$result = $fleetbase->zones->deleteZone(
-    [
-        'id' => 'zone_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->zones->deleteZone($zoneId);
 ```
 
 ### Query Zones
@@ -3787,11 +3088,8 @@ Returns zones matching the supplied filters. Use this to find configured geofenc
 
 ```php
 $result = $fleetbase->zones->queryZones(
-    [],
     [
-        'query' => [
-            'name' => 'zone_name-fixture',
-        ],
+        'name' => 'zone_name-fixture',
     ]
 );
 ```
@@ -3803,12 +3101,7 @@ Retrieves a single zone by ID. The response includes the zone geometry, display 
 `GET {{base_url}}/{{namespace}}/zones/:id`
 
 ```php
-$result = $fleetbase->zones->retrieveZone(
-    [
-        'id' => 'zone_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->zones->retrieveZone($zoneId);
 ```
 
 ### Update a Zone
@@ -3819,13 +3112,10 @@ You can update all properties of the Zone.
 
 ```php
 $result = $fleetbase->zones->updateZone(
+    $zoneId,
     [
-        'id' => 'zone_id-fixture',
-        'body' => [
-            'color' => '#ff00000',
-        ],
-    ],
-    []
+        'color' => '#ff00000',
+    ]
 );
 ```
 
@@ -3839,13 +3129,10 @@ Adds a user in the current organization to an existing chat channel. The respons
 
 ```php
 $result = $fleetbase->chatChannels->addParticipant(
+    $chatChannelId,
     [
-        'id' => 'chat_channel_id-fixture',
-        'body' => [
-            'user' => 'user_id-fixture',
-        ],
-    ],
-    []
+        'user' => 'user_id-fixture',
+    ]
 );
 ```
 
@@ -3858,14 +3145,11 @@ Creates a chat channel for the current organization. Include participant user ID
 ```php
 $result = $fleetbase->chatChannels->createChatChannel(
     [
-        'body' => [
-            'name' => 'Dispatch',
-            'participants' => [
-                'user_id-fixture',
-            ],
+        'name' => 'Dispatch',
+        'participants' => [
+            'user_id-fixture',
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -3877,13 +3161,10 @@ Marks a chat message as read for a participant. If a receipt already exists for 
 
 ```php
 $result = $fleetbase->chatChannels->createReadReceipt(
+    $chatMessageId,
     [
-        'chatMessageId' => 'chat_message_id-fixture',
-        'body' => [
-            'participant' => 'chat_participant_id-fixture',
-        ],
-    ],
-    []
+        'participant' => 'chat_participant_id-fixture',
+    ]
 );
 ```
 
@@ -3894,12 +3175,7 @@ Deletes a chat channel by ID. The response returns a deleted-resource envelope f
 `DELETE {{base_url}}/{{namespace}}/chat-channels/:id`
 
 ```php
-$result = $fleetbase->chatChannels->deleteChatChannel(
-    [
-        'id' => 'chat_channel_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->chatChannels->deleteChatChannel($chatChannelId);
 ```
 
 ### Delete Message
@@ -3909,12 +3185,7 @@ Deletes a chat message by ID. Use this when a previously sent message should be 
 `DELETE {{base_url}}/{{namespace}}/chat-channels/delete-message/:chatMessageId`
 
 ```php
-$result = $fleetbase->chatChannels->deleteMessage(
-    [
-        'chatMessageId' => 'chat_message_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->chatChannels->deleteMessage($chatMessageId);
 ```
 
 ### List Available Participants
@@ -3925,11 +3196,8 @@ Lists users in the current organization that can be added to a chat channel. Whe
 
 ```php
 $result = $fleetbase->chatChannels->listAvailableParticipants(
-    [],
     [
-        'query' => [
-            'channel' => 'chat_channel_id-fixture',
-        ],
+        'channel' => 'chat_channel_id-fixture',
     ]
 );
 ```
@@ -3942,13 +3210,10 @@ Returns chat channels visible to the current organization. Use query parameters 
 
 ```php
 $result = $fleetbase->chatChannels->queryChatChannels(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -3960,12 +3225,7 @@ Removes a participant from a chat channel by participant ID. The channel remains
 `DELETE {{base_url}}/{{namespace}}/chat-channels/remove-participant/:participantId`
 
 ```php
-$result = $fleetbase->chatChannels->removeParticipant(
-    [
-        'participantId' => 'chat_participant_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->chatChannels->removeParticipant($participantId);
 ```
 
 ### Retrieve Chat Channel
@@ -3975,12 +3235,7 @@ Retrieves a chat channel by ID, including its participants, feed, and latest mes
 `GET {{base_url}}/{{namespace}}/chat-channels/:id`
 
 ```php
-$result = $fleetbase->chatChannels->retrieveChatChannel(
-    [
-        'id' => 'chat_channel_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->chatChannels->retrieveChatChannel($chatChannelId);
 ```
 
 ### Send Message
@@ -3991,15 +3246,12 @@ Sends a message to a chat channel as an existing chat participant. File IDs can 
 
 ```php
 $result = $fleetbase->chatChannels->sendMessage(
+    $chatChannelId,
     [
-        'id' => 'chat_channel_id-fixture',
-        'body' => [
-            'sender' => 'chat_participant_id-fixture',
-            'content' => 'Hello from Fleetbase API',
-            'files' => [],
-        ],
-    ],
-    []
+        'sender' => 'chat_participant_id-fixture',
+        'content' => 'Hello from Fleetbase API',
+        'files' => [],
+    ]
 );
 ```
 
@@ -4011,13 +3263,10 @@ Updates a chat channel's name. The response returns the updated chat channel res
 
 ```php
 $result = $fleetbase->chatChannels->updateChatChannel(
+    $chatChannelId,
     [
-        'id' => 'chat_channel_id-fixture',
-        'body' => [
-            'name' => 'Dispatch Updates',
-        ],
-    ],
-    []
+        'name' => 'Dispatch Updates',
+    ]
 );
 ```
 
@@ -4032,15 +3281,12 @@ Creates a comment on a subject resource or as a reply to an existing comment. Pr
 ```php
 $result = $fleetbase->comments->createComment(
     [
-        'body' => [
-            'content' => 'Example comment',
-            'subject' => [
-                'id' => 'file_id-fixture',
-                'type' => 'file',
-            ],
+        'content' => 'Example comment',
+        'subject' => [
+            'id' => 'file_id-fixture',
+            'type' => 'file',
         ],
-    ],
-    []
+    ]
 );
 ```
 
@@ -4051,12 +3297,7 @@ Deletes a comment by ID. The response returns a deleted-resource envelope for th
 `DELETE {{base_url}}/{{namespace}}/comments/:id`
 
 ```php
-$result = $fleetbase->comments->deleteComment(
-    [
-        'id' => 'comment_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->comments->deleteComment($commentId);
 ```
 
 ### Query Comments
@@ -4067,13 +3308,10 @@ Returns comments for the current organization. Use query parameters to filter, s
 
 ```php
 $result = $fleetbase->comments->queryComments(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -4085,12 +3323,7 @@ Retrieves a comment by ID, including its author and any nested replies returned 
 `GET {{base_url}}/{{namespace}}/comments/:id`
 
 ```php
-$result = $fleetbase->comments->retrieveComment(
-    [
-        'id' => 'comment_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->comments->retrieveComment($commentId);
 ```
 
 ### Update Comment
@@ -4101,13 +3334,10 @@ Updates the content of an existing comment. The subject and parent linkage are n
 
 ```php
 $result = $fleetbase->comments->updateComment(
+    $commentId,
     [
-        'id' => 'comment_id-fixture',
-        'body' => [
-            'content' => 'Updated comment',
-        ],
-    ],
-    []
+        'content' => 'Updated comment',
+    ]
 );
 ```
 
@@ -4120,12 +3350,7 @@ Deletes a file record by ID. The response returns a deleted-resource envelope fo
 `DELETE {{base_url}}/{{namespace}}/files/:id`
 
 ```php
-$result = $fleetbase->files->deleteFile(
-    [
-        'id' => 'file_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->files->deleteFile($fileId);
 ```
 
 ### Download File
@@ -4135,12 +3360,7 @@ Downloads the binary contents of a file by ID. The API streams the stored file u
 `GET {{base_url}}/{{namespace}}/files/:id/download`
 
 ```php
-$result = $fleetbase->files->downloadFile(
-    [
-        'id' => 'file_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->files->downloadFile($fileId);
 ```
 
 ### Query Files
@@ -4151,13 +3371,10 @@ Returns uploaded files for the current organization. Use query parameters to fil
 
 ```php
 $result = $fleetbase->files->queryFiles(
-    [],
     [
-        'query' => [
-            'limit' => '25',
-            'offset' => '0',
-            'sort' => 'created_at',
-        ],
+        'limit' => '25',
+        'offset' => '0',
+        'sort' => 'created_at',
     ]
 );
 ```
@@ -4169,12 +3386,7 @@ Retrieves a file record by ID, including its URL, original filename, content typ
 `GET {{base_url}}/{{namespace}}/files/:id`
 
 ```php
-$result = $fleetbase->files->retrieveFile(
-    [
-        'id' => 'file_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->files->retrieveFile($fileId);
 ```
 
 ### Update File
@@ -4185,14 +3397,11 @@ Updates a file record's caption, metadata, or original filename. The uploaded bi
 
 ```php
 $result = $fleetbase->files->updateFile(
+    $fileId,
     [
-        'id' => 'file_id-fixture',
-        'body' => [
-            'caption' => 'Updated caption',
-            'meta' => [],
-        ],
-    ],
-    []
+        'caption' => 'Updated caption',
+        'meta' => [],
+    ]
 );
 ```
 
@@ -4205,15 +3414,12 @@ Creates a file from base64-encoded data. Fleetbase stores the decoded file, crea
 ```php
 $result = $fleetbase->files->uploadBase64File(
     [
-        'body' => [
-            'data' => 'base64_file_data-fixture',
-            'file_name' => 'example.png',
-            'file_type' => 'image',
-            'content_type' => 'image/png',
-            'path' => 'uploads',
-        ],
-    ],
-    []
+        'data' => 'base64_file_data-fixture',
+        'file_name' => 'example.png',
+        'file_type' => 'image',
+        'content_type' => 'image/png',
+        'path' => 'uploads',
+    ]
 );
 ```
 
@@ -4225,21 +3431,18 @@ Uploads a multipart file and creates a file record. The response includes the st
 
 ```php
 $result = $fleetbase->files->uploadFile(
-    [],
     [
-        'multipart' => [
-            [
-                'name' => 'file',
-                'contents' => 'replace-with-file-contents',
-            ],
-            [
-                'name' => 'path',
-                'contents' => 'uploads',
-            ],
-            [
-                'name' => 'type',
-                'contents' => 'attachment',
-            ],
+        [
+            'name' => 'file',
+            'contents' => 'replace-with-file-contents',
+        ],
+        [
+            'name' => 'path',
+            'contents' => 'uploads',
+        ],
+        [
+            'name' => 'type',
+            'contents' => 'attachment',
         ],
     ]
 );
@@ -4254,8 +3457,5 @@ Returns the organization associated with the API credential.
 `GET {{base_url}}/{{namespace}}/organizations/current`
 
 ```php
-$result = $fleetbase->organizations->getCurrentOrganization(
-    [],
-    []
-);
+$result = $fleetbase->organizations->getCurrentOrganization();
 ```

@@ -22,7 +22,7 @@ trait OrchestratorServiceEndpoints
      */
     public function commitOrchestratorPlan(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orchestrator/commit', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orchestrator/commit', [], 'body', func_get_args());
     }
 
     /**
@@ -34,6 +34,6 @@ trait OrchestratorServiceEndpoints
      */
     public function runOrchestrator(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/orchestrator/run', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/orchestrator/run', [], 'body', func_get_args());
     }
 }
