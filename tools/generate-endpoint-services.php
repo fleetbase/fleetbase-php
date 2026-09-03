@@ -145,13 +145,28 @@ function renderTrait(string $trait, array $methods): string
         $code .= "    /**\n";
         $code .= "     * {$description}.\n";
         $code .= "     *\n";
-        $code .= "     * @param array<string, mixed> \$parameters\n";
+        if ($method === 'dispatchOrder') {
+            $code .= "     * @param string|array<string, mixed> \$idOrParameters\n";
+            $code .= "     * @param array<string, mixed> \$parametersOrOptions\n";
+        } else {
+            $code .= "     * @param array<string, mixed> \$parameters\n";
+        }
         $code .= "     * @param array<string, mixed> \$options\n";
         $code .= "     * @return mixed\n";
         $code .= "     */\n";
-        $code .= "    public function {$method}(array \$parameters = [], array \$options = [])\n";
-        $code .= "    {\n";
-        $code .= "        return \$this->endpoint({$verb}, {$url}, \$parameters, \$options);\n";
+        if ($method === 'dispatchOrder') {
+            $code .= "    public function {$method}(\$idOrParameters = [], array \$parametersOrOptions = [], array \$options = [])\n";
+            $code .= "    {\n";
+            $code .= "        if (is_array(\$idOrParameters)) {\n";
+            $code .= "            return \$this->endpoint({$verb}, {$url}, \$idOrParameters, \$parametersOrOptions);\n";
+            $code .= "        }\n\n";
+            $code .= "        \$parametersOrOptions['id'] = \$idOrParameters;\n";
+            $code .= "        return \$this->endpoint({$verb}, {$url}, \$parametersOrOptions, \$options);\n";
+        } else {
+            $code .= "    public function {$method}(array \$parameters = [], array \$options = [])\n";
+            $code .= "    {\n";
+            $code .= "        return \$this->endpoint({$verb}, {$url}, \$parameters, \$options);\n";
+        }
         $code .= "    }\n\n";
     }
     return rtrim($code) . "\n}\n";

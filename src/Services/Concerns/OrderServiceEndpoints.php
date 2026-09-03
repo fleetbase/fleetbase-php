@@ -196,13 +196,19 @@ trait OrderServiceEndpoints
     /**
      * Dispatch an Order.
      *
-     * @param array<string, mixed> $parameters
+     * @param string|array<string, mixed> $idOrParameters
+     * @param array<string, mixed> $parametersOrOptions
      * @param array<string, mixed> $options
      * @return mixed
      */
-    public function dispatchOrder(array $parameters = [], array $options = [])
+    public function dispatchOrder($idOrParameters = [], array $parametersOrOptions = [], array $options = [])
     {
-        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/dispatch', $parameters, $options);
+        if (is_array($idOrParameters)) {
+            return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/dispatch', $idOrParameters, $parametersOrOptions);
+        }
+
+        $parametersOrOptions['id'] = $idOrParameters;
+        return $this->endpoint('PATCH', '{{base_url}}/{{namespace}}/orders/:id/dispatch', $parametersOrOptions, $options);
     }
 
     /**

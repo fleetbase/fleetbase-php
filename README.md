@@ -105,9 +105,10 @@ $fleetbase = new Fleetbase($_ENV['FLEETBASE_API_KEY'], [
 Standard resource services retain `create()`, `update()`, `findRecord()`, `findAll()`, `query()`, `queryRecord()`, and `destroy()`. Dedicated actions use discoverable methods named after the official Postman request.
 
 ```php
-$order = $fleetbase->orders->dispatchOrder([
-    'id' => 'order_123',
-]);
+$order = $fleetbase->orders->dispatch('order_123');
+
+// The contract-named form is equivalent.
+$order = $fleetbase->orders->dispatchOrder('order_123');
 
 $response = $fleetbase->client->request('GET', 'future-endpoint', [
     'limit' => 10,

@@ -14,12 +14,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - PHP 8.0 through 8.5 compatibility and PSR-18/PSR-7 transport injection.
 - Typed SDK exception hierarchy, defensive list-response hydration, deterministic contract/API snapshots, hermetic tests, and modern repository guidance.
+- Disposable-stack CI that executes all 220 locked Postman requests through their exact PHP SDK methods.
+- Automatic validation and publication when a semantic `release/` branch is merged into `main`.
 
 ### Changed
 
 - Relicensed unreleased 1.1.0 code to `AGPL-3.0-or-later`; released 1.0.x tags remain MIT licensed.
 - Preserved the 1.0.x facade while rebuilding request, response, resource, and service internals.
 - Modernized Composer dependencies and development tooling.
+- Normalized order dispatch calls so `dispatch($orderId)`, `dispatchOrder($orderId)`, and the legacy parameter-array form use the same official `PATCH` endpoint.
 
 ### Deprecated
 
@@ -34,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Tracking-status resources resolve with the correct spelling.
 - Legacy resource lifecycle hooks execute in the documented order and retain caller options.
 - Order services can access the transport, and QR/signature subject paths are generated correctly.
+- Order dispatch and destination actions use the HTTP verbs defined by the official API contract.
 - HTTP status, malformed JSON, empty body, transport, and Fleetbase error responses are handled consistently without leaking credentials.
 
 ### Security

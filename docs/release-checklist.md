@@ -1,6 +1,6 @@
 # 1.1.0 release checklist
 
-The release workflow validates and packages the candidate automatically. Publication remains an explicit maintainer-approved operation.
+The release workflow starts automatically when a semantic `release/` branch is merged into `main`. Publication remains subject to the protected `release` environment policy.
 
 ## Maintainer decisions before publication
 
@@ -8,21 +8,20 @@ The release workflow validates and packages the candidate automatically. Publica
 - An 85% minimum mutation score was approved. The final pre-release baseline measured 86.02% with 100% mutation-code coverage and no ignored source.
 - Select protected `release` environment approvers and the signing/attestation identity.
 - Verify Packagist ownership and the GitHub update hook.
-- Approve the coordinated Fleetbase API-reference generator update.
-- Approve the default-branch migration and the protected `master` transition period.
+- Review the coordinated Fleetbase API-reference generator update.
 
 ## Repository preparation
 
-1. Merge the implementation pull request into `release/v1.1.0` after every pull-request check succeeds.
-2. Review and merge the release integration into `main` after the default-branch runbook is approved.
+1. Create `release/v1.1.0`, update its dated changelog section and `docs/releases/1.1.0.md`, and open a pull request to `main`.
+2. Require every pull-request check, including the disposable 220-request SDK contract, before merge.
 3. Configure required checks and the protected `release` environment without granting workflow bypasses.
-4. Add `POSTMAN_API_KEY`, run both disposable contract workflows, and retain their evidence.
-5. Run the release workflow with version `1.1.0` and `publish=false`; review the archive, SBOM, checksums, coverage summary, API matrix, and workflow logs.
+4. Add `POSTMAN_API_KEY` at repository or organization scope and retain the live-contract artifacts.
+5. Review the pull-request release-candidate archive, SBOM, checksums, coverage summary, API matrix, and workflow logs.
 
 ## Publication
 
-1. Re-run the release workflow from the reviewed `main` commit with version `1.1.0` and `publish=true`.
-2. Approve the protected `release` environment only after the validation job succeeds.
+1. Merge the reviewed `release/v1.1.0` pull request into `main`; this automatically starts the release workflow and derives version `1.1.0`.
+2. Confirm the live SDK contract and validation jobs pass, then approve the protected `release` environment if an approval rule is configured.
 3. Confirm the immutable `1.1.0` tag and GitHub Release target the reviewed commit and contain the expected artifacts and provenance.
 4. Verify GitHub and Packagist identify `AGPL-3.0-or-later` for 1.1.0 while older tags retain their original MIT terms.
 5. Install the exact public package into clean plain PHP, Laravel, and Symfony fixtures:

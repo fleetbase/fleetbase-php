@@ -22,6 +22,21 @@ final class ApiExamplesTest extends TestCase
         $snippets = $matches[1];
         self::assertCount(220, $snippets);
 
+        $catalogContents = file_get_contents(dirname(__DIR__, 2) . '/contracts/php-sdk-examples.json');
+        self::assertIsString($catalogContents);
+        $catalog = json_decode($catalogContents, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($catalog);
+        $catalogExamples = $catalog['examples'] ?? null;
+        self::assertIsArray($catalogExamples);
+        self::assertCount(220, $catalogExamples);
+        self::assertSame($snippets, array_column(array_values($catalogExamples), 'call'));
+        $dispatchExample = $catalogExamples['fleetbase-api-orders-dispatch-an-order'] ?? null;
+        self::assertIsArray($dispatchExample);
+        self::assertSame(
+            '$result = $fleetbase->orders->dispatchOrder(\'order_id-fixture\');',
+            $dispatchExample['call'] ?? null
+        );
+
         $history = [];
         $responses = array_fill(0, count($snippets), new Response(200, ['Content-Type' => 'application/json'], '{}'));
         $handler = HandlerStack::create(new MockHandler($responses));

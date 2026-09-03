@@ -2189,12 +2189,7 @@ Dispatches an order to an assigned or eligible driver. The response returns the 
 `PATCH {{base_url}}/{{namespace}}/orders/:id/dispatch`
 
 ```php
-$result = $fleetbase->orders->dispatchOrder(
-    [
-        'id' => 'order_id-fixture',
-    ],
-    []
-);
+$result = $fleetbase->orders->dispatchOrder('order_id-fixture');
 ```
 
 ### Get Editable Entity Fields

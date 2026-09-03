@@ -1,7 +1,11 @@
 name: Disposable API contract
 
 on:
+  workflow_call:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
   schedule:
     - cron: "41 3 * * 0"
 
@@ -15,6 +19,7 @@ concurrency:
 jobs:
   contract:
     name: Official Postman and SDK contract
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 55
     env:
@@ -85,15 +90,6 @@ jobs:
           done
           echo "Disposable API did not become healthy." >&2
           exit 1
-      - name: Run both locked official Postman collections
-        uses: ./.github/actions/postman-contract
-        with:
-          collections: |
-            Fleetbase API
-            Fleetbase Core API
-          postman-ref: ${{ env.POSTMAN_REF }}
-          postman-api-key: ${{ env.POSTMAN_API_KEY }}
-          github-token: ${{ env.SOURCE_TOKEN }}
       - name: Mint a fresh SDK smoke credential
         env:
           CI_CUSTOMER_IDENTITY: ci-customer@fleetbase.local
@@ -137,10 +133,48 @@ jobs:
           tools: composer:v2
       - name: Install SDK dependencies
         run: composer install --working-dir=.sdk --no-interaction --prefer-dist
+      - name: Start the PHP SDK contract bridge
+        run: |
+          mkdir -p .sdk/build/live-contract
+          FLEETBASE_CONTRACT_TARGET_URL=http://127.0.0.1:8000 \
+          FLEETBASE_CONTRACT_NAMESPACE=v1 \
+          FLEETBASE_CONTRACT_STATE="$GITHUB_WORKSPACE/.sdk/build/live-contract/state.json" \
+            php -S 127.0.0.1:9000 .sdk/tools/live-sdk-contract-router.php \
+            > .sdk/build/live-contract/bridge.log 2>&1 &
+          echo $! > .sdk/build/live-contract/bridge.pid
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:9000/__sdk_contract_health | grep -q '"status":"ok"'; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "The PHP SDK contract bridge did not start." >&2
+          exit 1
+      - name: Run both official Postman collections through the SDK
+        uses: ./.github/actions/postman-contract
+        with:
+          collections: |
+            Fleetbase API
+            Fleetbase Core API
+          base-url: http://127.0.0.1:9000
+          postman-ref: ${{ env.POSTMAN_REF }}
+          postman-api-key: ${{ env.POSTMAN_API_KEY }}
+          github-token: ${{ env.SOURCE_TOKEN }}
+      - name: Prove every locked request invoked its SDK method
+        if: always()
+        run: php .sdk/tools/check-live-sdk-contract.php --state=.sdk/build/live-contract/state.json
       - name: Run SDK cases against the same stack
         run: php .sdk/tools/run-live-contract-smoke.php
         env:
           FLEETBASE_CONTRACT_BASE_URL: http://localhost:8000
+      - name: Upload SDK live-contract evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: php-sdk-live-contract
+          path: .sdk/build/live-contract/
+          if-no-files-found: error
+          retention-days: 30
       - name: Dump stack logs on failure
         if: failure()
         run: docker compose logs --no-color --tail=300
