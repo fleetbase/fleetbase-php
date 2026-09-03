@@ -22,19 +22,20 @@ trait IssueServiceEndpoints
      */
     public function createIssue(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/issues', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/issues', [], 'body', func_get_args());
     }
 
     /**
      * Delete an Issue.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteIssue(array $parameters = [], array $options = [])
+    public function deleteIssue($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/issues/:id', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/issues/:id', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -46,30 +47,32 @@ trait IssueServiceEndpoints
      */
     public function queryIssues(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/issues', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/issues', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve an Issue.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveIssue(array $parameters = [], array $options = [])
+    public function retrieveIssue($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/issues/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/issues/:id', ['id'], 'query', func_get_args());
     }
 
     /**
      * Update an Issue.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateIssue(array $parameters = [], array $options = [])
+    public function updateIssue($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/issues/:id', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/issues/:id', ['id'], 'body', func_get_args());
     }
 }

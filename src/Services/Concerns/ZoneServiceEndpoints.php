@@ -22,19 +22,20 @@ trait ZoneServiceEndpoints
      */
     public function createZone(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/zones', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/zones', [], 'body', func_get_args());
     }
 
     /**
      * Delete a Zone.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteZone(array $parameters = [], array $options = [])
+    public function deleteZone($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/zones/:id', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/zones/:id', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -46,30 +47,32 @@ trait ZoneServiceEndpoints
      */
     public function queryZones(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/zones', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/zones', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve a zone.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveZone(array $parameters = [], array $options = [])
+    public function retrieveZone($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/zones/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/zones/:id', ['id'], 'query', func_get_args());
     }
 
     /**
      * Update a Zone.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateZone(array $parameters = [], array $options = [])
+    public function updateZone($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/zones/:id', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/zones/:id', ['id'], 'body', func_get_args());
     }
 }

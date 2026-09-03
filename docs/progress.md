@@ -87,3 +87,12 @@ The disposable native Postman run requires a repository or organization `POSTMAN
 - Refactored the PHP SDK live contract to use the same published API image, clean database volume, pre-boot CI environment, non-interactive installer, health gate, and Fleetbase-owned seed-and-mint action used by the Core API and Fleet-Ops Postman workflows.
 - Retained the SDK-specific bridge on the same runner so both official collections still execute through PHP SDK methods rather than bypassing the library; the evidence gate requires every one of the 220 locked requests.
 - Added the canonical secret gate, optional Google Maps fixture configuration, test-only Stripe fixture inputs, API image digest reporting, and failure-safe stack diagnostics and teardown.
+
+## 2026-09-03 — ergonomic generated endpoint signatures
+
+- Classified all 220 locked requests by ordered URL identifiers and payload placement, then generated positional/direct calls for JSON, query, raw JSON, multipart, and empty-payload endpoints.
+- Centralized overload normalization in the base service while preserving the full published 1.1.0 parameter-array envelope, including PHP 8 named `parameters:` and `options:` calls.
+- Generated hermetic tests now invoke every endpoint in both forms and compare verb, encoded URL, query, JSON semantics, multipart content, and request-option forwarding. The focused edge-case suite rejects missing identifiers, invalid data/options, and ambiguous duplicate payloads.
+- Added the authoritative 1.1.0 public API snapshot to the compatibility gate. Local PHPUnit evidence is 35 tests and 3,906 assertions; fresh Xdebug evidence remains exactly 100.00% lines and 100.00% branches.
+- Switched the disposable bridge to positional/direct invocations so a successful 220-request run proves the documented SDK shape against Fleetbase rather than only exercising the legacy envelope.
+- The fresh full-source mutation run generated 1,802 mutants: 1,583 killed, 215 escaped, four timed out, and none uncovered, errored, skipped, or ignored. MSI and covered-code MSI are both 87.85%, above the approved 85% floor, with 100% mutation-code coverage.

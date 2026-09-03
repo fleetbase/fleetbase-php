@@ -22,43 +22,46 @@ trait FuelTransactionServiceEndpoints
      */
     public function createFuelTransaction(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/fuel-transactions', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fuel-transactions', [], 'body', func_get_args());
     }
 
     /**
      * Delete a Fuel Transaction.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteFuelTransaction(array $parameters = [], array $options = [])
+    public function deleteFuelTransaction($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}', ['fuel_transaction_id'], 'body', func_get_args());
     }
 
     /**
      * Match Fuel Transaction Order.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function matchFuelTransactionOrder(array $parameters = [], array $options = [])
+    public function matchFuelTransactionOrder($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/match-order', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/match-order', ['fuel_transaction_id'], 'body', func_get_args());
     }
 
     /**
      * Match Fuel Transaction Vehicle.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function matchFuelTransactionVehicle(array $parameters = [], array $options = [])
+    public function matchFuelTransactionVehicle($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/match-vehicle', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/match-vehicle', ['fuel_transaction_id'], 'body', func_get_args());
     }
 
     /**
@@ -70,54 +73,58 @@ trait FuelTransactionServiceEndpoints
      */
     public function queryFuelTransactions(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/fuel-transactions', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/fuel-transactions', [], 'query', func_get_args());
     }
 
     /**
      * Reprocess Fuel Transaction.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function reprocessFuelTransaction(array $parameters = [], array $options = [])
+    public function reprocessFuelTransaction($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/reprocess', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/reprocess', ['fuel_transaction_id'], 'body', func_get_args());
     }
 
     /**
      * Retrieve a Fuel Transaction.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveFuelTransaction(array $parameters = [], array $options = [])
+    public function retrieveFuelTransaction($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}', ['fuel_transaction_id'], 'query', func_get_args());
     }
 
     /**
      * Review Fuel Transaction.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function reviewFuelTransaction(array $parameters = [], array $options = [])
+    public function reviewFuelTransaction($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/review', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}/review', ['fuel_transaction_id'], 'body', func_get_args());
     }
 
     /**
      * Update a Fuel Transaction.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateFuelTransaction(array $parameters = [], array $options = [])
+    public function updateFuelTransaction($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/fuel-transactions/{{fuel_transaction_id}}', ['fuel_transaction_id'], 'body', func_get_args());
     }
 }

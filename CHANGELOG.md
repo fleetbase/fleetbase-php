@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Normalized order dispatch calls so `dispatch($orderId)`, `dispatchOrder($orderId)`, and the legacy parameter-array form use the same official `PATCH` endpoint.
+- Added positional path identifiers and direct body, query, and multipart arrays to all 220 generated methods while preserving the complete published 1.1.0 envelope and named-argument surface.
+- Updated the generated catalog and public examples to hide internal transport envelopes and execute the documented ergonomic calls.
 - Corrected the order destination action to use the HTTP verb defined by the official API contract.
 
 ## [1.1.0] - 2026-08-31

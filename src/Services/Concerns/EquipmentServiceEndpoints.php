@@ -22,19 +22,20 @@ trait EquipmentServiceEndpoints
      */
     public function createEquipment(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/equipment', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/equipment', [], 'body', func_get_args());
     }
 
     /**
      * Delete Equipment.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteEquipment(array $parameters = [], array $options = [])
+    public function deleteEquipment($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', ['equipment_id'], 'body', func_get_args());
     }
 
     /**
@@ -46,30 +47,32 @@ trait EquipmentServiceEndpoints
      */
     public function queryEquipment(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/equipment', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/equipment', [], 'query', func_get_args());
     }
 
     /**
      * Retrieve Equipment.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveEquipment(array $parameters = [], array $options = [])
+    public function retrieveEquipment($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', ['equipment_id'], 'query', func_get_args());
     }
 
     /**
      * Update Equipment.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateEquipment(array $parameters = [], array $options = [])
+    public function updateEquipment($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', ['equipment_id'], 'body', func_get_args());
     }
 }

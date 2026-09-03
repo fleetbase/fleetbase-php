@@ -59,6 +59,38 @@ foreach ($requests as $index => $request) {
     $ids[$id] = true;
     $sources[$source] = true;
 
+    $signature = $request['sdk_signature'] ?? null;
+    if (!is_array($signature)) {
+        $errors[] = sprintf('Request %s has no SDK signature metadata', $id);
+    } else {
+        $pathParameters = $signature['path_parameters'] ?? null;
+        $requestData = $signature['request_data'] ?? null;
+        $contractPayload = $signature['contract_payload'] ?? null;
+        if (!is_array($pathParameters) || array_filter($pathParameters, 'is_string') !== $pathParameters) {
+            $errors[] = sprintf('Request %s has invalid SDK path parameters', $id);
+        } else {
+            preg_match_all('/\{\{([^}]+)\}\}|:([A-Za-z][A-Za-z0-9_-]*)/', (string) ($request['url'] ?? ''), $matches, PREG_SET_ORDER);
+            $expectedPathParameters = array_map(static function (array $match): string {
+                return $match[1] !== '' ? $match[1] : $match[2];
+            }, $matches);
+            $expectedPathParameters = array_values(array_filter($expectedPathParameters, static function (string $name): bool {
+                return !in_array($name, ['base_url', 'namespace'], true);
+            }));
+            if ($pathParameters !== $expectedPathParameters) {
+                $errors[] = sprintf('Request %s SDK path parameter order does not match its URL', $id);
+            }
+        }
+        if (!in_array($requestData, ['body', 'query', 'multipart'], true)) {
+            $errors[] = sprintf('Request %s has invalid SDK request data placement', $id);
+        }
+        if (!in_array($contractPayload, ['none', 'json', 'raw', 'multipart', 'query'], true)) {
+            $errors[] = sprintf('Request %s has invalid SDK contract payload', $id);
+        }
+        if (($signature['legacy_envelope'] ?? null) !== true) {
+            $errors[] = sprintf('Request %s does not preserve the legacy SDK envelope', $id);
+        }
+    }
+
     $status = $request['status'] ?? '';
     if ($status === 'complete') {
         ++$counts['mapped'];

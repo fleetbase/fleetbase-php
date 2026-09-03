@@ -16,13 +16,14 @@ trait ChatChannelServiceEndpoints
     /**
      * Add Participant.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function addParticipant(array $parameters = [], array $options = [])
+    public function addParticipant($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/chat-channels/:id/add-participant', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/chat-channels/:id/add-participant', ['id'], 'body', func_get_args());
     }
 
     /**
@@ -34,43 +35,46 @@ trait ChatChannelServiceEndpoints
      */
     public function createChatChannel(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/chat-channels', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/chat-channels', [], 'body', func_get_args());
     }
 
     /**
      * Create Read Receipt.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function createReadReceipt(array $parameters = [], array $options = [])
+    public function createReadReceipt($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/chat-channels/read-message/:chatMessageId', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/chat-channels/read-message/:chatMessageId', ['chatMessageId'], 'body', func_get_args());
     }
 
     /**
      * Delete Chat Channel.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteChatChannel(array $parameters = [], array $options = [])
+    public function deleteChatChannel($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/chat-channels/:id', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/chat-channels/:id', ['id'], 'body', func_get_args());
     }
 
     /**
      * Delete Message.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function deleteMessage(array $parameters = [], array $options = [])
+    public function deleteMessage($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/chat-channels/delete-message/:chatMessageId', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/chat-channels/delete-message/:chatMessageId', ['chatMessageId'], 'body', func_get_args());
     }
 
     /**
@@ -82,7 +86,7 @@ trait ChatChannelServiceEndpoints
      */
     public function listAvailableParticipants(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/chat-channels/available-participants', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/chat-channels/available-participants', [], 'query', func_get_args());
     }
 
     /**
@@ -94,54 +98,58 @@ trait ChatChannelServiceEndpoints
      */
     public function queryChatChannels(array $parameters = [], array $options = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/chat-channels', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/chat-channels', [], 'query', func_get_args());
     }
 
     /**
      * Remove Participant.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function removeParticipant(array $parameters = [], array $options = [])
+    public function removeParticipant($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('DELETE', '{{base_url}}/{{namespace}}/chat-channels/remove-participant/:participantId', $parameters, $options);
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/chat-channels/remove-participant/:participantId', ['participantId'], 'body', func_get_args());
     }
 
     /**
      * Retrieve Chat Channel.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function retrieveChatChannel(array $parameters = [], array $options = [])
+    public function retrieveChatChannel($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('GET', '{{base_url}}/{{namespace}}/chat-channels/:id', $parameters, $options);
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/chat-channels/:id', ['id'], 'query', func_get_args());
     }
 
     /**
      * Send Message.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function sendMessage(array $parameters = [], array $options = [])
+    public function sendMessage($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('POST', '{{base_url}}/{{namespace}}/chat-channels/:id/send-message', $parameters, $options);
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/chat-channels/:id/send-message', ['id'], 'body', func_get_args());
     }
 
     /**
      * Update Chat Channel.
      *
-     * @param array<string, mixed> $parameters
-     * @param array<string, mixed> $options
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
      * @return mixed
      */
-    public function updateChatChannel(array $parameters = [], array $options = [])
+    public function updateChatChannel($parameters = [], $options = [], $requestOptions = [])
     {
-        return $this->endpoint('PUT', '{{base_url}}/{{namespace}}/chat-channels/:id', $parameters, $options);
+        return $this->endpointFromArguments('PUT', '{{base_url}}/{{namespace}}/chat-channels/:id', ['id'], 'body', func_get_args());
     }
 }
