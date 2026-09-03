@@ -25,9 +25,10 @@ This plan treats the Postman Native Git collections as the public contract inven
 
 - Repository: `fleetbase/fleetbase-php`
 - Default branch: `master`
-- Baseline commit and latest tag: `569fe88` / `1.0.2`
+- Required compatibility baseline: `569fe88` / `1.0.2`
+- Latest published tag after refreshing official refs: `97dabc5` / `1.0.3`
 - Baseline commit date: 2022-01-03
-- Repository history: 23 commits and three tags (`1.0.0`, `1.0.1`, `1.0.2`)
+- The 1.0.3 delta adds order actions that are also part of the compatibility surface; it changes the second `OrderService::getDistanceAndTime()` argument and contains malformed QR/signature path expressions, so callability and corrected behavior both require regression tests.
 - Production source and tests: 1,307 lines across 25 PHP files
 - Tracked dependencies: 4,394 files under `vendor/`
 - CI/release configuration: none
@@ -80,7 +81,7 @@ The current public shape must be captured before refactoring, but known defects 
 - `HttpClient` invokes `onBefore` after the network request.
 - HTTP failures are detected only when a decoded object has an `error` property. Status codes, validation envelopes, malformed JSON, empty bodies, transport failures, and response metadata are not modeled safely.
 - `getLastResponse()` is typed as Guzzle's concrete response while Guzzle returns the PSR response interface.
-- List/query handling supports only a bare JSON array, not pagination or common response envelopes.
+- List/query handling supports only a bare JSON array and does not defensively recognize common response envelopes. Fleetbase API v1 does not define an SDK pagination contract.
 - File upload/download, multipart bodies, streams, custom headers, idempotency keys, retries, timeouts, and cancellation are unsupported.
 - URL and namespace configuration is insufficient for self-hosted installations with path prefixes.
 
@@ -98,7 +99,7 @@ Even existing stores are incomplete. Orders alone have 30 documented requests, i
 
 - Only two test classes exist.
 - Tests instantiate the real client using `.env.test` and mutate API state.
-- There are no mock transport tests, exception-path tests, serialization tests, pagination tests, compatibility tests, or contract tests.
+- There are no mock transport tests, exception-path tests, serialization tests, list-response tests, compatibility tests, or contract tests.
 - The suite does not produce trustworthy coverage evidence for the current source.
 - PHPUnit 8 and PHPStan 0.11 are obsolete.
 - The PHPUnit configuration uses the removed `filter/whitelist` schema.
@@ -184,7 +185,7 @@ Split request construction, transport, response decoding, and error mapping.
 - Introduce immutable client configuration for base URI, namespace/version, API key, user agent, timeouts, retry policy, headers, debug behavior, and idempotency keys.
 - Preserve self-hosted path prefixes and normalize slashes without altering URLs.
 - Provide JSON, query, form, multipart, stream, and download request modes.
-- Expose response status, headers, request ID, pagination metadata, and raw PSR response when needed.
+- Expose response status, headers, request ID, and raw PSR response when needed.
 
 ### Error model
 
@@ -209,7 +210,7 @@ Use a common typed service for standard CRUD/query behavior and dedicated servic
 - correct dirty/change tracking
 - save, reload, and destroy state transitions
 - stable access to the owning service
-- paginated collection value object that remains iterable and can expose the legacy array where required
+- defensive list-response hydration that preserves the legacy array return without inventing SDK-side pagination
 
 Avoid generating opaque magic methods from endpoint names. A checked-in contract manifest may be generated from Postman, but human-reviewed service methods should define the public SDK experience.
 
@@ -241,7 +242,7 @@ Deliverables:
 
 - Record the exact Postman, Core API, and Fleet-Ops refs in a contract lock file.
 - Capture the `1.0.2` public API snapshot and behavioral characterization suite.
-- Add Architecture Decision Records for PHP support, PSR transport, pagination, endpoint generation, exceptions, and release automation.
+- Add Architecture Decision Records for PHP support, PSR transport, list responses/resources, endpoint generation, exceptions, and release automation.
 - Audit Packagist ownership, auto-update status, download metadata, and the unpublished/visible contents of `1.0.2`.
 - Audit repository administrators, branch protection, environments, secrets, webhooks, and signing policy without exposing secret values.
 - Confirm Fleetbase has the rights required to relicense all existing SDK code and record the effective release; previously published MIT tags remain under their original license.
@@ -280,7 +281,7 @@ Exit gate: old examples and characterization fixtures pass on all supported PHP 
 
 ### Phase 3 — standard resource completion
 
-Implement and test standard CRUD/query services for all public collection groups, including the currently missing groups. Add pagination, filtering, sorting, includes, sparse fields where supported, and resource hydration based on actual response resources.
+Implement and test standard CRUD/query services for all public collection groups, including the currently missing groups. Add filtering, sorting, includes, sparse fields where supported, and resource hydration based on actual response resources. Do not add an SDK pagination abstraction until the API exposes a verified pagination contract.
 
 Suggested batches:
 
@@ -311,7 +312,7 @@ Exit gate: all 220 Postman requests have an approved mapping and the public docs
 
 Deliverables:
 
-- Rewrite README quick start, configuration, self-hosted base URL, error handling, pagination, uploads/downloads, retries, debugging, and migration sections.
+- Rewrite README quick start, configuration, self-hosted base URL, error handling, list/query behavior, uploads/downloads, retries, debugging, and migration sections.
 - Document the license change prominently in the README, changelog, migration guide, release notes, Composer metadata, and GitHub Release so downstream users can assess AGPL obligations before upgrading.
 - Add framework recipes for plain PHP, Laravel container/service provider configuration, Symfony service configuration, and generic PSR-11/PSR-18 applications without forcing framework dependencies.
 - Verify Composer 2.2 LTS/current installation, prefer-lowest/current dependency resolution, Packagist dist installation, Git VCS installation, and optimized/no-dev autoloading.

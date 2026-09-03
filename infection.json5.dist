@@ -1,0 +1,31 @@
+{
+    source: {
+        directories: [
+            "src"
+        ]
+    },
+    timeout: 10,
+    threads: "max",
+    testFramework: "phpunit",
+    phpUnit: {
+        configDir: "."
+    },
+    // The 1.1.0 maintainer-approved quality floor. The release baseline is
+    // 86.02%, leaving limited headroom while preventing silent regression.
+    minMsi: 85,
+    minCoveredMsi: 85,
+    timeoutsAsEscaped: true,
+    // Four timeout-killed mutants were observed in the first complete baseline.
+    // Keep a small explicit ceiling so new timeout growth still fails CI.
+    maxTimeouts: 5,
+    logs: {
+        text: "build/mutation/infection.log",
+        summary: "build/mutation/summary.log",
+        summaryJson: "build/mutation/summary.json",
+        html: "build/mutation/report.html",
+        github: true
+    },
+    mutators: {
+        "@default": true
+    }
+}

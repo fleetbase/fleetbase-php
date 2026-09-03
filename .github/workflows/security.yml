@@ -1,0 +1,110 @@
+name: Security
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - release/**
+  schedule:
+    - cron: "23 4 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  composer:
+    name: Composer audit and license metadata
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up PHP
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+      - name: Install locked dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: Audit locked dependencies
+        run: composer audit --locked --no-interaction
+      - name: Verify AGPL release metadata
+        run: composer license:check
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: moderate
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Scan repository history
+        uses: trufflesecurity/trufflehog@20652fbbdefffcdaa493a5bf57ab2ac6b1db715b # v3.97.1
+        with:
+          version: 3.97.1
+          extra_args: --results=verified
+      - name: Check out the current source snapshot
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: current
+      - name: Scan the current source for verified and unknown secrets
+        uses: trufflesecurity/trufflehog@20652fbbdefffcdaa493a5bf57ab2ac6b1db715b # v3.97.1
+        with:
+          path: current
+          head: HEAD
+          version: 3.97.1
+          extra_args: --results=verified,unknown
+
+  codeql:
+    name: CodeQL (GitHub Actions)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@7188fc363630916deb702c7fdcf4e481b751f97a # v4.37.1
+        with:
+          languages: actions
+      - name: Analyze workflow code
+        uses: github/codeql-action/analyze@7188fc363630916deb702c7fdcf4e481b751f97a # v4.37.1
+        with:
+          output: build/codeql
+          upload: never
+      - name: Enforce clean CodeQL findings
+        run: php tools/check-sarif.php build/codeql/actions.sarif
+      - name: Upload CodeQL evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: codeql-actions-sarif
+          path: build/codeql/actions.sarif
+          if-no-files-found: error
+          retention-days: 14

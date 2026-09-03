@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible SDK defect
+title: "[Bug]: "
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include API keys, authorization headers, personal data, or production payloads. Report vulnerabilities through the Security tab.
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK version
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: PHP, Composer, framework, and Fleetbase API versions
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal sanitized reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true

@@ -1,0 +1,188 @@
+{
+    "schema_version": 1,
+    "generated_from": {
+        "repository": "https://github.com/fleetbase/postman",
+        "ref": "43253dbf87e5030d95d12be019dc26fcb7151ed6",
+        "collections": [
+            "Fleetbase API",
+            "Fleetbase Core API"
+        ]
+    },
+    "groups": {
+        "Chat Channels": {
+            "service": "Fleetbase\\Sdk\\Services\\ChatChannelService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ChatChannelServiceEndpoints",
+            "requests": 11
+        },
+        "Comments": {
+            "service": "Fleetbase\\Sdk\\Services\\CommentService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\CommentServiceEndpoints",
+            "requests": 5
+        },
+        "Contacts": {
+            "service": "Fleetbase\\Sdk\\Services\\ContactService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ContactServiceEndpoints",
+            "requests": 5
+        },
+        "Customers": {
+            "service": "Fleetbase\\Sdk\\Services\\CustomerService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\CustomerServiceEndpoints",
+            "requests": 16
+        },
+        "Devices": {
+            "service": "Fleetbase\\Sdk\\Services\\DeviceService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\DeviceServiceEndpoints",
+            "requests": 7
+        },
+        "Drivers": {
+            "service": "Fleetbase\\Sdk\\Services\\DriverService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\DriverServiceEndpoints",
+            "requests": 20
+        },
+        "Entities": {
+            "service": "Fleetbase\\Sdk\\Services\\EntityService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\EntityServiceEndpoints",
+            "requests": 5
+        },
+        "Equipment": {
+            "service": "Fleetbase\\Sdk\\Services\\EquipmentService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\EquipmentServiceEndpoints",
+            "requests": 5
+        },
+        "Files": {
+            "service": "Fleetbase\\Sdk\\Services\\FileService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\FileServiceEndpoints",
+            "requests": 7
+        },
+        "Fleets": {
+            "service": "Fleetbase\\Sdk\\Services\\FleetService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\FleetServiceEndpoints",
+            "requests": 5
+        },
+        "Fuel Reports": {
+            "service": "Fleetbase\\Sdk\\Services\\FuelReportService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\FuelReportServiceEndpoints",
+            "requests": 5
+        },
+        "Fuel Transactions": {
+            "service": "Fleetbase\\Sdk\\Services\\FuelTransactionService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\FuelTransactionServiceEndpoints",
+            "requests": 9
+        },
+        "Geofences": {
+            "service": "Fleetbase\\Sdk\\Services\\GeofenceService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\GeofenceServiceEndpoints",
+            "requests": 4
+        },
+        "Issues": {
+            "service": "Fleetbase\\Sdk\\Services\\IssueService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\IssueServiceEndpoints",
+            "requests": 5
+        },
+        "Labels": {
+            "service": "Fleetbase\\Sdk\\Services\\LabelService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\LabelServiceEndpoints",
+            "requests": 1
+        },
+        "Manifests": {
+            "service": "Fleetbase\\Sdk\\Services\\ManifestService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ManifestServiceEndpoints",
+            "requests": 3
+        },
+        "Onboard": {
+            "service": "Fleetbase\\Sdk\\Services\\OnboardService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\OnboardServiceEndpoints",
+            "requests": 1
+        },
+        "Orchestrator": {
+            "service": "Fleetbase\\Sdk\\Services\\OrchestratorService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\OrchestratorServiceEndpoints",
+            "requests": 2
+        },
+        "Order Configs": {
+            "service": "Fleetbase\\Sdk\\Services\\OrderConfigService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\OrderConfigServiceEndpoints",
+            "requests": 2
+        },
+        "Orders": {
+            "service": "Fleetbase\\Sdk\\Services\\OrderService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\OrderServiceEndpoints",
+            "requests": 30
+        },
+        "Organizations": {
+            "service": "Fleetbase\\Sdk\\Services\\OrganizationService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\OrganizationServiceEndpoints",
+            "requests": 2
+        },
+        "Parts": {
+            "service": "Fleetbase\\Sdk\\Services\\PartService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\PartServiceEndpoints",
+            "requests": 5
+        },
+        "Payloads": {
+            "service": "Fleetbase\\Sdk\\Services\\PayloadService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\PayloadServiceEndpoints",
+            "requests": 5
+        },
+        "Places": {
+            "service": "Fleetbase\\Sdk\\Services\\PlaceService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\PlaceServiceEndpoints",
+            "requests": 7
+        },
+        "Purchase Rates": {
+            "service": "Fleetbase\\Sdk\\Services\\PurchaseRateService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\PurchaseRateServiceEndpoints",
+            "requests": 3
+        },
+        "Sensors": {
+            "service": "Fleetbase\\Sdk\\Services\\SensorService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\SensorServiceEndpoints",
+            "requests": 5
+        },
+        "Service Areas": {
+            "service": "Fleetbase\\Sdk\\Services\\ServiceAreaService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ServiceAreaServiceEndpoints",
+            "requests": 5
+        },
+        "Service Quotes": {
+            "service": "Fleetbase\\Sdk\\Services\\ServiceQuoteService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ServiceQuoteServiceEndpoints",
+            "requests": 2
+        },
+        "Service Rates": {
+            "service": "Fleetbase\\Sdk\\Services\\ServiceRateService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ServiceRateServiceEndpoints",
+            "requests": 5
+        },
+        "Tracking Numbers": {
+            "service": "Fleetbase\\Sdk\\Services\\TrackingNumberService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\TrackingNumberServiceEndpoints",
+            "requests": 5
+        },
+        "Tracking Statuses": {
+            "service": "Fleetbase\\Sdk\\Services\\TrackingStatusService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\TrackingStatusServiceEndpoints",
+            "requests": 5
+        },
+        "Vehicles": {
+            "service": "Fleetbase\\Sdk\\Services\\VehicleService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\VehicleServiceEndpoints",
+            "requests": 6
+        },
+        "Vendors": {
+            "service": "Fleetbase\\Sdk\\Services\\VendorService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\VendorServiceEndpoints",
+            "requests": 5
+        },
+        "Work Orders": {
+            "service": "Fleetbase\\Sdk\\Services\\WorkOrderService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\WorkOrderServiceEndpoints",
+            "requests": 6
+        },
+        "Zones": {
+            "service": "Fleetbase\\Sdk\\Services\\ZoneService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\ZoneServiceEndpoints",
+            "requests": 5
+        }
+    }
+}

@@ -1,0 +1,149 @@
+name: Disposable API contract
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 3 * * 0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contract-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  contract:
+    name: Official Postman and SDK contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      FLEETBASE_STACK_REF: d810cee000d42713942a2343264eb706b0b3a59a
+      POSTMAN_REF: 43253dbf87e5030d95d12be019dc26fcb7151ed6
+      SOURCE_TOKEN: ${{ secrets._GITHUB_AUTH_TOKEN || github.token }}
+      POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+    steps:
+      - name: Require contract-only credentials
+        run: |
+          if [ -z "$POSTMAN_API_KEY" ]; then
+            echo "POSTMAN_API_KEY is required to run the official native collection." >&2
+            exit 1
+          fi
+      - name: Check out the locked Fleetbase stack
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: fleetbase/fleetbase
+          ref: d810cee000d42713942a2343264eb706b0b3a59a
+          submodules: recursive
+          token: ${{ env.SOURCE_TOKEN }}
+      - name: Prove locked package refs
+        run: |
+          test "$(git -C packages/core-api rev-parse HEAD)" = "b7691c06ffdfe8f8874352e746aa8e523d5e3531"
+          test "$(git -C packages/fleetops rev-parse HEAD)" = "a9131daeb1a23ed4b0046dd2d7b632fb100bfba0"
+      - name: Pin transitive actions in the locked Fleetbase composite
+        run: |
+          sed -i 's#actions/checkout@v4#actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1#g' .github/actions/postman-contract/action.yml
+          sed -i 's#actions/upload-artifact@v4#actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a#g' .github/actions/postman-contract/action.yml
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
+      - name: Build the locked API stack
+        run: |
+          docker build \
+            --file docker/Dockerfile \
+            --target app-release \
+            --build-arg GITHUB_AUTH_KEY="$SOURCE_TOKEN" \
+            --tag fleetbase/fleetbase-api:sdk-contract \
+            .
+          docker tag fleetbase/fleetbase-api:sdk-contract fleetbase/fleetbase-api:latest
+      - name: Prepare non-interactive test configuration
+        run: |
+          sudo rm -rf docker/database/mysql
+          mkdir -p docker/database/mysql
+          cp api/.env.example api/.env
+          set_env() {
+            if grep -q "^$1=" api/.env; then
+              sed -i "s|^$1=.*|$1=$2|" api/.env
+            else
+              echo "$1=$2" >> api/.env
+            fi
+          }
+          set_env THROTTLE_ENABLED false
+          set_env STOREFRONT_BYPASS_VERIFICATION_CODE 000000
+          set_env STOREFRONT_REVIEW_ACCOUNTS '+15555550123'
+          set_env MAIL_MAILER log
+          set_env MAIL_FROM_ADDRESS ci-contract@fleetbase.local
+      - name: Install the disposable stack
+        run: bash scripts/docker-install.sh --non-interactive
+      - name: Wait for API health
+        run: |
+          for attempt in $(seq 1 40); do
+            if curl --fail --silent --max-time 5 http://localhost:8000/health | grep -q '"status"'; then
+              echo "Disposable API is healthy."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Disposable API did not become healthy." >&2
+          exit 1
+      - name: Run both locked official Postman collections
+        uses: ./.github/actions/postman-contract
+        with:
+          collections: |
+            Fleetbase API
+            Fleetbase Core API
+          postman-ref: ${{ env.POSTMAN_REF }}
+          postman-api-key: ${{ env.POSTMAN_API_KEY }}
+          github-token: ${{ env.SOURCE_TOKEN }}
+      - name: Mint a fresh SDK smoke credential
+        env:
+          CI_CUSTOMER_IDENTITY: ci-customer@fleetbase.local
+          CI_CUSTOMER_PHONE: '+15555550123'
+          CI_CUSTOMER_PASSWORD: CiCustomerPassw0rd!
+          CI_CUSTOMER_VERIFICATION_CODE: '000000'
+          CI_DRIVER_IDENTITY: ci-driver@fleetbase.local
+          CI_DRIVER_PHONE: '+15555550124'
+          CI_DRIVER_PASSWORD: CiDriverPassw0rd!
+        run: |
+          code="$(base64 scripts/ci/mint-api-key.php | tr -d '\n')"
+          output="$(docker compose exec -T \
+            -e "CI_CUSTOMER_IDENTITY=$CI_CUSTOMER_IDENTITY" \
+            -e "CI_CUSTOMER_PHONE=$CI_CUSTOMER_PHONE" \
+            -e "CI_CUSTOMER_PASSWORD=$CI_CUSTOMER_PASSWORD" \
+            -e "CI_CUSTOMER_VERIFICATION_CODE=$CI_CUSTOMER_VERIFICATION_CODE" \
+            -e "CI_DRIVER_IDENTITY=$CI_DRIVER_IDENTITY" \
+            -e "CI_DRIVER_PHONE=$CI_DRIVER_PHONE" \
+            -e "CI_DRIVER_PASSWORD=$CI_DRIVER_PASSWORD" \
+            application php artisan tinker --execute="eval(base64_decode('${code}'));" 2>&1)"
+          if printf '%s\n' "$output" | grep -q 'MINT_ERROR'; then
+            printf '%s\n' "$output" | grep -A 2 'MINT_ERROR'
+            exit 1
+          fi
+          key="$(printf '%s\n' "$output" | grep -oE 'flb_(live|test)_[A-Za-z0-9_-]+' | tail -1)"
+          if [ -z "$key" ]; then
+            echo "Unable to mint the disposable SDK credential." >&2
+            exit 1
+          fi
+          echo "::add-mask::$key"
+          echo "FLEETBASE_CONTRACT_API_KEY=$key" >> "$GITHUB_ENV"
+      - name: Check out the SDK under test
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: .sdk
+      - name: Set up PHP for SDK smoke cases
+        uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+      - name: Install SDK dependencies
+        run: composer install --working-dir=.sdk --no-interaction --prefer-dist
+      - name: Run SDK cases against the same stack
+        run: php .sdk/tools/run-live-contract-smoke.php
+        env:
+          FLEETBASE_CONTRACT_BASE_URL: http://localhost:8000
+      - name: Dump stack logs on failure
+        if: failure()
+        run: docker compose logs --no-color --tail=300
+      - name: Tear down disposable stack
+        if: always()
+        run: docker compose down --volumes
