@@ -143,6 +143,7 @@ function reserveContractRequest(string $statePath, string $method, string $path)
     $state = readState($handle);
     $used = is_array($state['requests'] ?? null) ? $state['requests'] : [];
     $matches = [];
+    $position = 0;
     foreach ($manifest['requests'] as $request) {
         if (!is_array($request)) {
             continue;
@@ -150,7 +151,20 @@ function reserveContractRequest(string $statePath, string $method, string $path)
         if (requiredString($request, 'method') !== $method || matchTemplate(requiredString($request, 'url'), $path) === null) {
             continue;
         }
-        $matches[] = $request;
+        $matches[] = [
+            'request' => $request,
+            'specificity' => templateSpecificity(requiredString($request, 'url')),
+            'position' => $position++,
+        ];
+    }
+
+    usort($matches, static function (array $left, array $right): int {
+        $specificity = $right['specificity'] <=> $left['specificity'];
+        return $specificity !== 0 ? $specificity : $left['position'] <=> $right['position'];
+    });
+
+    foreach ($matches as $match) {
+        $request = $match['request'];
         if (isset($used[$request['id'] ?? ''])) {
             continue;
         }
@@ -161,7 +175,7 @@ function reserveContractRequest(string $statePath, string $method, string $path)
     }
 
     if ($matches !== []) {
-        $request = $matches[0];
+        $request = $matches[0]['request'];
         $id = requiredString($request, 'id');
         $previous = is_array($used[$id] ?? null) ? $used[$id] : [];
         $attempts = is_int($previous['attempts'] ?? null) ? $previous['attempts'] + 1 : 2;
@@ -176,6 +190,20 @@ function reserveContractRequest(string $statePath, string $method, string $path)
 
     fclose($handle);
     throw new RuntimeException(sprintf('No %s contract matches %s.', $method, $path));
+}
+
+function templateSpecificity(string $template): int
+{
+    $template = (string) preg_replace('#^\{\{base_url\}\}/\{\{namespace\}\}/?#i', '', $template);
+    $segments = explode('/', trim(explode('?', $template, 2)[0], '/'));
+    $specificity = 0;
+    foreach ($segments as $segment) {
+        if (preg_match('/^:[A-Za-z][A-Za-z0-9_-]*$/', $segment) !== 1
+            && preg_match('/^\{\{[^}]+\}\}$/', $segment) !== 1) {
+            $specificity++;
+        }
+    }
+    return $specificity;
 }
 
 /** @return resource */
