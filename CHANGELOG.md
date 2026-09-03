@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-09-03
+
+### Changed
+
+- Added positional path identifiers and direct body, query, and multipart arrays to all 220 generated methods while preserving the complete published 1.1.0 envelope and named-argument surface.
+- Updated the generated catalog and public examples to hide internal transport envelopes and execute the documented ergonomic calls.
+
 ## [1.1.1] - 2026-09-03
 
 ### Added
@@ -19,8 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Normalized order dispatch calls so `dispatch($orderId)`, `dispatchOrder($orderId)`, and the legacy parameter-array form use the same official `PATCH` endpoint.
-- Added positional path identifiers and direct body, query, and multipart arrays to all 220 generated methods while preserving the complete published 1.1.0 envelope and named-argument surface.
-- Updated the generated catalog and public examples to hide internal transport envelopes and execute the documented ergonomic calls.
 - Corrected the order destination action to use the HTTP verb defined by the official API contract.
 
 ## [1.1.0] - 2026-08-31
@@ -67,7 +72,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Latest baseline whose public API is explicitly preserved by 1.1.0.
 
 
-[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.1.1...HEAD
+[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/fleetbase/fleetbase-php/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/fleetbase/fleetbase-php/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/fleetbase/fleetbase-php/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/fleetbase/fleetbase-php/compare/1.0.2...1.0.3

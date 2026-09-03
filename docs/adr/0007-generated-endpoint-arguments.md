@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted for 1.1.1.
+Accepted for 1.1.2.
 
 ## Context
 

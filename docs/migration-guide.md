@@ -16,9 +16,9 @@ The 1.1.0 release preserves the `Fleetbase\Sdk` namespace, facade constructor, e
 
 The final guide will list every corrected behavior, new exception type, transport injection option, and framework recipe before release. Fleetbase API v1 does not expose an SDK pagination contract, so 1.1.0 retains the legacy array return from `findAll()` and `query()` and does not introduce a speculative pagination method.
 
-## Endpoint calls in 1.1.1
+## Endpoint calls in 1.1.2
 
-Version 1.1.1 adds an ergonomic form for every generated endpoint without removing the form published in 1.1.0. New code should pass URL identifiers positionally, followed by the request data and then optional transport options:
+Version 1.1.2 adds an ergonomic form for every generated endpoint without removing the form published in 1.1.0. New code should pass URL identifiers positionally, followed by the request data and then optional transport options:
 
 ```php
 $fleetbase->drivers->changeDriverPassword($driverId, $passwordData);
