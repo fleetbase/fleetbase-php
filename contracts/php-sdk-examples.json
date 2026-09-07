@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "9a7d4d898b4e74d735d93c78d67d4d5013c1a28b",
+        "ref": "9b59befdc1b4623ba40bf5661bd5e88f1dac673e",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
@@ -297,8 +297,17 @@
             "name": "Create a Driver",
             "implementation": "Fleetbase\\Sdk\\Services\\DriverService::createDriver",
             "variables": [],
-            "call": "$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n        'password' => 'driver_seed_password-fixture',\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n        'password' => 'driver_seed_password-fixture',\n    ]\n);"
+            "call": "$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n        'password' => 'driver_seed_password-fixture',\n        'timezone' => 'Asia/Singapore',\n        'internal_id' => 'DRV-1001',\n        'drivers_license_number' => 'S1234567A',\n        'license_expiry' => '2030-06-30',\n        'country' => 'SG',\n        'city' => 'Singapore',\n        'current_status' => 'on_duty',\n        'skills' => [\n            'hazmat',\n        ],\n        'max_travel_time' => 28800,\n        'max_distance' => 250000,\n        'time_window_start' => '08:00',\n        'time_window_end' => '18:00',\n        'meta' => [\n            'badge' => 'A12',\n        ],\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n        'password' => 'driver_seed_password-fixture',\n        'timezone' => 'Asia/Singapore',\n        'internal_id' => 'DRV-1001',\n        'drivers_license_number' => 'S1234567A',\n        'license_expiry' => '2030-06-30',\n        'country' => 'SG',\n        'city' => 'Singapore',\n        'current_status' => 'on_duty',\n        'skills' => [\n            'hazmat',\n        ],\n        'max_travel_time' => 28800,\n        'max_distance' => 250000,\n        'time_window_start' => '08:00',\n        'time_window_end' => '18:00',\n        'meta' => [\n            'badge' => 'A12',\n        ],\n    ]\n);"
+        },
+        "fleetbase-api-drivers-create-an-operational-driver": {
+            "collection": "Fleetbase API",
+            "group": "Drivers",
+            "name": "Create an Operational Driver",
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::createDriver",
+            "variables": [],
+            "call": "$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'Yard Driver',\n        'internal_id' => 'DRV-7788',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'Yard Driver',\n        'internal_id' => 'DRV-7788',\n    ]\n);"
         },
         "fleetbase-api-drivers-delete-a-driver": {
             "collection": "Fleetbase API",
@@ -310,6 +319,17 @@
             },
             "call": "$result = $fleetbase->drivers->deleteDriver($driverId);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$driverId = 'driver_id-fixture';\n\n$result = $fleetbase->drivers->deleteDriver($driverId);"
+        },
+        "fleetbase-api-drivers-delete-an-operational-driver": {
+            "collection": "Fleetbase API",
+            "group": "Drivers",
+            "name": "Delete an Operational Driver",
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::deleteDriver",
+            "variables": {
+                "driverId": "operational_driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->drivers->deleteDriver($driverId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$driverId = 'operational_driver_id-fixture';\n\n$result = $fleetbase->drivers->deleteDriver($driverId);"
         },
         "fleetbase-api-drivers-get-driver-current-organization": {
             "collection": "Fleetbase API",
@@ -472,8 +492,19 @@
             "variables": {
                 "driverId": "driver_id-fixture"
             },
-            "call": "$result = $fleetbase->drivers->updateDriver(\n    $driverId,\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$driverId = 'driver_id-fixture';\n\n$result = $fleetbase->drivers->updateDriver(\n    $driverId,\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n    ]\n);"
+            "call": "$result = $fleetbase->drivers->updateDriver(\n    $driverId,\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n        'internal_id' => 'DRV-1002',\n        'timezone' => 'Europe/Amsterdam',\n        'city' => 'Johor Bahru',\n        'current_status' => 'off_duty',\n        'meta' => [\n            'badge' => 'B34',\n        ],\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$driverId = 'driver_id-fixture';\n\n$result = $fleetbase->drivers->updateDriver(\n    $driverId,\n    [\n        'name' => 'John Doe',\n        'email' => 'randomEmail-fixture',\n        'phone' => 'randomPhoneNumber-fixture',\n        'internal_id' => 'DRV-1002',\n        'timezone' => 'Europe/Amsterdam',\n        'city' => 'Johor Bahru',\n        'current_status' => 'off_duty',\n        'meta' => [\n            'badge' => 'B34',\n        ],\n    ]\n);"
+        },
+        "fleetbase-api-drivers-update-a-driver-unchanged-contact": {
+            "collection": "Fleetbase API",
+            "group": "Drivers",
+            "name": "Update a Driver Unchanged Contact",
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::updateDriver",
+            "variables": {
+                "driverId": "driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->drivers->updateDriver(\n    $driverId,\n    [\n        'email' => 'created_driver_email-fixture',\n        'phone' => 'created_driver_phone-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$driverId = 'driver_id-fixture';\n\n$result = $fleetbase->drivers->updateDriver(\n    $driverId,\n    [\n        'email' => 'created_driver_email-fixture',\n        'phone' => 'created_driver_phone-fixture',\n    ]\n);"
         },
         "fleetbase-api-drivers-verify-driver-login-code": {
             "collection": "Fleetbase API",
@@ -586,14 +617,65 @@
             "call": "$result = $fleetbase->equipment->updateEquipment(\n    $equipmentId,\n    [\n        'status' => 'maintenance',\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'equipment_id-fixture';\n\n$result = $fleetbase->equipment->updateEquipment(\n    $equipmentId,\n    [\n        'status' => 'maintenance',\n    ]\n);"
         },
+        "fleetbase-api-fleets-assign-a-driver-to-a-fleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Assign a Driver to a Fleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignDriverToFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "driver": "fleet_driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->assignDriverToFleet($fleetId, $driver);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$driver = 'fleet_driver_id-fixture';\n\n$result = $fleetbase->fleets->assignDriverToFleet($fleetId, $driver);"
+        },
+        "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Assign a Vehicle to a Fleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignVehicleToFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "vehicle": "fleet_vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->assignVehicleToFleet($fleetId, $vehicle);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$vehicle = 'fleet_vehicle_id-fixture';\n\n$result = $fleetbase->fleets->assignVehicleToFleet($fleetId, $vehicle);"
+        },
         "fleetbase-api-fleets-create-a-fleet": {
             "collection": "Fleetbase API",
             "group": "Fleets",
             "name": "Create a Fleet",
             "implementation": "Fleetbase\\Sdk\\Services\\FleetService::createFleet",
             "variables": [],
-            "call": "$result = $fleetbase->fleets->createFleet(\n    [\n        'name' => 'Haulers',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->fleets->createFleet(\n    [\n        'name' => 'Haulers',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);"
+            "call": "$result = $fleetbase->fleets->createFleet(\n    [\n        'name' => 'Haulers',\n        'color' => '#2563EB',\n        'task' => 'Long haul distribution',\n        'status' => 'active',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->fleets->createFleet(\n    [\n        'name' => 'Haulers',\n        'color' => '#2563EB',\n        'task' => 'Long haul distribution',\n        'status' => 'active',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);"
+        },
+        "fleetbase-api-fleets-create-a-fleet-driver": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Create a Fleet Driver",
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::createDriver",
+            "variables": [],
+            "call": "$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'Fleet Membership Driver',\n        'internal_id' => 'DRV-FLT-0001',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->drivers->createDriver(\n    [\n        'name' => 'Fleet Membership Driver',\n        'internal_id' => 'DRV-FLT-0001',\n    ]\n);"
+        },
+        "fleetbase-api-fleets-create-a-fleet-vehicle": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Create a Fleet Vehicle",
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::createVehicle",
+            "variables": [],
+            "call": "$result = $fleetbase->vehicles->createVehicle(\n    [\n        'name' => 'Fleet Membership Van',\n        'make' => 'Toyota',\n        'model' => 'HiAce',\n        'year' => 2024,\n        'plate_number' => 'FLT-0001',\n        'status' => 'available',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->vehicles->createVehicle(\n    [\n        'name' => 'Fleet Membership Van',\n        'make' => 'Toyota',\n        'model' => 'HiAce',\n        'year' => 2024,\n        'plate_number' => 'FLT-0001',\n        'status' => 'available',\n    ]\n);"
+        },
+        "fleetbase-api-fleets-create-a-subfleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Create a Subfleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::createFleet",
+            "variables": [],
+            "call": "$result = $fleetbase->fleets->createFleet(\n    [\n        'name' => 'Carpool',\n        'color' => '#059669',\n        'task' => 'Employee transport',\n        'status' => 'active',\n        'parent_fleet' => 'parent_fleet_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->fleets->createFleet(\n    [\n        'name' => 'Carpool',\n        'color' => '#059669',\n        'task' => 'Employee transport',\n        'status' => 'active',\n        'parent_fleet' => 'parent_fleet_id-fixture',\n    ]\n);"
         },
         "fleetbase-api-fleets-delete-a-fleet": {
             "collection": "Fleetbase API",
@@ -606,6 +688,39 @@
             "call": "$result = $fleetbase->fleets->deleteFleet($fleetId);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n\n$result = $fleetbase->fleets->deleteFleet($fleetId);"
         },
+        "fleetbase-api-fleets-delete-a-fleet-driver": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Delete a Fleet Driver",
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::deleteDriver",
+            "variables": {
+                "driverId": "fleet_driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->drivers->deleteDriver($driverId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$driverId = 'fleet_driver_id-fixture';\n\n$result = $fleetbase->drivers->deleteDriver($driverId);"
+        },
+        "fleetbase-api-fleets-delete-a-fleet-vehicle": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Delete a Fleet Vehicle",
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::deleteVehicle",
+            "variables": {
+                "vehicleId": "fleet_vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->vehicles->deleteVehicle($vehicleId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'fleet_vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->deleteVehicle($vehicleId);"
+        },
+        "fleetbase-api-fleets-delete-a-subfleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Delete a Subfleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::deleteFleet",
+            "variables": {
+                "fleetId": "subfleet_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->deleteFleet($fleetId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'subfleet_id-fixture';\n\n$result = $fleetbase->fleets->deleteFleet($fleetId);"
+        },
         "fleetbase-api-fleets-query-fleets": {
             "collection": "Fleetbase API",
             "group": "Fleets",
@@ -614,6 +729,78 @@
             "variables": [],
             "call": "$result = $fleetbase->fleets->queryFleets(\n    [\n        'limit' => '25',\n        'offset' => '0',\n        'sort' => 'created_at',\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->fleets->queryFleets(\n    [\n        'limit' => '25',\n        'offset' => '0',\n        'sort' => 'created_at',\n    ]\n);"
+        },
+        "fleetbase-api-fleets-reassign-a-driver-to-a-fleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Reassign a Driver to a Fleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignDriverToFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "driver": "fleet_driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->assignDriverToFleet($fleetId, $driver);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$driver = 'fleet_driver_id-fixture';\n\n$result = $fleetbase->fleets->assignDriverToFleet($fleetId, $driver);"
+        },
+        "fleetbase-api-fleets-reassign-a-vehicle-to-a-fleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Reassign a Vehicle to a Fleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignVehicleToFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "vehicle": "fleet_vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->assignVehicleToFleet($fleetId, $vehicle);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$vehicle = 'fleet_vehicle_id-fixture';\n\n$result = $fleetbase->fleets->assignVehicleToFleet($fleetId, $vehicle);"
+        },
+        "fleetbase-api-fleets-remove-a-driver-from-a-fleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Driver from a Fleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeDriverFromFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "driver": "fleet_driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->removeDriverFromFleet($fleetId, $driver);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$driver = 'fleet_driver_id-fixture';\n\n$result = $fleetbase->fleets->removeDriverFromFleet($fleetId, $driver);"
+        },
+        "fleetbase-api-fleets-remove-a-driver-from-a-fleet-again": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Driver from a Fleet Again",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeDriverFromFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "driver": "fleet_driver_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->removeDriverFromFleet($fleetId, $driver);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$driver = 'fleet_driver_id-fixture';\n\n$result = $fleetbase->fleets->removeDriverFromFleet($fleetId, $driver);"
+        },
+        "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Vehicle from a Fleet",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeVehicleFromFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "vehicle": "fleet_vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->removeVehicleFromFleet($fleetId, $vehicle);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$vehicle = 'fleet_vehicle_id-fixture';\n\n$result = $fleetbase->fleets->removeVehicleFromFleet($fleetId, $vehicle);"
+        },
+        "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet-again": {
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Vehicle from a Fleet Again",
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeVehicleFromFleet",
+            "variables": {
+                "fleetId": "fleet_id-fixture",
+                "vehicle": "fleet_vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->fleets->removeVehicleFromFleet($fleetId, $vehicle);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n$vehicle = 'fleet_vehicle_id-fixture';\n\n$result = $fleetbase->fleets->removeVehicleFromFleet($fleetId, $vehicle);"
         },
         "fleetbase-api-fleets-retrieve-a-fleet": {
             "collection": "Fleetbase API",
@@ -634,8 +821,8 @@
             "variables": {
                 "fleetId": "fleet_id-fixture"
             },
-            "call": "$result = $fleetbase->fleets->updateFleet(\n    $fleetId,\n    [\n        'name' => 'Haulers',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n\n$result = $fleetbase->fleets->updateFleet(\n    $fleetId,\n    [\n        'name' => 'Haulers',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);"
+            "call": "$result = $fleetbase->fleets->updateFleet(\n    $fleetId,\n    [\n        'name' => 'Haulers North',\n        'color' => '#7C3AED',\n        'task' => 'Regional distribution',\n        'status' => 'active',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$fleetId = 'fleet_id-fixture';\n\n$result = $fleetbase->fleets->updateFleet(\n    $fleetId,\n    [\n        'name' => 'Haulers North',\n        'color' => '#7C3AED',\n        'task' => 'Regional distribution',\n        'status' => 'active',\n        'service_area' => 'service_area_id-fixture',\n    ]\n);"
         },
         "fleetbase-api-fuel-reports-create-a-fuel-report": {
             "collection": "Fleetbase API",
@@ -1103,6 +1290,15 @@
             "variables": [],
             "call": "$result = $fleetbase->orders->createOrderUsingOnlyWaypoints(\n    [\n        'waypoints' => [\n            [\n                1.3521,\n                103.8198,\n            ],\n            '10 Bayfront Avenue, Singapore 018956',\n            '18 Marina Gardens Drive, Singapore 018953',\n            '80 Mandai Lake Rd, Singapore 729826',\n            '1 Beach Road, Singapore 189673',\n            'Sentosa, Singapore',\n        ],\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->orders->createOrderUsingOnlyWaypoints(\n    [\n        'waypoints' => [\n            [\n                1.3521,\n                103.8198,\n            ],\n            '10 Bayfront Avenue, Singapore 018956',\n            '18 Marina Gardens Drive, Singapore 018953',\n            '80 Mandai Lake Rd, Singapore 729826',\n            '1 Beach Road, Singapore 189673',\n            'Sentosa, Singapore',\n        ],\n    ]\n);"
+        },
+        "fleetbase-api-orders-create-an-order-with-empty-relationships": {
+            "collection": "Fleetbase API",
+            "group": "Orders",
+            "name": "Create an Order with Empty Relationships",
+            "implementation": "Fleetbase\\Sdk\\Services\\OrderService::createOrder",
+            "variables": [],
+            "call": "$result = $fleetbase->orders->createOrder(\n    [\n        'pickup' => 'Singapore 018971',\n        'dropoff' => '321 Orchard Rd, Singapore',\n        'driver' => '',\n        'vehicle' => '',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->orders->createOrder(\n    [\n        'pickup' => 'Singapore 018971',\n        'dropoff' => '321 Orchard Rd, Singapore',\n        'driver' => '',\n        'vehicle' => '',\n    ]\n);"
         },
         "fleetbase-api-orders-delete-an-order": {
             "collection": "Fleetbase API",
@@ -1629,6 +1825,15 @@
             "call": "$result = $fleetbase->serviceRates->createServiceRate(\n    [\n        'service_name' => 'Food Delivery',\n        'service_type' => 'food_delivery',\n        'rate_calculation_method' => 'per_meter',\n        'currency' => 'USD',\n        'base_fee' => 10,\n        'per_meter_unit' => 'km',\n        'per_meter_flat_rate_fee' => 25,\n        'has_cod_fee' => true,\n        'cod_calculation_method' => 'percentage',\n        'cod_flat_fee' => 1,\n        'cod_percent' => 0,\n        'has_peak_hours_fee' => true,\n        'peak_hours_calculation_method' => 'percentage',\n        'peak_hours_flat_fee' => 3,\n        'peak_hours_percent' => 0,\n        'peak_hours_start' => '17:00',\n        'peak_hours_end' => '18:45',\n        'duration_terms' => 'Standard',\n        'estimated_days' => 3,\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->serviceRates->createServiceRate(\n    [\n        'service_name' => 'Food Delivery',\n        'service_type' => 'food_delivery',\n        'rate_calculation_method' => 'per_meter',\n        'currency' => 'USD',\n        'base_fee' => 10,\n        'per_meter_unit' => 'km',\n        'per_meter_flat_rate_fee' => 25,\n        'has_cod_fee' => true,\n        'cod_calculation_method' => 'percentage',\n        'cod_flat_fee' => 1,\n        'cod_percent' => 0,\n        'has_peak_hours_fee' => true,\n        'peak_hours_calculation_method' => 'percentage',\n        'peak_hours_flat_fee' => 3,\n        'peak_hours_percent' => 0,\n        'peak_hours_start' => '17:00',\n        'peak_hours_end' => '18:45',\n        'duration_terms' => 'Standard',\n        'estimated_days' => 3,\n    ]\n);"
         },
+        "fleetbase-api-service-rates-create-a-service-rate-with-an-empty-service-area": {
+            "collection": "Fleetbase API",
+            "group": "Service Rates",
+            "name": "Create a Service Rate with an Empty Service Area",
+            "implementation": "Fleetbase\\Sdk\\Services\\ServiceRateService::createServiceRate",
+            "variables": [],
+            "call": "$result = $fleetbase->serviceRates->createServiceRate(\n    [\n        'service_name' => 'Empty Relationship Rate',\n        'service_type' => 'food_delivery',\n        'rate_calculation_method' => 'per_meter',\n        'currency' => 'USD',\n        'base_fee' => 10,\n        'per_meter_unit' => 'km',\n        'per_meter_flat_rate_fee' => 25,\n        'service_area' => '',\n        'zone' => '',\n        'duration_terms' => 'Standard',\n        'estimated_days' => 3,\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->serviceRates->createServiceRate(\n    [\n        'service_name' => 'Empty Relationship Rate',\n        'service_type' => 'food_delivery',\n        'rate_calculation_method' => 'per_meter',\n        'currency' => 'USD',\n        'base_fee' => 10,\n        'per_meter_unit' => 'km',\n        'per_meter_flat_rate_fee' => 25,\n        'service_area' => '',\n        'zone' => '',\n        'duration_terms' => 'Standard',\n        'estimated_days' => 3,\n    ]\n);"
+        },
         "fleetbase-api-service-rates-delete-a-service-rate": {
             "collection": "Fleetbase API",
             "group": "Service Rates",
@@ -1777,8 +1982,8 @@
             "name": "Create a Vehicle",
             "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::createVehicle",
             "variables": [],
-            "call": "$result = $fleetbase->vehicles->createVehicle(\n    [\n        'vin' => '1GCGSBEA0G1111111',\n        'year' => 2023,\n        'make' => 'Toyota',\n        'model' => 'Camry',\n        'trim' => 'SE',\n        'plate_number' => 'ABC123',\n        'status' => 'maintenance',\n        'online' => false,\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->vehicles->createVehicle(\n    [\n        'vin' => '1GCGSBEA0G1111111',\n        'year' => 2023,\n        'make' => 'Toyota',\n        'model' => 'Camry',\n        'trim' => 'SE',\n        'plate_number' => 'ABC123',\n        'status' => 'maintenance',\n        'online' => false,\n    ]\n);"
+            "call": "$result = $fleetbase->vehicles->createVehicle(\n    [\n        'internal_id' => 'VEH-1001',\n        'name' => 'Depot Van',\n        'description' => 'City route van',\n        'vin' => '1GCGSBEA0G1111111',\n        'year' => 2023,\n        'make' => 'Toyota',\n        'model' => 'Camry',\n        'trim' => 'SE',\n        'color' => 'White',\n        'type' => 'sedan',\n        'class' => 'N1',\n        'plate_number' => 'ABC123',\n        'serial_number' => 'SER-1001',\n        'call_sign' => 'DEPOT-1',\n        'fuel_card_number' => 'FC-1001',\n        'status' => 'maintenance',\n        'online' => false,\n        'odometer' => 41000,\n        'odometer_unit' => 'km',\n        'odometer_at_purchase' => 12,\n        'measurement_system' => 'metric',\n        'fuel_type' => 'diesel',\n        'fuel_volume_unit' => 'l',\n        'transmission' => 'automatic',\n        'body_type' => 'sedan',\n        'seating_capacity' => 5,\n        'weight' => 1620.5,\n        'payload_capacity' => 1400,\n        'fuel_capacity' => 60,\n        'currency' => 'SGD',\n        'purchased_at' => '2026-01-02',\n        'loan_first_payment' => '2026-02-15',\n        'loan_amount' => 32000,\n        'insurance_value' => 41000,\n        'depreciation_rate' => 12.5,\n        'current_value' => 38000,\n        'acquisition_cost' => 52000,\n        'engine_number' => 'ENG-1001',\n        'number_of_cylinders' => 4,\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'specs' => [\n            'doors' => 4,\n        ],\n        'details' => [\n            'liftgate' => true,\n        ],\n        'notes' => 'City route pool',\n        'meta' => [\n            'depot' => 'north',\n        ],\n        'skills' => [\n            'tail_lift',\n        ],\n        'max_tasks' => 40,\n        'time_window_start' => '08:00',\n        'time_window_end' => '18:00',\n        'return_to_depot' => true,\n        'vendor' => 'vendor_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->vehicles->createVehicle(\n    [\n        'internal_id' => 'VEH-1001',\n        'name' => 'Depot Van',\n        'description' => 'City route van',\n        'vin' => '1GCGSBEA0G1111111',\n        'year' => 2023,\n        'make' => 'Toyota',\n        'model' => 'Camry',\n        'trim' => 'SE',\n        'color' => 'White',\n        'type' => 'sedan',\n        'class' => 'N1',\n        'plate_number' => 'ABC123',\n        'serial_number' => 'SER-1001',\n        'call_sign' => 'DEPOT-1',\n        'fuel_card_number' => 'FC-1001',\n        'status' => 'maintenance',\n        'online' => false,\n        'odometer' => 41000,\n        'odometer_unit' => 'km',\n        'odometer_at_purchase' => 12,\n        'measurement_system' => 'metric',\n        'fuel_type' => 'diesel',\n        'fuel_volume_unit' => 'l',\n        'transmission' => 'automatic',\n        'body_type' => 'sedan',\n        'seating_capacity' => 5,\n        'weight' => 1620.5,\n        'payload_capacity' => 1400,\n        'fuel_capacity' => 60,\n        'currency' => 'SGD',\n        'purchased_at' => '2026-01-02',\n        'loan_first_payment' => '2026-02-15',\n        'loan_amount' => 32000,\n        'insurance_value' => 41000,\n        'depreciation_rate' => 12.5,\n        'current_value' => 38000,\n        'acquisition_cost' => 52000,\n        'engine_number' => 'ENG-1001',\n        'number_of_cylinders' => 4,\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'specs' => [\n            'doors' => 4,\n        ],\n        'details' => [\n            'liftgate' => true,\n        ],\n        'notes' => 'City route pool',\n        'meta' => [\n            'depot' => 'north',\n        ],\n        'skills' => [\n            'tail_lift',\n        ],\n        'max_tasks' => 40,\n        'time_window_start' => '08:00',\n        'time_window_end' => '18:00',\n        'return_to_depot' => true,\n        'vendor' => 'vendor_id-fixture',\n    ]\n);"
         },
         "fleetbase-api-vehicles-delete-a-vehicle": {
             "collection": "Fleetbase API",
@@ -1790,6 +1995,28 @@
             },
             "call": "$result = $fleetbase->vehicles->deleteVehicle($vehicleId);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->deleteVehicle($vehicleId);"
+        },
+        "fleetbase-api-vehicles-expand-a-vehicle": {
+            "collection": "Fleetbase API",
+            "group": "Vehicles",
+            "name": "Expand a Vehicle",
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::retrieveVehicle",
+            "variables": {
+                "vehicleId": "vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->vehicles->retrieveVehicle(\n    $vehicleId,\n    [\n        'with' => [\n            'vendor',\n            'not_a_relation',\n        ],\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->retrieveVehicle(\n    $vehicleId,\n    [\n        'with' => [\n            'vendor',\n            'not_a_relation',\n        ],\n    ]\n);"
+        },
+        "fleetbase-api-vehicles-expand-a-vehicle-scalar": {
+            "collection": "Fleetbase API",
+            "group": "Vehicles",
+            "name": "Expand a Vehicle Scalar",
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::retrieveVehicle",
+            "variables": {
+                "vehicleId": "vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->vehicles->retrieveVehicle(\n    $vehicleId,\n    [\n        'with' => 'vendor',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->retrieveVehicle(\n    $vehicleId,\n    [\n        'with' => 'vendor',\n    ]\n);"
         },
         "fleetbase-api-vehicles-query-vehicles": {
             "collection": "Fleetbase API",
@@ -1830,8 +2057,8 @@
             "variables": {
                 "vehicleId": "vehicle_id-fixture"
             },
-            "call": "$result = $fleetbase->vehicles->updateVehicle(\n    $vehicleId,\n    [\n        'plate_number' => 'ABC123',\n        'status' => 'operational',\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'speed' => 90,\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->updateVehicle(\n    $vehicleId,\n    [\n        'plate_number' => 'ABC123',\n        'status' => 'operational',\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'speed' => 90,\n    ]\n);"
+            "call": "$result = $fleetbase->vehicles->updateVehicle(\n    $vehicleId,\n    [\n        'plate_number' => 'ABC123',\n        'status' => 'operational',\n        'odometer' => 41250,\n        'color' => 'Silver',\n        'body_type' => 'sedan',\n        'transmission' => 'automatic',\n        'seating_capacity' => 5,\n        'currency' => 'SGD',\n        'purchased_at' => '2026-01-02',\n        'specs' => [\n            'doors' => 4,\n        ],\n        'details' => [\n            'liftgate' => true,\n        ],\n        'meta' => [\n            'depot' => 'south',\n        ],\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'speed' => 90,\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->updateVehicle(\n    $vehicleId,\n    [\n        'plate_number' => 'ABC123',\n        'status' => 'operational',\n        'odometer' => 41250,\n        'color' => 'Silver',\n        'body_type' => 'sedan',\n        'transmission' => 'automatic',\n        'seating_capacity' => 5,\n        'currency' => 'SGD',\n        'purchased_at' => '2026-01-02',\n        'specs' => [\n            'doors' => 4,\n        ],\n        'details' => [\n            'liftgate' => true,\n        ],\n        'meta' => [\n            'depot' => 'south',\n        ],\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'speed' => 90,\n    ]\n);"
         },
         "fleetbase-api-vendors-create-a-vendor": {
             "collection": "Fleetbase API",

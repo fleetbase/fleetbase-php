@@ -1,6 +1,6 @@
 # Fleetbase PHP SDK API examples
 
-These 220 examples are generated from the locked official Postman contract. CI executes every fenced snippet against a hermetic PSR-18 transport.
+These 241 examples are generated from the locked official Postman contract. CI executes every fenced snippet against a hermetic PSR-18 transport.
 
 Create `$fleetbase` once as shown in the README, then use the relevant service call below. Fixture identifiers and payloads are illustrative; replace them with values from your application.
 
@@ -444,7 +444,7 @@ $result = $fleetbase->drivers->changeDriverPassword(
 
 ### Create a Driver
 
-Creates a driver profile and linked user account. Provide a unique email and phone number, then optionally assign a vehicle, vendor, current job, location, or photo.
+Creates a driver profile and its linked user account. Only `name` is required. `email` and `phone` are optional — an operational fleet record may legitimately have neither — but each is validated and required to be unique across users when it is supplied. No placeholder address or number is ever generated, and no invitation is sent when there is no deliverable contact method. A driver created without credentials cannot sign in to Navigator until credentials are added; see **Create an Operational Driver**. Beyond the account fields the endpoint accepts the driver's identity (`internal_id`, `drivers_license_number`, `license_expiry`, `photo`), operational fields (`country`, `currency`, `city`, `online`, `current_status`, `status`, location and telemetry), structured `meta`, orchestrator constraints, and the `vehicle`, `vendor` and `job` relationships given as public IDs and resolved inside the authenticated organization.
 
 `POST {{base_url}}/{{namespace}}/drivers`
 
@@ -455,6 +455,38 @@ $result = $fleetbase->drivers->createDriver(
         'email' => 'randomEmail-fixture',
         'phone' => 'randomPhoneNumber-fixture',
         'password' => 'driver_seed_password-fixture',
+        'timezone' => 'Asia/Singapore',
+        'internal_id' => 'DRV-1001',
+        'drivers_license_number' => 'S1234567A',
+        'license_expiry' => '2030-06-30',
+        'country' => 'SG',
+        'city' => 'Singapore',
+        'current_status' => 'on_duty',
+        'skills' => [
+            'hazmat',
+        ],
+        'max_travel_time' => 28800,
+        'max_distance' => 250000,
+        'time_window_start' => '08:00',
+        'time_window_end' => '18:00',
+        'meta' => [
+            'badge' => 'A12',
+        ],
+    ]
+);
+```
+
+### Create an Operational Driver
+
+Creates a driver record for someone with no deliverable email address and no phone number — a subcontracted or yard-only driver, or a record imported from an operator's own system. Only `name` is required. Nothing is invented to fill the gap: no placeholder address, no placeholder number, and no invitation or credential notification is sent, because there is nowhere to send one. The Driver-to-User relationship, the organization membership, the `driver` user type and the `Driver` role are all created exactly as they are for a credentialed driver. **A driver created this way cannot sign in to Navigator until credentials are supplied.** Add an email address or phone number with `PUT /v1/drivers/{id}` when one becomes available.
+
+`POST {{base_url}}/{{namespace}}/drivers`
+
+```php
+$result = $fleetbase->drivers->createDriver(
+    [
+        'name' => 'Yard Driver',
+        'internal_id' => 'DRV-7788',
     ]
 );
 ```
@@ -462,6 +494,16 @@ $result = $fleetbase->drivers->createDriver(
 ### Delete a Driver
 
 Use this endpoint to delete a driver.
+
+`DELETE {{base_url}}/{{namespace}}/drivers/:id`
+
+```php
+$result = $fleetbase->drivers->deleteDriver($driverId);
+```
+
+### Delete an Operational Driver
+
+Deletes the credential-less driver created by **Create an Operational Driver**.
 
 `DELETE {{base_url}}/{{namespace}}/drivers/:id`
 
@@ -682,7 +724,7 @@ $result = $fleetbase->drivers->trackDriver(
 
 ### Update a Driver
 
-Updates a driver's account fields, assignment, status, location, photo, or metadata.
+Updates a driver's account fields, identity, assignment, operational state, location, photo, orchestrator constraints, or metadata. `password` is deliberately not accepted here. Changing a password requires proving the old one and resetting it requires a code, neither of which a general `PUT` can express — use **Change Driver Password**, **Request Driver Password Reset** and **Reset Driver Password** instead. Relationship inputs take public IDs and are resolved inside the authenticated organization. Sending `null` clears an assignment.
 
 `PUT {{base_url}}/{{namespace}}/drivers/:id`
 
@@ -693,6 +735,29 @@ $result = $fleetbase->drivers->updateDriver(
         'name' => 'John Doe',
         'email' => 'randomEmail-fixture',
         'phone' => 'randomPhoneNumber-fixture',
+        'internal_id' => 'DRV-1002',
+        'timezone' => 'Europe/Amsterdam',
+        'city' => 'Johor Bahru',
+        'current_status' => 'off_duty',
+        'meta' => [
+            'badge' => 'B34',
+        ],
+    ]
+);
+```
+
+### Update a Driver Unchanged Contact
+
+Resends the driver's current email address and phone number unchanged. Uniqueness is enforced on update against every other live user account, with the driver's own linked user ignored by uuid. Without that clause this request would fail against the driver's own address — which is why it exists.
+
+`PUT {{base_url}}/{{namespace}}/drivers/:id`
+
+```php
+$result = $fleetbase->drivers->updateDriver(
+    $driverId,
+    [
+        'email' => 'created_driver_email-fixture',
+        'phone' => 'created_driver_phone-fixture',
     ]
 );
 ```
@@ -875,9 +940,29 @@ $result = $fleetbase->equipment->updateEquipment(
 
 ## Fleets
 
+### Assign a Driver to a Fleet
+
+Adds a driver to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned. Assignment is idempotent. Repeating it answers the same way and never creates a second membership; a membership that was previously removed is restored rather than duplicated. Assigning to one fleet does not remove the resource from any other fleet, and does not change a driver's current vehicle.
+
+`POST {{base_url}}/{{namespace}}/fleets/:id/drivers/:driver`
+
+```php
+$result = $fleetbase->fleets->assignDriverToFleet($fleetId, $driver);
+```
+
+### Assign a Vehicle to a Fleet
+
+Adds a vehicle to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned. Assignment is idempotent. Repeating it answers the same way and never creates a second membership; a membership that was previously removed is restored rather than duplicated. Assigning to one fleet does not remove the resource from any other fleet, and does not change a driver's current vehicle.
+
+`POST {{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle`
+
+```php
+$result = $fleetbase->fleets->assignVehicleToFleet($fleetId, $vehicle);
+```
+
 ### Create a Fleet
 
-Creates a fleet for grouping drivers and vehicles. Assign a service area when the fleet should be constrained to a specific operating area.
+Creates a fleet for grouping drivers and vehicles. Every safe fleet field is accepted: name, colour, task, status, and the service area, zone, vendor and parent fleet relationships. Relationships are given as public IDs (`service_area_...`, `zone_...`, `vendor_...`, `fleet_...`) and are resolved inside the authenticated organization — a public ID belonging to another organization is rejected exactly as a non-existent one is. Omitting `parent_fleet` creates a root fleet. This request creates the parent used by **Create a Subfleet**.
 
 `POST {{base_url}}/{{namespace}}/fleets`
 
@@ -885,7 +970,62 @@ Creates a fleet for grouping drivers and vehicles. Assign a service area when th
 $result = $fleetbase->fleets->createFleet(
     [
         'name' => 'Haulers',
+        'color' => '#2563EB',
+        'task' => 'Long haul distribution',
+        'status' => 'active',
         'service_area' => 'service_area_id-fixture',
+    ]
+);
+```
+
+### Create a Fleet Driver
+
+Creates a driver for the fleet membership requests to operate on. The driver created in the **Drivers** folder is deleted before this folder runs, so the membership assertions need a resource of their own. It is removed again by **Delete a Fleet Driver** at the end of this folder.
+
+`POST {{base_url}}/{{namespace}}/drivers`
+
+```php
+$result = $fleetbase->drivers->createDriver(
+    [
+        'name' => 'Fleet Membership Driver',
+        'internal_id' => 'DRV-FLT-0001',
+    ]
+);
+```
+
+### Create a Fleet Vehicle
+
+Creates a vehicle for the fleet membership requests to operate on. The vehicle created in the **Vehicles** folder is deleted before this folder runs, so the membership assertions need a resource of their own. It is removed again by **Delete a Fleet Vehicle** at the end of this folder.
+
+`POST {{base_url}}/{{namespace}}/vehicles`
+
+```php
+$result = $fleetbase->vehicles->createVehicle(
+    [
+        'name' => 'Fleet Membership Van',
+        'make' => 'Toyota',
+        'model' => 'HiAce',
+        'year' => 2024,
+        'plate_number' => 'FLT-0001',
+        'status' => 'available',
+    ]
+);
+```
+
+### Create a Subfleet
+
+Creates a fleet nested beneath another fleet by sending the parent's public ID in `parent_fleet`. Hierarchies are validated on write: a fleet cannot be its own parent, and cannot be moved beneath one of its own subfleets. Both are answered with `422`. A parent belonging to another organization is answered with `404`, the same as a parent that does not exist.
+
+`POST {{base_url}}/{{namespace}}/fleets`
+
+```php
+$result = $fleetbase->fleets->createFleet(
+    [
+        'name' => 'Carpool',
+        'color' => '#059669',
+        'task' => 'Employee transport',
+        'status' => 'active',
+        'parent_fleet' => 'parent_fleet_id-fixture',
     ]
 );
 ```
@@ -893,6 +1033,36 @@ $result = $fleetbase->fleets->createFleet(
 ### Delete a Fleet
 
 Deletes a fleet.
+
+`DELETE {{base_url}}/{{namespace}}/fleets/:id`
+
+```php
+$result = $fleetbase->fleets->deleteFleet($fleetId);
+```
+
+### Delete a Fleet Driver
+
+Deletes the driver created for the fleet membership requests. Runs after every membership has been removed.
+
+`DELETE {{base_url}}/{{namespace}}/drivers/:id`
+
+```php
+$result = $fleetbase->drivers->deleteDriver($driverId);
+```
+
+### Delete a Fleet Vehicle
+
+Deletes the vehicle created for the fleet membership requests. Runs after every membership has been removed.
+
+`DELETE {{base_url}}/{{namespace}}/vehicles/:id`
+
+```php
+$result = $fleetbase->vehicles->deleteVehicle($vehicleId);
+```
+
+### Delete a Subfleet
+
+Deletes the subfleet created by **Create a Subfleet**. It runs before **Delete a Fleet** so the child is removed before its parent.
 
 `DELETE {{base_url}}/{{namespace}}/fleets/:id`
 
@@ -916,6 +1086,66 @@ $result = $fleetbase->fleets->queryFleets(
 );
 ```
 
+### Reassign a Driver to a Fleet
+
+Adds a driver to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned. This request repeats the assignment above deliberately: assignment is idempotent, so a second call answers exactly as the first did and produces one active membership, not two.
+
+`POST {{base_url}}/{{namespace}}/fleets/:id/drivers/:driver`
+
+```php
+$result = $fleetbase->fleets->assignDriverToFleet($fleetId, $driver);
+```
+
+### Reassign a Vehicle to a Fleet
+
+Adds a vehicle to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned. This request repeats the assignment above deliberately: assignment is idempotent, so a second call answers exactly as the first did and produces one active membership, not two.
+
+`POST {{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle`
+
+```php
+$result = $fleetbase->fleets->assignVehicleToFleet($fleetId, $vehicle);
+```
+
+### Remove a Driver from a Fleet
+
+Removes a driver from a fleet. Both path parameters are public IDs. Removing a membership never deletes the driver, never changes a driver's current vehicle, and never affects the resource's membership of any other fleet. Repeating the removal is a successful no-op.
+
+`DELETE {{base_url}}/{{namespace}}/fleets/:id/drivers/:driver`
+
+```php
+$result = $fleetbase->fleets->removeDriverFromFleet($fleetId, $driver);
+```
+
+### Remove a Driver from a Fleet Again
+
+Removes a driver from a fleet. Both path parameters are public IDs. This request repeats the removal above deliberately: removing a membership that is not there is a documented, successful no-op.
+
+`DELETE {{base_url}}/{{namespace}}/fleets/:id/drivers/:driver`
+
+```php
+$result = $fleetbase->fleets->removeDriverFromFleet($fleetId, $driver);
+```
+
+### Remove a Vehicle from a Fleet
+
+Removes a vehicle from a fleet. Both path parameters are public IDs. Removing a membership never deletes the vehicle, never changes a driver's current vehicle, and never affects the resource's membership of any other fleet. Repeating the removal is a successful no-op.
+
+`DELETE {{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle`
+
+```php
+$result = $fleetbase->fleets->removeVehicleFromFleet($fleetId, $vehicle);
+```
+
+### Remove a Vehicle from a Fleet Again
+
+Removes a vehicle from a fleet. Both path parameters are public IDs. This request repeats the removal above deliberately: removing a membership that is not there is a documented, successful no-op.
+
+`DELETE {{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle`
+
+```php
+$result = $fleetbase->fleets->removeVehicleFromFleet($fleetId, $vehicle);
+```
+
 ### Retrieve a Fleet
 
 Retrieves a fleet.
@@ -928,7 +1158,7 @@ $result = $fleetbase->fleets->retrieveFleet($fleetId);
 
 ### Update a Fleet
 
-Updates a fleet's name or assigned service area.
+Updates any safe fleet field: name, colour, task, status, and the service area, zone, vendor and parent fleet relationships. Relationship inputs take public IDs and are resolved inside the authenticated organization. Sending `null` for a relationship clears it — `"parent_fleet": null` promotes a subfleet back to a root fleet.
 
 `PUT {{base_url}}/{{namespace}}/fleets/:id`
 
@@ -936,7 +1166,10 @@ Updates a fleet's name or assigned service area.
 $result = $fleetbase->fleets->updateFleet(
     $fleetId,
     [
-        'name' => 'Haulers',
+        'name' => 'Haulers North',
+        'color' => '#7C3AED',
+        'task' => 'Regional distribution',
+        'status' => 'active',
         'service_area' => 'service_area_id-fixture',
     ]
 );
@@ -1785,6 +2018,23 @@ $result = $fleetbase->orders->createOrderUsingOnlyWaypoints(
 );
 ```
 
+### Create an Order with Empty Relationships
+
+Creates an order while sending `driver` and `vehicle` as empty strings. An empty relationship means "none", not "invalid": Fleetbase ignores the field and creates the order unassigned, exactly as if the key had been left out. This is the historical behaviour, and it matters because a client that serialises an unselected dropdown sends `""` rather than omitting the key. Empty-string request values reach the API as null, and a null is a question with an answer — "there is no such record" — rather than a malformed request. This request exists so that answer stays a 2xx.
+
+`POST {{base_url}}/{{namespace}}/orders`
+
+```php
+$result = $fleetbase->orders->createOrder(
+    [
+        'pickup' => 'Singapore 018971',
+        'dropoff' => '321 Orchard Rd, Singapore',
+        'driver' => '',
+        'vehicle' => '',
+    ]
+);
+```
+
 ### Delete an Order
 
 Deletes an order resource.
@@ -2544,6 +2794,30 @@ $result = $fleetbase->serviceRates->createServiceRate(
 );
 ```
 
+### Create a Service Rate with an Empty Service Area
+
+Creates a service rate while sending `service_area` and `zone` as empty strings. Both relationships are optional, so an empty one reads as absent. Without that, the `exists` check runs against the null an empty string becomes and answers "The selected service area is invalid" for a field the caller simply left blank. Does not overwrite `service_rate_id`; the canonical create owns that variable.
+
+`POST {{base_url}}/{{namespace}}/service-rates`
+
+```php
+$result = $fleetbase->serviceRates->createServiceRate(
+    [
+        'service_name' => 'Empty Relationship Rate',
+        'service_type' => 'food_delivery',
+        'rate_calculation_method' => 'per_meter',
+        'currency' => 'USD',
+        'base_fee' => 10,
+        'per_meter_unit' => 'km',
+        'per_meter_flat_rate_fee' => 25,
+        'service_area' => '',
+        'zone' => '',
+        'duration_terms' => 'Standard',
+        'estimated_days' => 3,
+    ]
+);
+```
+
 ### Delete a Service Rate
 
 Delete a Service Rate.
@@ -2743,21 +3017,72 @@ $result = $fleetbase->trackingStatuses->updateTrackingStatus(
 
 ### Create a Vehicle
 
-Creates a vehicle for the current company. Send VIN, make/model fields, assignment fields, status, location, capacity, or orchestrator constraints as needed.
+Creates a vehicle for the current organization. Every safe business field the vehicle record holds is accepted: identity and description, odometer and measurement, body, capacity and dimensions, lifecycle and financing, regulatory and engine specifications, structured `specs` / `details` / `meta`, orchestrator constraints, and the vendor, driver, category and warranty relationships. Relationships take public IDs (`vendor_...`, `driver_...`, `category_...`, `warranty_...`) and are resolved inside the authenticated organization; another organization's public ID is rejected exactly as a non-existent one is. Server-managed values — decoded `vin_data`, `telematics`, the generated `slug`, and every internal uuid column — are not accepted as input.
 
 `POST {{base_url}}/{{namespace}}/vehicles`
 
 ```php
 $result = $fleetbase->vehicles->createVehicle(
     [
+        'internal_id' => 'VEH-1001',
+        'name' => 'Depot Van',
+        'description' => 'City route van',
         'vin' => '1GCGSBEA0G1111111',
         'year' => 2023,
         'make' => 'Toyota',
         'model' => 'Camry',
         'trim' => 'SE',
+        'color' => 'White',
+        'type' => 'sedan',
+        'class' => 'N1',
         'plate_number' => 'ABC123',
+        'serial_number' => 'SER-1001',
+        'call_sign' => 'DEPOT-1',
+        'fuel_card_number' => 'FC-1001',
         'status' => 'maintenance',
         'online' => false,
+        'odometer' => 41000,
+        'odometer_unit' => 'km',
+        'odometer_at_purchase' => 12,
+        'measurement_system' => 'metric',
+        'fuel_type' => 'diesel',
+        'fuel_volume_unit' => 'l',
+        'transmission' => 'automatic',
+        'body_type' => 'sedan',
+        'seating_capacity' => 5,
+        'weight' => 1620.5,
+        'payload_capacity' => 1400,
+        'fuel_capacity' => 60,
+        'currency' => 'SGD',
+        'purchased_at' => '2026-01-02',
+        'loan_first_payment' => '2026-02-15',
+        'loan_amount' => 32000,
+        'insurance_value' => 41000,
+        'depreciation_rate' => 12.5,
+        'current_value' => 38000,
+        'acquisition_cost' => 52000,
+        'engine_number' => 'ENG-1001',
+        'number_of_cylinders' => 4,
+        'latitude' => 40.7484,
+        'longitude' => -73.9857,
+        'specs' => [
+            'doors' => 4,
+        ],
+        'details' => [
+            'liftgate' => true,
+        ],
+        'notes' => 'City route pool',
+        'meta' => [
+            'depot' => 'north',
+        ],
+        'skills' => [
+            'tail_lift',
+        ],
+        'max_tasks' => 40,
+        'time_window_start' => '08:00',
+        'time_window_end' => '18:00',
+        'return_to_depot' => true,
+        'vendor' => 'vendor_id-fixture',
     ]
 );
 ```
@@ -2770,6 +3095,39 @@ Permanently deletes a `Vehicle`. It cannot be undone.
 
 ```php
 $result = $fleetbase->vehicles->deleteVehicle($vehicleId);
+```
+
+### Expand a Vehicle
+
+Retrieves a vehicle with its vendor expanded, using the array form of the expansion parameter. Both `?with=vendor` and `?with[]=vendor` are accepted, as are `?with=vendor,driver` and the `expand` alias. Expansion is strictly additive: it adds the nested object and leaves `vendor_id` exactly as it was. A relationship name outside the supported set is ignored rather than rejected, so a client sending a relation this version does not have still gets its response.
+
+`GET {{base_url}}/{{namespace}}/vehicles/:id`
+
+```php
+$result = $fleetbase->vehicles->retrieveVehicle(
+    $vehicleId,
+    [
+        'with' => [
+            'vendor',
+            'not_a_relation',
+        ],
+    ]
+);
+```
+
+### Expand a Vehicle Scalar
+
+The same expansion as **Expand a Vehicle**, sent in the scalar comma-separated form. `?with=vendor,driver` must behave exactly as `?with[]=vendor&with[]=driver` does. This request exists so the two spellings are proven equivalent rather than assumed to be.
+
+`GET {{base_url}}/{{namespace}}/vehicles/:id`
+
+```php
+$result = $fleetbase->vehicles->retrieveVehicle(
+    $vehicleId,
+    [
+        'with' => 'vendor',
+    ]
+);
 ```
 
 ### Query Vehicles
@@ -2816,7 +3174,7 @@ $result = $fleetbase->vehicles->trackVehicle(
 
 ### Update a Vehicle
 
-Updates a vehicle's identity, operational status, vendor assignment, location, capacity, or orchestrator constraints. Updating the VIN refreshes decoded VIN data.
+Updates any safe vehicle field. Updating the VIN re-runs VIN decoding. A partial update touches only the fields that are sent: omitting `online` leaves the vehicle's online state alone rather than taking it offline. Relationship inputs take public IDs and are resolved inside the authenticated organization; sending `null` clears the assignment, and sending an empty `driver` unassigns the current driver.
 
 `PUT {{base_url}}/{{namespace}}/vehicles/:id`
 
@@ -2826,6 +3184,22 @@ $result = $fleetbase->vehicles->updateVehicle(
     [
         'plate_number' => 'ABC123',
         'status' => 'operational',
+        'odometer' => 41250,
+        'color' => 'Silver',
+        'body_type' => 'sedan',
+        'transmission' => 'automatic',
+        'seating_capacity' => 5,
+        'currency' => 'SGD',
+        'purchased_at' => '2026-01-02',
+        'specs' => [
+            'doors' => 4,
+        ],
+        'details' => [
+            'liftgate' => true,
+        ],
+        'meta' => [
+            'depot' => 'south',
+        ],
         'latitude' => 40.7484,
         'longitude' => -73.9857,
         'speed' => 90,

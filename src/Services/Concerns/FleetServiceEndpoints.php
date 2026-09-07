@@ -14,6 +14,34 @@ namespace Fleetbase\Sdk\Services\Concerns;
 trait FleetServiceEndpoints
 {
     /**
+     * Assign a Driver to a Fleet.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function assignDriverToFleet($parameters = [], $options = [], $data = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fleets/:id/drivers/:driver', ['id', 'driver'], 'body', func_get_args());
+    }
+
+    /**
+     * Assign a Vehicle to a Fleet.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function assignVehicleToFleet($parameters = [], $options = [], $data = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle', ['id', 'vehicle'], 'body', func_get_args());
+    }
+
+    /**
      * Create a Fleet.
      *
      * @param array<string, mixed> $parameters
@@ -48,6 +76,34 @@ trait FleetServiceEndpoints
     public function queryFleets(array $parameters = [], array $options = [])
     {
         return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/fleets', [], 'query', func_get_args());
+    }
+
+    /**
+     * Remove a Driver from a Fleet.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function removeDriverFromFleet($parameters = [], $options = [], $data = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/fleets/:id/drivers/:driver', ['id', 'driver'], 'body', func_get_args());
+    }
+
+    /**
+     * Remove a Vehicle from a Fleet.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function removeVehicleFromFleet($parameters = [], $options = [], $data = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle', ['id', 'vehicle'], 'body', func_get_args());
     }
 
     /**

@@ -1,0 +1,74 @@
+{
+    "schema_version": 1,
+    "description": "Postman requests that exercise a scenario on an endpoint the SDK already covers, rather than a distinct operation. The generator maps each to the canonical request's method instead of minting a new one, so a contract-test case cannot become permanent public API surface. Adding an entry here removes nothing that already exists; it only prevents a new method being generated.",
+    "variants": {
+        "fleetbase-api-fleets-reassign-a-driver-to-a-fleet": {
+            "canonical": "fleetbase-api-fleets-assign-a-driver-to-a-fleet",
+            "rationale": "Assigns the same driver twice to prove membership assignment is idempotent. Same route and same call."
+        },
+        "fleetbase-api-fleets-reassign-a-vehicle-to-a-fleet": {
+            "canonical": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet",
+            "rationale": "Assigns the same vehicle twice to prove membership assignment is idempotent. Same route and same call."
+        },
+        "fleetbase-api-fleets-remove-a-driver-from-a-fleet-again": {
+            "canonical": "fleetbase-api-fleets-remove-a-driver-from-a-fleet",
+            "rationale": "Removes an already-removed driver to prove the delete is idempotent. Same route and same call."
+        },
+        "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet-again": {
+            "canonical": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet",
+            "rationale": "Removes an already-removed vehicle to prove the delete is idempotent. Same route and same call."
+        },
+        "fleetbase-api-fleets-create-a-fleet-driver": {
+            "canonical": "fleetbase-api-drivers-create-a-driver",
+            "rationale": "Creates the driver the fleet membership requests operate on. It posts to /drivers, so it belongs to DriverService::createDriver rather than a FleetService method that does not touch /fleets."
+        },
+        "fleetbase-api-fleets-create-a-fleet-vehicle": {
+            "canonical": "fleetbase-api-vehicles-create-a-vehicle",
+            "rationale": "Creates the vehicle the fleet membership requests operate on. It posts to /vehicles, so it belongs to VehicleService::createVehicle."
+        },
+        "fleetbase-api-fleets-delete-a-fleet-driver": {
+            "canonical": "fleetbase-api-drivers-delete-a-driver",
+            "rationale": "Cleans up the driver fixture. It deletes from /drivers, so it belongs to DriverService::deleteDriver."
+        },
+        "fleetbase-api-fleets-delete-a-fleet-vehicle": {
+            "canonical": "fleetbase-api-vehicles-delete-a-vehicle",
+            "rationale": "Cleans up the vehicle fixture. It deletes from /vehicles, so it belongs to VehicleService::deleteVehicle."
+        },
+        "fleetbase-api-fleets-create-a-subfleet": {
+            "canonical": "fleetbase-api-fleets-create-a-fleet",
+            "rationale": "Creates a fleet with a parent_fleet set. A subfleet is a fleet, created by the same POST /fleets call."
+        },
+        "fleetbase-api-fleets-delete-a-subfleet": {
+            "canonical": "fleetbase-api-fleets-delete-a-fleet",
+            "rationale": "Deletes the subfleet fixture through the same DELETE /fleets/:id call."
+        },
+        "fleetbase-api-drivers-create-an-operational-driver": {
+            "canonical": "fleetbase-api-drivers-create-a-driver",
+            "rationale": "Creates a driver without an email or phone to prove those are optional. Same POST /drivers call with a narrower body."
+        },
+        "fleetbase-api-drivers-delete-an-operational-driver": {
+            "canonical": "fleetbase-api-drivers-delete-a-driver",
+            "rationale": "Cleans up the operational driver fixture through the same DELETE /drivers/:id call."
+        },
+        "fleetbase-api-drivers-update-a-driver-unchanged-contact": {
+            "canonical": "fleetbase-api-drivers-update-a-driver",
+            "rationale": "Resubmits a driver's existing email and phone to prove uniqueness does not reject a record against itself. Same PUT /drivers/:id call."
+        },
+        "fleetbase-api-vehicles-expand-a-vehicle": {
+            "canonical": "fleetbase-api-vehicles-retrieve-a-vehicle",
+            "rationale": "Retrieves a vehicle with ?with[]= expansion. Expansion is a query parameter on GET /vehicles/:id, not a separate operation."
+        },
+        "fleetbase-api-vehicles-expand-a-vehicle-scalar": {
+            "canonical": "fleetbase-api-vehicles-retrieve-a-vehicle",
+            "rationale": "The scalar ?with= form of the same expansion on GET /vehicles/:id."
+        },
+        "fleetbase-api-orders-create-an-order-with-empty-relationships": {
+            "canonical": "fleetbase-api-orders-create-an-order",
+            "rationale": "Creates an order sending driver and vehicle as empty strings, to prove an empty relationship is ignored rather than rejected. Same POST /orders call."
+        },
+        "fleetbase-api-service-rates-create-a-service-rate-with-an-empty-service-area": {
+            "canonical": "fleetbase-api-service-rates-create-a-service-rate",
+            "rationale": "Creates a service rate sending service_area and zone as empty strings, to prove an empty optional relationship is not a validation error. Same POST /service-rates call."
+        }
+    }
+}

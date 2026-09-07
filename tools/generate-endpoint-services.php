@@ -9,13 +9,15 @@ declare(strict_types=1);
  * the verb and path are copied exactly from the generated manifest.
  */
 
-$options = getopt('', ['manifest:', 'source:', 'tests:']);
+$options = getopt('', ['manifest:', 'source:', 'tests:', 'variants:']);
 $manifestPath = is_string($options['manifest'] ?? null) ? $options['manifest'] : 'contracts/postman-manifest.json';
 $sourceRoot = is_string($options['source'] ?? null) ? rtrim($options['source'], '/') : 'src/Services';
 $testPath = is_string($options['tests'] ?? null) ? $options['tests'] : 'tests/Contract/EndpointContractTest.php';
+$variantsPath = is_string($options['variants'] ?? null) ? $options['variants'] : 'contracts/sdk-variants.json';
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+$variants = readVariants($variantsPath);
 $manifest = readManifest($manifestPath);
 $requests = $manifest['requests'];
 if (!is_array($requests)) {
@@ -23,10 +25,22 @@ if (!is_array($requests)) {
 }
 
 $groups = [];
+$variantIndexes = [];
 foreach ($requests as $index => $request) {
     if (!is_array($request)) {
         fail(sprintf('Manifest request %d is invalid.', $index + 1));
     }
+
+    // A variant exercises a scenario on an endpoint the SDK already covers, so
+    // it must not mint a method of its own. Hold it back and resolve it to the
+    // canonical request's implementation once every real method exists.
+    $id = requiredString($request, 'id');
+    if (isset($variants[$id])) {
+        $variantIndexes[$index] = $id;
+
+        continue;
+    }
+
     $group = requiredString($request, 'group');
     $service = serviceName($group);
     $method = methodName(requiredString($request, 'name'));
@@ -47,6 +61,47 @@ foreach ($requests as $index => $request) {
     $request['status'] = 'complete';
     $request['exception'] = null;
     $requests[$index] = $request;
+}
+
+// Resolve each variant to the canonical request's implementation. The manifest
+// still lists the variant, and the contract test still drives it — through the
+// canonical method, which is exactly the claim being made: this scenario is
+// reachable with the API the SDK already exposes.
+$implementationsById = [];
+foreach ($requests as $request) {
+    if (is_array($request) && isset($request['id'], $request['implementation'])) {
+        $implementationsById[$request['id']] = $request['implementation'];
+    }
+}
+
+foreach ($variantIndexes as $index => $id) {
+    $canonicalId = $variants[$id]['canonical'] ?? null;
+    if (!is_string($canonicalId) || $canonicalId === '') {
+        fail(sprintf('Variant %s has no canonical request.', $id));
+    }
+    if (!isset($implementationsById[$canonicalId])) {
+        fail(sprintf('Variant %s points at unknown canonical request %s.', $id, $canonicalId));
+    }
+    if (isset($variants[$canonicalId])) {
+        fail(sprintf('Variant %s points at %s, which is itself a variant.', $id, $canonicalId));
+    }
+
+    $request = $requests[$index];
+    $request['sdk_signature'] = signatureForRequest($request);
+    $request['implementation'] = $implementationsById[$canonicalId];
+    $request['tests'] = ['tests/Contract/EndpointContractTest.php::testEveryEndpointContract'];
+    $request['status'] = 'complete';
+    $request['exception'] = null;
+    $request['variant_of'] = $canonicalId;
+    $requests[$index] = $request;
+}
+
+// Every declared variant has to correspond to a real request, or the map is
+// silently carrying a stale entry.
+foreach (array_keys($variants) as $id) {
+    if (!in_array($id, $variantIndexes, true)) {
+        fail(sprintf('Variant map lists %s, which is not a request in the manifest.', $id));
+    }
 }
 
 ksort($groups);
@@ -85,6 +140,7 @@ foreach ($groups as $service => $definition) {
 
 $manifest['requests'] = $requests;
 $manifest['summary']['mapped'] = count($requests);
+$manifest['summary']['variants'] = count($variantIndexes);
 $manifest['summary']['exceptions'] = 0;
 $manifest['summary']['unmapped'] = 0;
 writeJson($manifestPath, $manifest);
@@ -109,6 +165,31 @@ function readManifest(string $path): array
         fail(sprintf('Invalid manifest JSON: %s', $path));
     }
     return $data;
+}
+
+/**
+ * Read the curated variant map.
+ *
+ * Absence is not an error: a checkout without the file simply mints a method
+ * for every request, which is the behaviour that predates the map.
+ *
+ * @return array<string, array<string, string>>
+ */
+function readVariants(string $path): array
+{
+    if (!is_file($path)) {
+        return [];
+    }
+    $contents = file_get_contents($path);
+    if (!is_string($contents)) {
+        fail(sprintf('Unable to read variant map: %s', $path));
+    }
+    $data = json_decode($contents, true);
+    if (!is_array($data) || !is_array($data['variants'] ?? null)) {
+        fail(sprintf('Invalid variant map JSON: %s', $path));
+    }
+
+    return $data['variants'];
 }
 
 /** @param array<mixed, mixed> $data */

@@ -16,11 +16,26 @@ final class ApiExamplesTest extends TestCase
 {
     public function testEveryGeneratedDocumentationSnippetExecutes(): void
     {
+        // Read the expected count from the contract lock rather than pinning a
+        // literal here. The literal is one more place to remember when the
+        // contract grows, and forgetting it fails this test for a reason that
+        // has nothing to do with the snippets.
+        $lockContents = file_get_contents(dirname(__DIR__, 2) . '/contracts/contract-lock.json');
+        self::assertIsString($lockContents);
+        $lock = json_decode($lockContents, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($lock);
+        $lockSources = $lock['sources'] ?? null;
+        self::assertIsArray($lockSources);
+        $lockPostman = $lockSources['postman'] ?? null;
+        self::assertIsArray($lockPostman);
+        $expectedRequests = $lockPostman['expected_requests'] ?? null;
+        self::assertIsInt($expectedRequests);
+
         $contents = file_get_contents(dirname(__DIR__, 2) . '/docs/api-examples.md');
         self::assertIsString($contents);
         preg_match_all('/```php\n(.*?)\n```/s', $contents, $matches);
         $snippets = $matches[1];
-        self::assertCount(220, $snippets);
+        self::assertCount($expectedRequests, $snippets);
 
         $catalogContents = file_get_contents(dirname(__DIR__, 2) . '/contracts/php-sdk-examples.json');
         self::assertIsString($catalogContents);
@@ -28,7 +43,7 @@ final class ApiExamplesTest extends TestCase
         self::assertIsArray($catalog);
         $catalogExamples = $catalog['examples'] ?? null;
         self::assertIsArray($catalogExamples);
-        self::assertCount(220, $catalogExamples);
+        self::assertCount($expectedRequests, $catalogExamples);
         self::assertSame($snippets, array_column(array_values($catalogExamples), 'call'));
         $dispatchExample = $catalogExamples['fleetbase-api-orders-dispatch-an-order'] ?? null;
         self::assertIsArray($dispatchExample);
