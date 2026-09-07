@@ -22,6 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       enabled: ${{ steps.check.outputs.enabled }}
+      postman_ref: ${{ steps.locked.outputs.postman_ref }}
+      stack_ref: ${{ steps.locked.outputs.stack_ref }}
+      core_api_ref: ${{ steps.locked.outputs.core_api_ref }}
+      fleetops_ref: ${{ steps.locked.outputs.fleetops_ref }}
     steps:
       - id: check
         env:
@@ -33,6 +37,24 @@ jobs:
             echo "enabled=false" >> "$GITHUB_OUTPUT"
             echo "::warning::POSTMAN_API_KEY is not set; skipping the API contract run."
           fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # These refs used to be copied into this file by hand, which meant a
+      # contract sync could update contracts/contract-lock.json and leave CI
+      # booting the previous collection against the previous stack. Read them
+      # from the lock instead, so there is one place to change.
+      - id: locked
+        run: |
+          set -euo pipefail
+          read_lock() {
+            jq -er "$1" contracts/contract-lock.json \
+              || { echo "::error::contract-lock.json is missing $1"; exit 1; }
+          }
+          {
+            echo "postman_ref=$(read_lock '.sources.postman.commit')"
+            echo "stack_ref=$(read_lock '.sources.fleetbase_stack.commit')"
+            echo "core_api_ref=$(read_lock '.sources.fleetbase_stack.core_api_submodule')"
+            echo "fleetops_ref=$(read_lock '.sources.fleetbase_stack.fleetops_submodule')"
+          } >> "$GITHUB_OUTPUT"
 
   contract:
     name: Official Postman and SDK contract
@@ -43,9 +65,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 55
     env:
-      FLEETBASE_STACK_REF: d810cee000d42713942a2343264eb706b0b3a59a
+      FLEETBASE_STACK_REF: ${{ needs.gate.outputs.stack_ref }}
       FLEETBASE_API_IMAGE: fleetbase/fleetbase-api:latest
-      POSTMAN_REF: 9a7d4d898b4e74d735d93c78d67d4d5013c1a28b
+      POSTMAN_REF: ${{ needs.gate.outputs.postman_ref }}
+      CORE_API_REF: ${{ needs.gate.outputs.core_api_ref }}
+      FLEETOPS_REF: ${{ needs.gate.outputs.fleetops_ref }}
       SOURCE_TOKEN: ${{ secrets._GITHUB_AUTH_TOKEN || github.token }}
       POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
     steps:
@@ -56,13 +80,13 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: fleetbase/fleetbase
-          ref: d810cee000d42713942a2343264eb706b0b3a59a
+          ref: ${{ env.FLEETBASE_STACK_REF }}
           submodules: recursive
           token: ${{ env.SOURCE_TOKEN }}
       - name: Prove locked package refs
         run: |
-          test "$(git -C packages/core-api rev-parse HEAD)" = "b7691c06ffdfe8f8874352e746aa8e523d5e3531"
-          test "$(git -C packages/fleetops rev-parse HEAD)" = "a9131daeb1a23ed4b0046dd2d7b632fb100bfba0"
+          test "$(git -C packages/core-api rev-parse HEAD)" = "$CORE_API_REF"
+          test "$(git -C packages/fleetops rev-parse HEAD)" = "$FLEETOPS_REF"
       - name: Pin transitive actions in the locked Fleetbase composite
         run: |
           sed -i 's#actions/checkout@v4#actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1#g' .github/actions/postman-contract/action.yml
