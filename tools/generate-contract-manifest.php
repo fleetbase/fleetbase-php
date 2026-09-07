@@ -66,7 +66,11 @@ foreach ($scopes as $collection) {
             'group' => $group,
             'name' => $requestName,
             'method' => strtoupper($method),
-            'url' => $url,
+            // The query string is captured separately in the fixture, so record
+            // the path alone. A request that inlines its query in `url` would
+            // otherwise carry it twice, once in the path and once appended from
+            // the fixture.
+            'url' => explode('?', $url, 2)[0],
             'source' => $relative,
             'description' => is_string($document['description'] ?? null) ? $document['description'] : null,
             'authentication' => authentication($document),
@@ -134,13 +138,37 @@ function normalizeParameters($parameters): array
         return [];
     }
     $normalized = [];
+    $repeated = [];
     foreach ($parameters as $key => $value) {
         if (is_string($key)) {
-            $normalized[$key] = $value;
+            $name = $key;
+            $entry = $value;
         } elseif (is_array($value) && is_string($value['key'] ?? null)) {
-            $normalized[$value['key']] = $value['value'] ?? null;
+            $name = $value['key'];
+            $entry = $value['value'] ?? null;
+        } else {
+            continue;
         }
+
+        // `with[]=vendor&with[]=driver` is one list parameter written twice, not
+        // two parameters. Keeping only the last value silently drops the rest,
+        // so collect repeats under the base name and let the caller send a list.
+        $isList = substr($name, -2) === '[]';
+        $name = $isList ? substr($name, 0, -2) : $name;
+
+        if ($isList || array_key_exists($name, $normalized)) {
+            if (!isset($repeated[$name])) {
+                $repeated[$name] = array_key_exists($name, $normalized) ? [$normalized[$name]] : [];
+            }
+            $repeated[$name][] = $entry;
+            $normalized[$name] = $repeated[$name];
+
+            continue;
+        }
+
+        $normalized[$name] = $entry;
     }
+
     return $normalized;
 }
 

@@ -2,25 +2,26 @@
     "schema_version": 1,
     "source": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "9a7d4d898b4e74d735d93c78d67d4d5013c1a28b",
+        "ref": "9b59befdc1b4623ba40bf5661bd5e88f1dac673e",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
         ]
     },
     "summary": {
-        "requests": 220,
+        "requests": 241,
         "groups": 36,
         "methods": {
-            "DELETE": 28,
-            "GET": 84,
+            "DELETE": 36,
+            "GET": 86,
             "PATCH": 6,
-            "POST": 77,
-            "PUT": 25
+            "POST": 87,
+            "PUT": 26
         },
-        "mapped": 220,
+        "mapped": 241,
         "exceptions": 0,
-        "unmapped": 0
+        "unmapped": 0,
+        "variants": 17
     },
     "requests": [
         {
@@ -1091,7 +1092,7 @@
             "method": "POST",
             "url": "{{base_url}}/{{namespace}}/drivers",
             "source": "postman/collections/Fleetbase API/Drivers/Create a Driver.request.yaml",
-            "description": "Creates a driver profile and linked user account. Provide a unique email and phone number, then optionally assign a vehicle, vendor, current job, location, or photo.",
+            "description": "Creates a driver profile and its linked user account.\n\nOnly `name` is required. `email` and `phone` are optional \u2014 an operational fleet record may legitimately have neither \u2014 but each is validated and required to be unique across users when it is supplied. No placeholder address or number is ever generated, and no invitation is sent when there is no deliverable contact method. A driver created without credentials cannot sign in to Navigator until credentials are added; see **Create an Operational Driver**.\n\nBeyond the account fields the endpoint accepts the driver's identity (`internal_id`, `drivers_license_number`, `license_expiry`, `photo`), operational fields (`country`, `currency`, `city`, `online`, `current_status`, `status`, location and telemetry), structured `meta`, orchestrator constraints, and the `vehicle`, `vendor` and `job` relationships given as public IDs and resolved inside the authenticated organization.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": [],
@@ -1101,13 +1102,34 @@
                     "name": "John Doe",
                     "email": "randomEmail-fixture",
                     "phone": "randomPhoneNumber-fixture",
-                    "password": "driver_seed_password-fixture"
+                    "password": "driver_seed_password-fixture",
+                    "timezone": "Asia/Singapore",
+                    "internal_id": "DRV-1001",
+                    "drivers_license_number": "S1234567A",
+                    "license_expiry": "2030-06-30",
+                    "country": "SG",
+                    "city": "Singapore",
+                    "current_status": "on_duty",
+                    "skills": [
+                        "hazmat"
+                    ],
+                    "max_travel_time": 28800,
+                    "max_distance": 250000,
+                    "time_window_start": "08:00",
+                    "time_window_end": "18:00",
+                    "meta": {
+                        "badge": "A12"
+                    }
                 }
             },
             "response_fixtures": [
                 {
                     "source": "postman/collections/Fleetbase API/Drivers/.resources/Create a Driver.resources/examples/OK.example.yaml",
                     "status": 200
+                },
+                {
+                    "source": "postman/collections/Fleetbase API/Drivers/.resources/Create a Driver.resources/examples/Unprocessable Entity.example.yaml",
+                    "status": 422
                 }
             ],
             "implementation": "Fleetbase\\Sdk\\Services\\DriverService::createDriver",
@@ -1122,6 +1144,45 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-drivers-create-an-operational-driver",
+            "collection": "Fleetbase API",
+            "group": "Drivers",
+            "name": "Create an Operational Driver",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/drivers",
+            "source": "postman/collections/Fleetbase API/Drivers/Create an Operational Driver.request.yaml",
+            "description": "Creates a driver record for someone with no deliverable email address and no phone number \u2014 a subcontracted or yard-only driver, or a record imported from an operator's own system.\n\nOnly `name` is required. Nothing is invented to fill the gap: no placeholder address, no placeholder number, and no invitation or credential notification is sent, because there is nowhere to send one. The Driver-to-User relationship, the organization membership, the `driver` user type and the `Driver` role are all created exactly as they are for a credentialed driver.\n\n**A driver created this way cannot sign in to Navigator until credentials are supplied.** Add an email address or phone number with `PUT /v1/drivers/{id}` when one becomes available.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Yard Driver",
+                    "internal_id": "DRV-7788"
+                }
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Drivers/.resources/Create an Operational Driver.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::createDriver",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-drivers-create-a-driver"
         },
         {
             "id": "fleetbase-api-drivers-delete-a-driver",
@@ -1161,6 +1222,41 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-drivers-delete-an-operational-driver",
+            "collection": "Fleetbase API",
+            "group": "Drivers",
+            "name": "Delete an Operational Driver",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/drivers/:id",
+            "source": "postman/collections/Fleetbase API/Drivers/Delete an Operational Driver.request.yaml",
+            "description": "Deletes the credential-less driver created by **Create an Operational Driver**.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{operational_driver_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::deleteDriver",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-drivers-delete-a-driver"
         },
         {
             "id": "fleetbase-api-drivers-get-driver-current-organization",
@@ -1698,7 +1794,7 @@
             "method": "PUT",
             "url": "{{base_url}}/{{namespace}}/drivers/:id",
             "source": "postman/collections/Fleetbase API/Drivers/Update a Driver.request.yaml",
-            "description": "Updates a driver's account fields, assignment, status, location, photo, or metadata.",
+            "description": "Updates a driver's account fields, identity, assignment, operational state, location, photo, orchestrator constraints, or metadata.\n\n`password` is deliberately not accepted here. Changing a password requires proving the old one and resetting it requires a code, neither of which a general `PUT` can express \u2014 use **Change Driver Password**, **Request Driver Password Reset** and **Reset Driver Password** instead.\n\nRelationship inputs take public IDs and are resolved inside the authenticated organization. Sending `null` clears an assignment.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": {
@@ -1709,7 +1805,14 @@
                 "body": {
                     "name": "John Doe",
                     "email": "randomEmail-fixture",
-                    "phone": "randomPhoneNumber-fixture"
+                    "phone": "randomPhoneNumber-fixture",
+                    "internal_id": "DRV-1002",
+                    "timezone": "Europe/Amsterdam",
+                    "city": "Johor Bahru",
+                    "current_status": "off_duty",
+                    "meta": {
+                        "badge": "B34"
+                    }
                 }
             },
             "response_fixtures": [
@@ -1732,6 +1835,44 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-drivers-update-a-driver-unchanged-contact",
+            "collection": "Fleetbase API",
+            "group": "Drivers",
+            "name": "Update a Driver Unchanged Contact",
+            "method": "PUT",
+            "url": "{{base_url}}/{{namespace}}/drivers/:id",
+            "source": "postman/collections/Fleetbase API/Drivers/Update a Driver Unchanged Contact.request.yaml",
+            "description": "Resends the driver's current email address and phone number unchanged.\n\nUniqueness is enforced on update against every other live user account, with the driver's own linked user ignored by uuid. Without that clause this request would fail against the driver's own address \u2014 which is why it exists.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{driver_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "email": "created_driver_email-fixture",
+                    "phone": "created_driver_phone-fixture"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::updateDriver",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-drivers-update-a-driver"
         },
         {
             "id": "fleetbase-api-drivers-verify-driver-login-code",
@@ -2179,6 +2320,92 @@
             }
         },
         {
+            "id": "fleetbase-api-fleets-assign-a-driver-to-a-fleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Assign a Driver to a Fleet",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/drivers/:driver",
+            "source": "postman/collections/Fleetbase API/Fleets/Assign a Driver to a Fleet.request.yaml",
+            "description": "Adds a driver to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned.\n\nAssignment is idempotent. Repeating it answers the same way and never creates a second membership; a membership that was previously removed is restored rather than duplicated. Assigning to one fleet does not remove the resource from any other fleet, and does not change a driver's current vehicle.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "driver": "{{fleet_driver_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Assign a Driver to a Fleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignDriverToFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "driver"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
+        },
+        {
+            "id": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Assign a Vehicle to a Fleet",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle",
+            "source": "postman/collections/Fleetbase API/Fleets/Assign a Vehicle to a Fleet.request.yaml",
+            "description": "Adds a vehicle to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned.\n\nAssignment is idempotent. Repeating it answers the same way and never creates a second membership; a membership that was previously removed is restored rather than duplicated. Assigning to one fleet does not remove the resource from any other fleet, and does not change a driver's current vehicle.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "vehicle": "{{fleet_vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Assign a Vehicle to a Fleet.resources/examples/Not Found.example.yaml",
+                    "status": 404
+                },
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Assign a Vehicle to a Fleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignVehicleToFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "vehicle"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
+        },
+        {
             "id": "fleetbase-api-fleets-create-a-fleet",
             "collection": "Fleetbase API",
             "group": "Fleets",
@@ -2186,7 +2413,7 @@
             "method": "POST",
             "url": "{{base_url}}/{{namespace}}/fleets",
             "source": "postman/collections/Fleetbase API/Fleets/Create a Fleet.request.yaml",
-            "description": "Creates a fleet for grouping drivers and vehicles. Assign a service area when the fleet should be constrained to a specific operating area.",
+            "description": "Creates a fleet for grouping drivers and vehicles.\n\nEvery safe fleet field is accepted: name, colour, task, status, and the service area, zone, vendor and parent fleet relationships. Relationships are given as public IDs (`service_area_...`, `zone_...`, `vendor_...`, `fleet_...`) and are resolved inside the authenticated organization \u2014 a public ID belonging to another organization is rejected exactly as a non-existent one is.\n\nOmitting `parent_fleet` creates a root fleet. This request creates the parent used by **Create a Subfleet**.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": [],
@@ -2194,6 +2421,9 @@
                 "body_type": "json",
                 "body": {
                     "name": "Haulers",
+                    "color": "#2563EB",
+                    "task": "Long haul distribution",
+                    "status": "active",
                     "service_area": "service_area_id-fixture"
                 }
             },
@@ -2215,6 +2445,128 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-fleets-create-a-fleet-driver",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Create a Fleet Driver",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/drivers",
+            "source": "postman/collections/Fleetbase API/Fleets/Create a Fleet Driver.request.yaml",
+            "description": "Creates a driver for the fleet membership requests to operate on.\n\nThe driver created in the **Drivers** folder is deleted before this folder runs, so the membership assertions need a resource of their own. It is removed again by **Delete a Fleet Driver** at the end of this folder.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Fleet Membership Driver",
+                    "internal_id": "DRV-FLT-0001"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::createDriver",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-drivers-create-a-driver"
+        },
+        {
+            "id": "fleetbase-api-fleets-create-a-fleet-vehicle",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Create a Fleet Vehicle",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/vehicles",
+            "source": "postman/collections/Fleetbase API/Fleets/Create a Fleet Vehicle.request.yaml",
+            "description": "Creates a vehicle for the fleet membership requests to operate on.\n\nThe vehicle created in the **Vehicles** folder is deleted before this folder runs, so the membership assertions need a resource of their own. It is removed again by **Delete a Fleet Vehicle** at the end of this folder.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Fleet Membership Van",
+                    "make": "Toyota",
+                    "model": "HiAce",
+                    "year": 2024,
+                    "plate_number": "FLT-0001",
+                    "status": "available"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::createVehicle",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-vehicles-create-a-vehicle"
+        },
+        {
+            "id": "fleetbase-api-fleets-create-a-subfleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Create a Subfleet",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/fleets",
+            "source": "postman/collections/Fleetbase API/Fleets/Create a Subfleet.request.yaml",
+            "description": "Creates a fleet nested beneath another fleet by sending the parent's public ID in `parent_fleet`.\n\nHierarchies are validated on write: a fleet cannot be its own parent, and cannot be moved beneath one of its own subfleets. Both are answered with `422`. A parent belonging to another organization is answered with `404`, the same as a parent that does not exist.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Carpool",
+                    "color": "#059669",
+                    "task": "Employee transport",
+                    "status": "active",
+                    "parent_fleet": "parent_fleet_id-fixture"
+                }
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Create a Subfleet.resources/examples/Not Found.example.yaml",
+                    "status": 404
+                },
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Create a Subfleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                },
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Create a Subfleet.resources/examples/Unprocessable Entity.example.yaml",
+                    "status": 422
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::createFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-fleets-create-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet",
@@ -2256,6 +2608,111 @@
             }
         },
         {
+            "id": "fleetbase-api-fleets-delete-a-fleet-driver",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Delete a Fleet Driver",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/drivers/:id",
+            "source": "postman/collections/Fleetbase API/Fleets/Delete a Fleet Driver.request.yaml",
+            "description": "Deletes the driver created for the fleet membership requests. Runs after every membership has been removed.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_driver_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DriverService::deleteDriver",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-drivers-delete-a-driver"
+        },
+        {
+            "id": "fleetbase-api-fleets-delete-a-fleet-vehicle",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Delete a Fleet Vehicle",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/vehicles/:id",
+            "source": "postman/collections/Fleetbase API/Fleets/Delete a Fleet Vehicle.request.yaml",
+            "description": "Deletes the vehicle created for the fleet membership requests. Runs after every membership has been removed.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::deleteVehicle",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-vehicles-delete-a-vehicle"
+        },
+        {
+            "id": "fleetbase-api-fleets-delete-a-subfleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Delete a Subfleet",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id",
+            "source": "postman/collections/Fleetbase API/Fleets/Delete a Subfleet.request.yaml",
+            "description": "Deletes the subfleet created by **Create a Subfleet**.\n\nIt runs before **Delete a Fleet** so the child is removed before its parent.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{subfleet_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::deleteFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-fleets-delete-a-fleet"
+        },
+        {
             "id": "fleetbase-api-fleets-query-fleets",
             "collection": "Fleetbase API",
             "group": "Fleets",
@@ -2293,6 +2750,256 @@
                 "contract_payload": "query",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-fleets-reassign-a-driver-to-a-fleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Reassign a Driver to a Fleet",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/drivers/:driver",
+            "source": "postman/collections/Fleetbase API/Fleets/Reassign a Driver to a Fleet.request.yaml",
+            "description": "Adds a driver to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned.\n\nThis request repeats the assignment above deliberately: assignment is idempotent, so a second call answers exactly as the first did and produces one active membership, not two.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "driver": "{{fleet_driver_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Reassign a Driver to a Fleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignDriverToFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "driver"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-fleets-assign-a-driver-to-a-fleet"
+        },
+        {
+            "id": "fleetbase-api-fleets-reassign-a-vehicle-to-a-fleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Reassign a Vehicle to a Fleet",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle",
+            "source": "postman/collections/Fleetbase API/Fleets/Reassign a Vehicle to a Fleet.request.yaml",
+            "description": "Adds a vehicle to a fleet. Both path parameters are public IDs; no internal uuid is accepted or returned.\n\nThis request repeats the assignment above deliberately: assignment is idempotent, so a second call answers exactly as the first did and produces one active membership, not two.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "vehicle": "{{fleet_vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Reassign a Vehicle to a Fleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::assignVehicleToFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "vehicle"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet"
+        },
+        {
+            "id": "fleetbase-api-fleets-remove-a-driver-from-a-fleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Driver from a Fleet",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/drivers/:driver",
+            "source": "postman/collections/Fleetbase API/Fleets/Remove a Driver from a Fleet.request.yaml",
+            "description": "Removes a driver from a fleet. Both path parameters are public IDs.\n\nRemoving a membership never deletes the driver, never changes a driver's current vehicle, and never affects the resource's membership of any other fleet. Repeating the removal is a successful no-op.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "driver": "{{fleet_driver_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Remove a Driver from a Fleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeDriverFromFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "driver"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
+        },
+        {
+            "id": "fleetbase-api-fleets-remove-a-driver-from-a-fleet-again",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Driver from a Fleet Again",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/drivers/:driver",
+            "source": "postman/collections/Fleetbase API/Fleets/Remove a Driver from a Fleet Again.request.yaml",
+            "description": "Removes a driver from a fleet. Both path parameters are public IDs.\n\nThis request repeats the removal above deliberately: removing a membership that is not there is a documented, successful no-op.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "driver": "{{fleet_driver_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Remove a Driver from a Fleet Again.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeDriverFromFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "driver"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-fleets-remove-a-driver-from-a-fleet"
+        },
+        {
+            "id": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Vehicle from a Fleet",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle",
+            "source": "postman/collections/Fleetbase API/Fleets/Remove a Vehicle from a Fleet.request.yaml",
+            "description": "Removes a vehicle from a fleet. Both path parameters are public IDs.\n\nRemoving a membership never deletes the vehicle, never changes a driver's current vehicle, and never affects the resource's membership of any other fleet. Repeating the removal is a successful no-op.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "vehicle": "{{fleet_vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Remove a Vehicle from a Fleet.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeVehicleFromFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "vehicle"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            }
+        },
+        {
+            "id": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet-again",
+            "collection": "Fleetbase API",
+            "group": "Fleets",
+            "name": "Remove a Vehicle from a Fleet Again",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/fleets/:id/vehicles/:vehicle",
+            "source": "postman/collections/Fleetbase API/Fleets/Remove a Vehicle from a Fleet Again.request.yaml",
+            "description": "Removes a vehicle from a fleet. Both path parameters are public IDs.\n\nThis request repeats the removal above deliberately: removing a membership that is not there is a documented, successful no-op.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{fleet_id}}",
+                    "vehicle": "{{fleet_vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Fleets/.resources/Remove a Vehicle from a Fleet Again.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\FleetService::removeVehicleFromFleet",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id",
+                    "vehicle"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-retrieve-a-fleet",
@@ -2341,7 +3048,7 @@
             "method": "PUT",
             "url": "{{base_url}}/{{namespace}}/fleets/:id",
             "source": "postman/collections/Fleetbase API/Fleets/Update a Fleet.request.yaml",
-            "description": "Updates a fleet's name or assigned service area.",
+            "description": "Updates any safe fleet field: name, colour, task, status, and the service area, zone, vendor and parent fleet relationships.\n\nRelationship inputs take public IDs and are resolved inside the authenticated organization. Sending `null` for a relationship clears it \u2014 `\"parent_fleet\": null` promotes a subfleet back to a root fleet.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": {
@@ -2350,7 +3057,10 @@
                 "query": [],
                 "body_type": "json",
                 "body": {
-                    "name": "Haulers",
+                    "name": "Haulers North",
+                    "color": "#7C3AED",
+                    "task": "Regional distribution",
+                    "status": "active",
                     "service_area": "service_area_id-fixture"
                 }
             },
@@ -4236,6 +4946,42 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-orders-create-an-order-with-empty-relationships",
+            "collection": "Fleetbase API",
+            "group": "Orders",
+            "name": "Create an Order with Empty Relationships",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/orders",
+            "source": "postman/collections/Fleetbase API/Orders/Create an Order with Empty Relationships.request.yaml",
+            "description": "Creates an order while sending `driver` and `vehicle` as empty strings.\n\nAn empty relationship means \"none\", not \"invalid\": Fleetbase ignores the field and creates the order unassigned, exactly as if the key had been left out. This is the historical behaviour, and it matters because a client that serialises an unselected dropdown sends `\"\"` rather than omitting the key.\n\nEmpty-string request values reach the API as null, and a null is a question with an answer \u2014 \"there is no such record\" \u2014 rather than a malformed request. This request exists so that answer stays a 2xx.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "pickup": "Singapore 018971",
+                    "dropoff": "321 Orchard Rd, Singapore",
+                    "driver": "",
+                    "vehicle": ""
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\OrderService::createOrder",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-orders-create-an-order"
         },
         {
             "id": "fleetbase-api-orders-delete-an-order",
@@ -6243,6 +6989,49 @@
             }
         },
         {
+            "id": "fleetbase-api-service-rates-create-a-service-rate-with-an-empty-service-area",
+            "collection": "Fleetbase API",
+            "group": "Service Rates",
+            "name": "Create a Service Rate with an Empty Service Area",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/service-rates",
+            "source": "postman/collections/Fleetbase API/Service Rates/Create a Service Rate with an Empty Service Area.request.yaml",
+            "description": "Creates a service rate while sending `service_area` and `zone` as empty strings.\n\nBoth relationships are optional, so an empty one reads as absent. Without that, the `exists` check runs against the null an empty string becomes and answers \"The selected service area is invalid\" for a field the caller simply left blank.\n\nDoes not overwrite `service_rate_id`; the canonical create owns that variable.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "service_name": "Empty Relationship Rate",
+                    "service_type": "food_delivery",
+                    "rate_calculation_method": "per_meter",
+                    "currency": "USD",
+                    "base_fee": 10,
+                    "per_meter_unit": "km",
+                    "per_meter_flat_rate_fee": 25,
+                    "service_area": "",
+                    "zone": "",
+                    "duration_terms": "Standard",
+                    "estimated_days": 3
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\ServiceRateService::createServiceRate",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-service-rates-create-a-service-rate"
+        },
+        {
             "id": "fleetbase-api-service-rates-delete-a-service-rate",
             "collection": "Fleetbase API",
             "group": "Service Rates",
@@ -6790,27 +7579,86 @@
             "method": "POST",
             "url": "{{base_url}}/{{namespace}}/vehicles",
             "source": "postman/collections/Fleetbase API/Vehicles/Create a Vehicle.request.yaml",
-            "description": "Creates a vehicle for the current company. Send VIN, make/model fields, assignment fields, status, location, capacity, or orchestrator constraints as needed.",
+            "description": "Creates a vehicle for the current organization.\n\nEvery safe business field the vehicle record holds is accepted: identity and description, odometer and measurement, body, capacity and dimensions, lifecycle and financing, regulatory and engine specifications, structured `specs` / `details` / `meta`, orchestrator constraints, and the vendor, driver, category and warranty relationships.\n\nRelationships take public IDs (`vendor_...`, `driver_...`, `category_...`, `warranty_...`) and are resolved inside the authenticated organization; another organization's public ID is rejected exactly as a non-existent one is. Server-managed values \u2014 decoded `vin_data`, `telematics`, the generated `slug`, and every internal uuid column \u2014 are not accepted as input.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": [],
                 "query": [],
                 "body_type": "json",
                 "body": {
+                    "internal_id": "VEH-1001",
+                    "name": "Depot Van",
+                    "description": "City route van",
                     "vin": "1GCGSBEA0G1111111",
                     "year": 2023,
                     "make": "Toyota",
                     "model": "Camry",
                     "trim": "SE",
+                    "color": "White",
+                    "type": "sedan",
+                    "class": "N1",
                     "plate_number": "ABC123",
+                    "serial_number": "SER-1001",
+                    "call_sign": "DEPOT-1",
+                    "fuel_card_number": "FC-1001",
                     "status": "maintenance",
-                    "online": false
+                    "online": false,
+                    "odometer": 41000,
+                    "odometer_unit": "km",
+                    "odometer_at_purchase": 12,
+                    "measurement_system": "metric",
+                    "fuel_type": "diesel",
+                    "fuel_volume_unit": "l",
+                    "transmission": "automatic",
+                    "body_type": "sedan",
+                    "seating_capacity": 5,
+                    "weight": 1620.5,
+                    "payload_capacity": 1400,
+                    "fuel_capacity": 60,
+                    "currency": "SGD",
+                    "purchased_at": "2026-01-02",
+                    "loan_first_payment": "2026-02-15",
+                    "loan_amount": 32000,
+                    "insurance_value": 41000,
+                    "depreciation_rate": 12.5,
+                    "current_value": 38000,
+                    "acquisition_cost": 52000,
+                    "engine_number": "ENG-1001",
+                    "number_of_cylinders": 4,
+                    "latitude": 40.7484,
+                    "longitude": -73.9857,
+                    "specs": {
+                        "doors": 4
+                    },
+                    "details": {
+                        "liftgate": true
+                    },
+                    "notes": "City route pool",
+                    "meta": {
+                        "depot": "north"
+                    },
+                    "skills": [
+                        "tail_lift"
+                    ],
+                    "max_tasks": 40,
+                    "time_window_start": "08:00",
+                    "time_window_end": "18:00",
+                    "return_to_depot": true,
+                    "vendor": "vendor_id-fixture"
                 }
             },
             "response_fixtures": [
                 {
                     "source": "postman/collections/Fleetbase API/Vehicles/.resources/Create a Vehicle.resources/examples/Created.example.yaml",
                     "status": 201
+                },
+                {
+                    "source": "postman/collections/Fleetbase API/Vehicles/.resources/Create a Vehicle.resources/examples/Not Found.example.yaml",
+                    "status": 404
+                },
+                {
+                    "source": "postman/collections/Fleetbase API/Vehicles/.resources/Create a Vehicle.resources/examples/Unprocessable Entity.example.yaml",
+                    "status": 422
                 }
             ],
             "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::createVehicle",
@@ -6864,6 +7712,93 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             }
+        },
+        {
+            "id": "fleetbase-api-vehicles-expand-a-vehicle",
+            "collection": "Fleetbase API",
+            "group": "Vehicles",
+            "name": "Expand a Vehicle",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/vehicles/:id",
+            "source": "postman/collections/Fleetbase API/Vehicles/Expand a Vehicle.request.yaml",
+            "description": "Retrieves a vehicle with its vendor expanded, using the array form of the expansion parameter.\n\nBoth `?with=vendor` and `?with[]=vendor` are accepted, as are `?with=vendor,driver` and the `expand` alias. Expansion is strictly additive: it adds the nested object and leaves `vendor_id` exactly as it was. A relationship name outside the supported set is ignored rather than rejected, so a client sending a relation this version does not have still gets its response.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{vehicle_id}}"
+                },
+                "query": {
+                    "with": [
+                        "vendor",
+                        "not_a_relation"
+                    ]
+                },
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Vehicles/.resources/Expand a Vehicle.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::retrieveVehicle",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle"
+        },
+        {
+            "id": "fleetbase-api-vehicles-expand-a-vehicle-scalar",
+            "collection": "Fleetbase API",
+            "group": "Vehicles",
+            "name": "Expand a Vehicle Scalar",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/vehicles/:id",
+            "source": "postman/collections/Fleetbase API/Vehicles/Expand a Vehicle Scalar.request.yaml",
+            "description": "The same expansion as **Expand a Vehicle**, sent in the scalar comma-separated form.\n\n`?with=vendor,driver` must behave exactly as `?with[]=vendor&with[]=driver` does. This request exists so the two spellings are proven equivalent rather than assumed to be.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{vehicle_id}}"
+                },
+                "query": {
+                    "with": "vendor"
+                },
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [
+                {
+                    "source": "postman/collections/Fleetbase API/Vehicles/.resources/Expand a Vehicle.resources/examples/OK.example.yaml",
+                    "status": 200
+                }
+            ],
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::retrieveVehicle",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle"
         },
         {
             "id": "fleetbase-api-vehicles-query-vehicles",
@@ -6986,7 +7921,7 @@
             "method": "PUT",
             "url": "{{base_url}}/{{namespace}}/vehicles/:id",
             "source": "postman/collections/Fleetbase API/Vehicles/Update a Vehicle.request.yaml",
-            "description": "Updates a vehicle's identity, operational status, vendor assignment, location, capacity, or orchestrator constraints. Updating the VIN refreshes decoded VIN data.",
+            "description": "Updates any safe vehicle field. Updating the VIN re-runs VIN decoding.\n\nA partial update touches only the fields that are sent: omitting `online` leaves the vehicle's online state alone rather than taking it offline. Relationship inputs take public IDs and are resolved inside the authenticated organization; sending `null` clears the assignment, and sending an empty `driver` unassigns the current driver.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": {
@@ -6997,6 +7932,22 @@
                 "body": {
                     "plate_number": "ABC123",
                     "status": "operational",
+                    "odometer": 41250,
+                    "color": "Silver",
+                    "body_type": "sedan",
+                    "transmission": "automatic",
+                    "seating_capacity": 5,
+                    "currency": "SGD",
+                    "purchased_at": "2026-01-02",
+                    "specs": {
+                        "doors": 4
+                    },
+                    "details": {
+                        "liftgate": true
+                    },
+                    "meta": {
+                        "depot": "south"
+                    },
                     "latitude": 40.7484,
                     "longitude": -73.9857,
                     "speed": 90

@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "9a7d4d898b4e74d735d93c78d67d4d5013c1a28b",
+        "ref": "9b59befdc1b4623ba40bf5661bd5e88f1dac673e",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
@@ -57,7 +57,7 @@
         "Fleets": {
             "service": "Fleetbase\\Sdk\\Services\\FleetService",
             "trait": "Fleetbase\\Sdk\\Services\\Concerns\\FleetServiceEndpoints",
-            "requests": 5
+            "requests": 9
         },
         "Fuel Reports": {
             "service": "Fleetbase\\Sdk\\Services\\FuelReportService",

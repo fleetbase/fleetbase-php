@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-06
+
+### Added
+
+- Fleet membership methods for the endpoints Fleet-Ops added in the public Fleet resource expansion: `assignDriverToFleet`, `assignVehicleToFleet`, `removeDriverFromFleet`, and `removeVehicleFromFleet`.
+
+### Changed
+
+- Synced the locked contract to Postman `9b59bef`, which grows the collection from 220 to 241 requests.
+- Contract requests that exercise a scenario on an existing endpoint now resolve to that endpoint's method instead of generating one of their own. A request such as `Create an Order with Empty Relationships` documents `createOrder`, and `Expand a Vehicle` documents `retrieveVehicle` with its `with` parameter, rather than adding a method that only a contract test would ever call.
+
+### Fixed
+
+- Repeated query parameters are no longer collapsed to their last value when the contract manifest is generated, so `?with[]=vendor&with[]=driver` keeps both values.
+- A request that inlines its query string in `url` no longer records that query twice.
+
 ## [1.1.2] - 2026-09-03
 
 ### Changed
@@ -72,7 +88,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Latest baseline whose public API is explicitly preserved by 1.1.0.
 
 
-[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.1.2...HEAD
+[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/fleetbase/fleetbase-php/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/fleetbase/fleetbase-php/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/fleetbase/fleetbase-php/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/fleetbase/fleetbase-php/compare/1.0.3...1.1.0

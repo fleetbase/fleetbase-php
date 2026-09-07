@@ -31,11 +31,27 @@ $catalog = [
     'examples' => [],
 ];
 
+// A variant is filed under the folder that exercises it, but it calls the
+// canonical request's method — `Create a Fleet Driver` lives under Fleets and
+// calls `$fleetbase->drivers->createDriver()`. The accessor and the path
+// variable names have to follow the method, not the folder.
+$groupsById = [];
+foreach ($manifest['requests'] as $indexedRequest) {
+    if (is_array($indexedRequest) && isset($indexedRequest['id'], $indexedRequest['group'])) {
+        $groupsById[$indexedRequest['id']] = $indexedRequest['group'];
+    }
+}
+
 foreach ($manifest['requests'] as $request) {
     if (!is_array($request)) {
         fail('The endpoint contract contains an invalid request.');
     }
     $group = requiredString($request, 'group');
+
+    $variantOf = $request['variant_of'] ?? null;
+    $callGroup = is_string($variantOf) && isset($groupsById[$variantOf])
+        ? $groupsById[$variantOf]
+        : $group;
     if ($group !== $currentGroup) {
         $lines[] = '';
         $lines[] = '## ' . $group;
@@ -47,12 +63,12 @@ foreach ($manifest['requests'] as $request) {
     if (!is_string($method) || $method === '') {
         fail('A request has no callable implementation method.');
     }
-    $property = serviceProperty($group);
+    $property = serviceProperty($callGroup);
     if (!property_exists(Fleetbase\Sdk\Fleetbase::class, $property)) {
-        fail(sprintf('Fleetbase has no service property for group %s.', $group));
+        fail(sprintf('Fleetbase has no service property for group %s.', $callGroup));
     }
 
-    [$arguments, $variables] = arguments($request);
+    [$arguments, $variables] = arguments($request, $callGroup);
     $call = renderCall($property, $method, $arguments);
 
     $id = requiredString($request, 'id');
@@ -111,7 +127,7 @@ final class PhpExpression
 }
 
 /** @param array<string, mixed> $request @return array{array<int, mixed>, array<string, mixed>} */
-function arguments(array $request): array
+function arguments(array $request, string $callGroup): array
 {
     $fixture = is_array($request['request_fixture'] ?? null) ? $request['request_fixture'] : [];
     $pathVariables = is_array($fixture['path_variables'] ?? null) ? $fixture['path_variables'] : [];
@@ -123,7 +139,7 @@ function arguments(array $request): array
         if (!is_string($name) || $name === '') {
             fail('An SDK signature has an invalid path parameter.');
         }
-        $variable = variableName($name, requiredString($request, 'group'));
+        $variable = variableName($name, $callGroup);
         $fixtureValue = normalized($pathVariables[$name] ?? $name . '-fixture');
         $variables[$variable] = $fixtureValue === '' ? $name . '-fixture' : $fixtureValue;
         $arguments[] = new PhpExpression('$' . $variable);
