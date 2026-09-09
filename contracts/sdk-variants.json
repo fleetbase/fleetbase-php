@@ -1,7 +1,54 @@
 {
     "schema_version": 1,
     "description": "Postman requests that exercise a scenario on an endpoint the SDK already covers, rather than a distinct operation. The generator maps each to the canonical request's method instead of minting a new one, so a contract-test case cannot become permanent public API surface. Adding an entry here removes nothing that already exists; it only prevents a new method being generated.",
+    "service_groups": {
+        "fleetbase-api-trailers-list-vehicle-trailers": "Vehicles"
+    },
     "variants": {
+        "fleetbase-api-trailers-attach-device-to-trailer": {
+            "canonical": "fleetbase-api-devices-attach-device",
+            "rationale": "Attaches an existing device to a trailer through the Device API."
+        },
+        "fleetbase-api-trailers-attach-equipment-to-trailer": {
+            "canonical": "fleetbase-api-equipment-attach-equipment",
+            "rationale": "Attaches equipment to a trailer through the Equipment API."
+        },
+        "fleetbase-api-trailers-create-trailer-device": {
+            "canonical": "fleetbase-api-devices-create-a-device",
+            "rationale": "Creates a device fixture through the Device API."
+        },
+        "fleetbase-api-trailers-create-trailer-equipment": {
+            "canonical": "fleetbase-api-equipment-create-equipment",
+            "rationale": "Creates an equipment fixture through the Equipment API."
+        },
+        "fleetbase-api-trailers-delete-trailer-device": {
+            "canonical": "fleetbase-api-devices-delete-a-device",
+            "rationale": "Cleans up the device fixture through the Device API."
+        },
+        "fleetbase-api-trailers-delete-trailer-equipment": {
+            "canonical": "fleetbase-api-equipment-delete-equipment",
+            "rationale": "Cleans up the equipment fixture through the Equipment API."
+        },
+        "fleetbase-api-trailers-detach-trailer-attachments": {
+            "canonical": "fleetbase-api-devices-detach-device",
+            "rationale": "Detaches the trailer's device through the Device API."
+        },
+        "fleetbase-api-trailers-detach-trailer-equipment": {
+            "canonical": "fleetbase-api-equipment-detach-equipment",
+            "rationale": "Detaches the trailer's equipment through the Equipment API."
+        },
+        "fleetbase-api-trailers-reattach-equipment-to-vehicle": {
+            "canonical": "fleetbase-api-equipment-attach-equipment",
+            "rationale": "Exercises moving equipment between attachments using the same attach operation."
+        },
+        "fleetbase-api-trailers-verify-detached-connection-history": {
+            "canonical": "fleetbase-api-trailers-list-trailer-connections",
+            "rationale": "Queries connection history after detaching using the same history operation."
+        },
+        "fleetbase-api-trailers-verify-trailer-equipment": {
+            "canonical": "fleetbase-api-trailers-retrieve-a-trailer",
+            "rationale": "Retrieves the trailer to verify its equipment representation."
+        },
         "fleetbase-api-fleets-reassign-a-driver-to-a-fleet": {
             "canonical": "fleetbase-api-fleets-assign-a-driver-to-a-fleet",
             "rationale": "Assigns the same driver twice to prove membership assignment is idempotent. Same route and same call."

@@ -42,6 +42,7 @@ use Fleetbase\Sdk\Services\ServiceQuoteService;
 use Fleetbase\Sdk\Services\ServiceRateService;
 use Fleetbase\Sdk\Services\TrackingNumberService;
 use Fleetbase\Sdk\Services\TrackingStatusService;
+use Fleetbase\Sdk\Services\TrailerService;
 use Fleetbase\Sdk\Services\VehicleService;
 use Fleetbase\Sdk\Services\VendorService;
 use Fleetbase\Sdk\Services\WorkOrderService;
@@ -72,6 +73,9 @@ class Fleetbase
 
     /** @var VehicleService */
     public $vehicles;
+
+    /** @var TrailerService */
+    public $trailers;
 
     /** @var VendorService */
     public $vendors;
@@ -176,6 +180,7 @@ class Fleetbase
         $this->places = new PlaceService($this->client);
         $this->drivers = new DriverService($this->client);
         $this->vehicles = new VehicleService($this->client);
+        $this->trailers = new TrailerService($this->client);
         $this->vendors = new VendorService($this->client);
         $this->contacts = new ContactService($this->client);
         $this->serviceAreas = new ServiceAreaService($this->client);
@@ -349,6 +354,11 @@ class Fleetbase
     public function devices(): DeviceService
     {
         return $this->devices;
+    }
+
+    public function trailers(): TrailerService
+    {
+        return $this->trailers;
     }
 
     public function equipment(): EquipmentService

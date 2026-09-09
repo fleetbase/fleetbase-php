@@ -8,7 +8,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/fleetbase/fleetbase-php.svg)](https://packagist.org/packages/fleetbase/fleetbase-php)
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue.svg)](LICENSE)
 
-The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted installations, offers explicit methods for all 220 locked Fleetbase and Core API requests, and retains the public API used by the 1.0.x SDK.
+The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted installations, covers all 264 locked Fleetbase and Core API requests, and retains the public API used by earlier SDK releases.
 
 Version 1.1.0 changed the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
 
@@ -54,7 +54,7 @@ echo $place->id;
 
 Never commit an API key. Load it from your runtime secret manager or environment.
 
-Existing property access remains supported (`$fleetbase->orders`). Explicit accessors such as `$fleetbase->orders()` are available for static analysis and dependency injection. Browse [all 220 generated PHP examples](docs/api-examples.md); CI executes each exact snippet against a hermetic transport.
+Existing property access remains supported (`$fleetbase->orders`). Explicit accessors such as `$fleetbase->orders()` are available for static analysis and dependency injection. Browse [all 264 generated PHP examples](docs/api-examples.md); CI executes each exact snippet against a hermetic transport.
 
 ### Endpoint arguments
 
@@ -80,6 +80,32 @@ $manifests = $fleetbase->drivers->listDriverManifests($driverId, [
 ```
 
 Methods with two URL identifiers take both identifiers before the data array, for example `capturePhotoForOrder($orderId, $subjectId, $data, $requestOptions)`. Collection methods take data first and request options second. The published 1.1.0 envelope form remains supported, including named `parameters:` and `options:` arguments, but new documentation uses the positional/direct form.
+
+### Trailers
+
+Version 1.3.0 adds first-class trailers and equipment attachment actions:
+
+```php
+$trailer = $fleetbase->trailers->create([
+    'name' => 'Refrigerated trailer',
+    'type' => 'reefer',
+    'status' => 'available',
+]);
+
+$connection = $fleetbase->trailers->attachTrailerToVehicle($trailer->id, [
+    'vehicle' => $vehicleId,
+    'position' => 1,
+]);
+$fleetbase->trailers->trackTrailer($trailer->id, [
+    'latitude' => 1.29027,
+    'longitude' => 103.851959,
+]);
+$history = $fleetbase->trailers->listTrailerConnections($trailer->id);
+$trailers = $fleetbase->vehicles->listVehicleTrailers($vehicleId);
+$fleetbase->trailers->detachTrailerFromVehicle($trailer->id);
+```
+
+Attach devices and equipment through their own services, using `attachDevice($deviceId, $data)` and `attachEquipment($equipmentId, $data)`. Standard trailer CRUD also supports `createTrailer`, `retrieveTrailer`, `queryTrailers`, `updateTrailer`, and `deleteTrailer`.
 
 ## Configuration
 

@@ -52,6 +52,13 @@ final class ApiExamplesTest extends TestCase
             $dispatchExample['call'] ?? null
         );
         $passwordExample = $catalogExamples['fleetbase-api-drivers-change-driver-password'] ?? null;
+        $vehicleTrailers = $catalogExamples['fleetbase-api-trailers-list-vehicle-trailers'] ?? null;
+        self::assertIsArray($vehicleTrailers);
+        self::assertSame('$result = $fleetbase->vehicles->listVehicleTrailers($vehicleId);', $vehicleTrailers['call'] ?? null);
+        $deviceAttachment = $catalogExamples['fleetbase-api-trailers-attach-device-to-trailer'] ?? null;
+        self::assertIsArray($deviceAttachment);
+        self::assertIsString($deviceAttachment['call'] ?? null);
+        self::assertStringContainsString('$fleetbase->devices->attachDevice(', $deviceAttachment['call']);
         $scheduleExample = $catalogExamples['fleetbase-api-orders-schedule-an-order'] ?? null;
         self::assertIsArray($passwordExample);
         self::assertIsArray($scheduleExample);

@@ -17,7 +17,9 @@ $variantsPath = is_string($options['variants'] ?? null) ? $options['variants'] :
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$variants = readVariants($variantsPath);
+$mapping = readVariants($variantsPath);
+$variants = $mapping['variants'] ?? [];
+$serviceGroups = $mapping['service_groups'] ?? [];
 $manifest = readManifest($manifestPath);
 $requests = $manifest['requests'];
 if (!is_array($requests)) {
@@ -41,7 +43,7 @@ foreach ($requests as $index => $request) {
         continue;
     }
 
-    $group = requiredString($request, 'group');
+    $group = $serviceGroups[$id] ?? requiredString($request, 'group');
     $service = serviceName($group);
     $method = methodName(requiredString($request, 'name'));
     $request['sdk_signature'] = signatureForRequest($request);
@@ -57,6 +59,7 @@ foreach ($requests as $index => $request) {
     }
 
     $request['implementation'] = 'Fleetbase\\Sdk\\Services\\' . $service . '::' . $method;
+    $request['sdk_group'] = $group;
     $request['tests'] = ['tests/Contract/EndpointContractTest.php::testEveryEndpointContract'];
     $request['status'] = 'complete';
     $request['exception'] = null;
@@ -68,9 +71,11 @@ foreach ($requests as $index => $request) {
 // canonical method, which is exactly the claim being made: this scenario is
 // reachable with the API the SDK already exposes.
 $implementationsById = [];
+$requestsById = [];
 foreach ($requests as $request) {
     if (is_array($request) && isset($request['id'], $request['implementation'])) {
         $implementationsById[$request['id']] = $request['implementation'];
+        $requestsById[$request['id']] = $request;
     }
 }
 
@@ -87,8 +92,17 @@ foreach ($variantIndexes as $index => $id) {
     }
 
     $request = $requests[$index];
+    $canonical = $requestsById[$canonicalId];
+    $normalizePath = static function (string $url): string {
+        return preg_replace('/\{\{[^}]+\}\}|:[A-Za-z][A-Za-z0-9_-]*/', '{}', $url) ?? $url;
+    };
+    if ($request['method'] !== $canonical['method']
+        || $normalizePath(requiredString($request, 'url')) !== $normalizePath(requiredString($canonical, 'url'))) {
+        fail(sprintf('Variant %s does not match the canonical HTTP operation.', $id));
+    }
     $request['sdk_signature'] = signatureForRequest($request);
     $request['implementation'] = $implementationsById[$canonicalId];
+    $request['sdk_group'] = $canonical['sdk_group'];
     $request['tests'] = ['tests/Contract/EndpointContractTest.php::testEveryEndpointContract'];
     $request['status'] = 'complete';
     $request['exception'] = null;
@@ -173,7 +187,7 @@ function readManifest(string $path): array
  * Absence is not an error: a checkout without the file simply mints a method
  * for every request, which is the behaviour that predates the map.
  *
- * @return array<string, array<string, string>>
+ * @return array{variants?: array<string, array<string, string>>, service_groups?: array<string, string>}
  */
 function readVariants(string $path): array
 {
@@ -189,7 +203,7 @@ function readVariants(string $path): array
         fail(sprintf('Invalid variant map JSON: %s', $path));
     }
 
-    return $data['variants'];
+    return $data;
 }
 
 /** @param array<mixed, mixed> $data */
@@ -507,6 +521,12 @@ function renderContractTest(): string
                 if (!is_array($manifest) || !is_array($manifest['requests'] ?? null)) {
                     throw new \RuntimeException('The endpoint contract manifest is invalid.');
                 }
+                $requestsById = [];
+                foreach ($manifest['requests'] as $entry) {
+                    if (is_array($entry) && is_string($entry['id'] ?? null)) {
+                        $requestsById[$entry['id']] = $entry;
+                    }
+                }
                 foreach ($manifest['requests'] as $request) {
                     if (!is_array($request)) {
                         throw new \RuntimeException('The endpoint contract request is invalid.');
@@ -515,6 +535,12 @@ function renderContractTest(): string
                     $implementationName = $request['implementation'] ?? null;
                     $httpMethod = $request['method'] ?? null;
                     $url = $request['url'] ?? null;
+                    // Legacy envelopes name the canonical method's placeholders. A
+                    // scenario may spell the same path parameter :id or {{device_id}}.
+                    $canonicalId = $request['variant_of'] ?? null;
+                    if (is_string($canonicalId) && isset($requestsById[$canonicalId])) {
+                        $url = $requestsById[$canonicalId]['url'] ?? null;
+                    }
                     $requestFixture = $request['request_fixture'] ?? null;
                     if (!is_string($id) || !is_string($implementationName) || !is_string($httpMethod) || !is_string($url) || !is_array($requestFixture)) {
                         throw new \RuntimeException('The endpoint contract request fields are invalid.');

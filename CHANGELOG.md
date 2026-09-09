@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-09
+
+### Added
+
+- First-class Trailers service and resource, covering creation, retrieval, queries, updates, deletion, tracking, vehicle attachment and detachment, and connection history.
+- `vehicles->listVehicleTrailers()` and Equipment `attachEquipment()` / `detachEquipment()` actions.
+
+### Changed
+
+- Updated the locked Postman contract and executable PHP catalog from 241 to 264 requests, including all trailer and equipment scenarios.
+- Trailer scenarios reuse the canonical Device and Equipment methods; vehicle trailer listings belong to VehicleService.
+- Updated the disposable Fleetbase stack and package pins to include the Trailers API.
+
+### Fixed
+
+- Contract tests now use canonical placeholder names for legacy envelopes when scenario URLs spell the same identifier differently.
+- Restored the complete PHP example catalog required by the website's Postman submodule update.
+
 ## [1.2.0] - 2026-09-06
 
 ### Added
@@ -88,7 +106,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Latest baseline whose public API is explicitly preserved by 1.1.0.
 
 
-[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/fleetbase/fleetbase-php/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/fleetbase/fleetbase-php/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/fleetbase/fleetbase-php/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/fleetbase/fleetbase-php/compare/1.1.0...1.1.1

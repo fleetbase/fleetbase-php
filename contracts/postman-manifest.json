@@ -2,26 +2,26 @@
     "schema_version": 1,
     "source": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "9b59befdc1b4623ba40bf5661bd5e88f1dac673e",
+        "ref": "7fe06b7c5e415a9aa292869e9037910896b049ad",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
         ]
     },
     "summary": {
-        "requests": 241,
-        "groups": 36,
+        "requests": 264,
+        "groups": 37,
         "methods": {
-            "DELETE": 36,
-            "GET": 86,
-            "PATCH": 6,
-            "POST": 87,
-            "PUT": 26
+            "DELETE": 39,
+            "GET": 92,
+            "PATCH": 7,
+            "POST": 99,
+            "PUT": 27
         },
-        "mapped": 241,
+        "mapped": 264,
         "exceptions": 0,
         "unmapped": 0,
-        "variants": 17
+        "variants": 28
     },
     "requests": [
         {
@@ -63,7 +63,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Contacts"
         },
         {
             "id": "fleetbase-api-contacts-delete-a-contact",
@@ -102,7 +103,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Contacts"
         },
         {
             "id": "fleetbase-api-contacts-query-contacts",
@@ -142,7 +144,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Contacts"
         },
         {
             "id": "fleetbase-api-contacts-retrieve-a-contact",
@@ -181,7 +184,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Contacts"
         },
         {
             "id": "fleetbase-api-contacts-update-a-contact",
@@ -228,7 +232,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Contacts"
         },
         {
             "id": "fleetbase-api-customers-create-a-customer",
@@ -272,7 +277,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-create-a-customer-order",
@@ -329,7 +335,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-forgot-customer-password",
@@ -361,7 +368,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-list-customer-orders",
@@ -391,7 +399,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-list-customer-places",
@@ -421,7 +430,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-login-customer",
@@ -454,7 +464,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-logout-all-customer-sessions",
@@ -484,7 +495,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-logout-customer",
@@ -514,7 +526,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-register-customer-device",
@@ -547,7 +560,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-request-customer-creation-code",
@@ -582,7 +596,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-request-customer-login-sms",
@@ -614,7 +629,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-reset-customer-password",
@@ -648,7 +664,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-retrieve-authenticated-customer",
@@ -678,7 +695,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-retrieve-a-customer-order",
@@ -710,7 +728,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-update-authenticated-customer",
@@ -744,7 +763,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-customers-verify-customer-login-code",
@@ -778,7 +798,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Customers"
         },
         {
             "id": "fleetbase-api-devices-attach-device",
@@ -788,14 +809,15 @@
             "method": "POST",
             "url": "{{base_url}}/{{namespace}}/devices/{{device_id}}/attach",
             "source": "postman/collections/Fleetbase API/Devices/Attach Device.request.yaml",
-            "description": "Attach this device to a vehicle.",
+            "description": "Attach this Device to a Vehicle or Trailer. The legacy `vehicle` field remains supported.",
             "authentication": "fleetbase-api-key",
             "request_fixture": {
                 "path_variables": [],
                 "query": [],
                 "body_type": "json",
                 "body": {
-                    "vehicle": "vehicle_id-fixture"
+                    "attachable_type": "fleet-ops:vehicle",
+                    "attachable": "vehicle_id-fixture"
                 }
             },
             "response_fixtures": [
@@ -817,7 +839,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-devices-create-a-device",
@@ -858,7 +881,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-devices-delete-a-device",
@@ -895,7 +919,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-devices-detach-device",
@@ -932,7 +957,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-devices-query-devices",
@@ -967,7 +993,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-devices-retrieve-a-device",
@@ -1004,7 +1031,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-devices-update-a-device",
@@ -1043,7 +1071,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Devices"
         },
         {
             "id": "fleetbase-api-drivers-change-driver-password",
@@ -1082,7 +1111,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-create-a-driver",
@@ -1143,7 +1173,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-create-an-operational-driver",
@@ -1182,7 +1213,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-create-a-driver"
+            "variant_of": "fleetbase-api-drivers-create-a-driver",
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-delete-a-driver",
@@ -1221,7 +1253,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-delete-an-operational-driver",
@@ -1256,7 +1289,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-delete-a-driver"
+            "variant_of": "fleetbase-api-drivers-delete-a-driver",
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-get-driver-current-organization",
@@ -1290,7 +1324,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-list-driver-manifests",
@@ -1324,7 +1359,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-list-driver-organizations",
@@ -1358,7 +1394,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-login-driver",
@@ -1391,7 +1428,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-query-drivers",
@@ -1428,7 +1466,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-register-device",
@@ -1461,7 +1500,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-register-driver-device",
@@ -1498,7 +1538,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-request-driver-login-sms",
@@ -1530,7 +1571,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-request-driver-password-reset",
@@ -1562,7 +1604,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-reset-driver-password",
@@ -1596,7 +1639,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-retrieve-a-driver",
@@ -1635,7 +1679,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-simulate-driver-route",
@@ -1678,7 +1723,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-switch-driver-organization",
@@ -1714,7 +1760,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-toggle-driver-online",
@@ -1750,7 +1797,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-track-driver",
@@ -1784,7 +1832,8 @@
                 "request_data": "body",
                 "contract_payload": "raw",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-update-a-driver",
@@ -1834,7 +1883,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-update-a-driver-unchanged-contact",
@@ -1872,7 +1922,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-update-a-driver"
+            "variant_of": "fleetbase-api-drivers-update-a-driver",
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-drivers-verify-driver-login-code",
@@ -1905,7 +1956,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-entities-create-an-entity",
@@ -1963,7 +2015,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Entities"
         },
         {
             "id": "fleetbase-api-entities-delete-a-entity",
@@ -2002,7 +2055,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Entities"
         },
         {
             "id": "fleetbase-api-entities-query-entities",
@@ -2037,7 +2091,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Entities"
         },
         {
             "id": "fleetbase-api-entities-retrieve-an-entity",
@@ -2080,7 +2135,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Entities"
         },
         {
             "id": "fleetbase-api-entities-update-a-entity",
@@ -2125,7 +2181,46 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Entities"
+        },
+        {
+            "id": "fleetbase-api-equipment-attach-equipment",
+            "collection": "Fleetbase API",
+            "group": "Equipment",
+            "name": "Attach Equipment",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/equipment/:id/attach",
+            "source": "postman/collections/Fleetbase API/Equipment/Attach Equipment.request.yaml",
+            "description": "Attach or atomically reassign Equipment to a Vehicle or Trailer.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{equipment_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "attachable_type": "fleet-ops:vehicle",
+                    "attachable": "vehicle_id-fixture"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::attachEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Equipment"
         },
         {
             "id": "fleetbase-api-equipment-create-equipment",
@@ -2169,7 +2264,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Equipment"
         },
         {
             "id": "fleetbase-api-equipment-delete-equipment",
@@ -2206,7 +2302,43 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Equipment"
+        },
+        {
+            "id": "fleetbase-api-equipment-detach-equipment",
+            "collection": "Fleetbase API",
+            "group": "Equipment",
+            "name": "Detach Equipment",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/equipment/:id/detach",
+            "source": "postman/collections/Fleetbase API/Equipment/Detach Equipment.request.yaml",
+            "description": "Detach Equipment from its current Vehicle or Trailer.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{equipment_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::detachEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Equipment"
         },
         {
             "id": "fleetbase-api-equipment-query-equipment",
@@ -2241,7 +2373,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Equipment"
         },
         {
             "id": "fleetbase-api-equipment-retrieve-equipment",
@@ -2278,7 +2411,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Equipment"
         },
         {
             "id": "fleetbase-api-equipment-update-equipment",
@@ -2317,7 +2451,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Equipment"
         },
         {
             "id": "fleetbase-api-fleets-assign-a-driver-to-a-fleet",
@@ -2358,7 +2493,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet",
@@ -2403,7 +2539,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-create-a-fleet",
@@ -2444,7 +2581,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-create-a-fleet-driver",
@@ -2478,7 +2616,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-create-a-driver"
+            "variant_of": "fleetbase-api-drivers-create-a-driver",
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-fleets-create-a-fleet-vehicle",
@@ -2516,7 +2655,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-create-a-vehicle"
+            "variant_of": "fleetbase-api-vehicles-create-a-vehicle",
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-fleets-create-a-subfleet",
@@ -2566,7 +2706,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-create-a-fleet"
+            "variant_of": "fleetbase-api-fleets-create-a-fleet",
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet",
@@ -2605,7 +2746,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet-driver",
@@ -2640,7 +2782,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-delete-a-driver"
+            "variant_of": "fleetbase-api-drivers-delete-a-driver",
+            "sdk_group": "Drivers"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet-vehicle",
@@ -2675,7 +2818,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-delete-a-vehicle"
+            "variant_of": "fleetbase-api-vehicles-delete-a-vehicle",
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-subfleet",
@@ -2710,7 +2854,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-delete-a-fleet"
+            "variant_of": "fleetbase-api-fleets-delete-a-fleet",
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-query-fleets",
@@ -2749,7 +2894,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-reassign-a-driver-to-a-fleet",
@@ -2791,7 +2937,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-assign-a-driver-to-a-fleet"
+            "variant_of": "fleetbase-api-fleets-assign-a-driver-to-a-fleet",
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-reassign-a-vehicle-to-a-fleet",
@@ -2833,7 +2980,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet"
+            "variant_of": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet",
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-remove-a-driver-from-a-fleet",
@@ -2874,7 +3022,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-remove-a-driver-from-a-fleet-again",
@@ -2916,7 +3065,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-remove-a-driver-from-a-fleet"
+            "variant_of": "fleetbase-api-fleets-remove-a-driver-from-a-fleet",
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet",
@@ -2957,7 +3107,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet-again",
@@ -2999,7 +3150,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet"
+            "variant_of": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet",
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-retrieve-a-fleet",
@@ -3038,7 +3190,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fleets-update-a-fleet",
@@ -3083,7 +3236,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fleets"
         },
         {
             "id": "fleetbase-api-fuel-reports-create-a-fuel-report",
@@ -3125,7 +3279,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Reports"
         },
         {
             "id": "fleetbase-api-fuel-reports-delete-a-fuel-report",
@@ -3159,7 +3314,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Reports"
         },
         {
             "id": "fleetbase-api-fuel-reports-query-fuel-reports",
@@ -3193,7 +3349,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Reports"
         },
         {
             "id": "fleetbase-api-fuel-reports-retrieve-a-fuel-report",
@@ -3227,7 +3384,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Reports"
         },
         {
             "id": "fleetbase-api-fuel-reports-update-a-fuel-report",
@@ -3268,7 +3426,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Reports"
         },
         {
             "id": "fleetbase-api-fuel-transactions-create-a-fuel-transaction",
@@ -3313,7 +3472,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-delete-a-fuel-transaction",
@@ -3350,7 +3510,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-match-fuel-transaction-order",
@@ -3389,7 +3550,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-match-fuel-transaction-vehicle",
@@ -3428,7 +3590,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-query-fuel-transactions",
@@ -3463,7 +3626,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-reprocess-fuel-transaction",
@@ -3500,7 +3664,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-retrieve-a-fuel-transaction",
@@ -3537,7 +3702,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-review-fuel-transaction",
@@ -3576,7 +3742,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-fuel-transactions-update-a-fuel-transaction",
@@ -3615,7 +3782,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Fuel Transactions"
         },
         {
             "id": "fleetbase-api-geofences-get-driver-geofence-history",
@@ -3651,7 +3819,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Geofences"
         },
         {
             "id": "fleetbase-api-geofences-get-geofence-dwell-report",
@@ -3684,7 +3853,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Geofences"
         },
         {
             "id": "fleetbase-api-geofences-get-geofence-inventory",
@@ -3714,7 +3884,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Geofences"
         },
         {
             "id": "fleetbase-api-geofences-list-geofence-events",
@@ -3747,7 +3918,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Geofences"
         },
         {
             "id": "fleetbase-api-issues-create-an-issue",
@@ -3788,7 +3960,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Issues"
         },
         {
             "id": "fleetbase-api-issues-delete-an-issue",
@@ -3822,7 +3995,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Issues"
         },
         {
             "id": "fleetbase-api-issues-query-issues",
@@ -3856,7 +4030,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Issues"
         },
         {
             "id": "fleetbase-api-issues-retrieve-an-issue",
@@ -3890,7 +4065,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Issues"
         },
         {
             "id": "fleetbase-api-issues-update-an-issue",
@@ -3930,7 +4106,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Issues"
         },
         {
             "id": "fleetbase-api-labels-render-label",
@@ -3967,7 +4144,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Labels"
         },
         {
             "id": "fleetbase-api-manifests-optimize-a-manifest",
@@ -4004,7 +4182,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Manifests"
         },
         {
             "id": "fleetbase-api-manifests-retrieve-a-manifest",
@@ -4038,7 +4217,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Manifests"
         },
         {
             "id": "fleetbase-api-manifests-update-a-manifest-stop",
@@ -4074,7 +4254,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Manifests"
         },
         {
             "id": "fleetbase-api-onboard-get-driver-onboard-settings",
@@ -4108,7 +4289,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Onboard"
         },
         {
             "id": "fleetbase-api-orchestrator-commit-orchestrator-plan",
@@ -4156,7 +4338,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orchestrator"
         },
         {
             "id": "fleetbase-api-orchestrator-run-orchestrator",
@@ -4221,7 +4404,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orchestrator"
         },
         {
             "id": "fleetbase-api-order-configs-query-order-configs",
@@ -4251,7 +4435,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Order Configs"
         },
         {
             "id": "fleetbase-api-order-configs-retrieve-an-order-config",
@@ -4283,7 +4468,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Order Configs"
         },
         {
             "id": "fleetbase-api-orders-cancel-an-order",
@@ -4322,7 +4508,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-capture-photo-for-order",
@@ -4364,7 +4551,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-capture-qr-code-for-order",
@@ -4409,7 +4597,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-capture-signature-for-order",
@@ -4453,7 +4642,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-complete-an-order",
@@ -4487,7 +4677,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order",
@@ -4559,7 +4750,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-complete-payload",
@@ -4596,7 +4788,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-coordinates",
@@ -4635,7 +4828,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-geojson-points",
@@ -4680,7 +4874,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-payload",
@@ -4739,7 +4934,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-waypoints-and-entities-with-photos",
@@ -4806,7 +5002,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-waypoints-and-entity-destinations",
@@ -4870,7 +5067,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-only-pickup-dropoff",
@@ -4903,7 +5101,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-using-only-waypoints",
@@ -4945,7 +5144,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-create-an-order-with-empty-relationships",
@@ -4981,7 +5181,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-orders-create-an-order"
+            "variant_of": "fleetbase-api-orders-create-an-order",
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-delete-an-order",
@@ -5015,7 +5216,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-dispatch-an-order",
@@ -5054,7 +5256,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-get-editable-entity-fields",
@@ -5088,7 +5291,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-get-order-distance-and-time",
@@ -5122,7 +5326,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-get-order-eta",
@@ -5156,7 +5361,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-get-order-next-activity",
@@ -5197,7 +5403,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-get-order-tracker",
@@ -5231,7 +5438,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-list-order-comments",
@@ -5265,7 +5473,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-list-order-proofs",
@@ -5301,7 +5510,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-query-orders",
@@ -5336,7 +5546,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-retrieve-an-order",
@@ -5373,7 +5584,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-schedule-an-order",
@@ -5416,7 +5628,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-set-order-destination",
@@ -5457,7 +5670,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-start-an-order",
@@ -5498,7 +5712,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-update-order-activity",
@@ -5540,7 +5755,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-orders-update-an-order",
@@ -5581,7 +5797,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Orders"
         },
         {
             "id": "fleetbase-api-organizations-get-current-organization",
@@ -5611,7 +5828,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Organizations"
         },
         {
             "id": "fleetbase-api-organizations-list-organizations",
@@ -5644,7 +5862,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Organizations"
         },
         {
             "id": "fleetbase-api-parts-create-a-part",
@@ -5686,7 +5905,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Parts"
         },
         {
             "id": "fleetbase-api-parts-delete-a-part",
@@ -5723,7 +5943,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Parts"
         },
         {
             "id": "fleetbase-api-parts-query-parts",
@@ -5758,7 +5979,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Parts"
         },
         {
             "id": "fleetbase-api-parts-retrieve-a-part",
@@ -5795,7 +6017,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Parts"
         },
         {
             "id": "fleetbase-api-parts-update-a-part",
@@ -5834,7 +6057,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Parts"
         },
         {
             "id": "fleetbase-api-payloads-create-a-payload",
@@ -5891,7 +6115,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Payloads"
         },
         {
             "id": "fleetbase-api-payloads-delete-a-payload",
@@ -5930,7 +6155,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Payloads"
         },
         {
             "id": "fleetbase-api-payloads-query-payloads",
@@ -5964,7 +6190,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Payloads"
         },
         {
             "id": "fleetbase-api-payloads-retrieve-a-payload",
@@ -5998,7 +6225,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Payloads"
         },
         {
             "id": "fleetbase-api-payloads-update-a-payload",
@@ -6070,7 +6298,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Payloads"
         },
         {
             "id": "fleetbase-api-places-create-a-place",
@@ -6129,7 +6358,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-places-delete-a-place",
@@ -6168,7 +6398,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-places-list-all-places",
@@ -6202,7 +6433,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-places-query-places",
@@ -6237,7 +6469,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-places-retrieve-a-place",
@@ -6271,7 +6504,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-places-search-places",
@@ -6305,7 +6539,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-places-update-a-place",
@@ -6356,7 +6591,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Places"
         },
         {
             "id": "fleetbase-api-purchase-rates-create-a-purchase-rate",
@@ -6393,7 +6629,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Purchase Rates"
         },
         {
             "id": "fleetbase-api-purchase-rates-query-purchase-rates",
@@ -6427,7 +6664,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Purchase Rates"
         },
         {
             "id": "fleetbase-api-purchase-rates-retrieve-a-purchase-rate",
@@ -6466,7 +6704,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Purchase Rates"
         },
         {
             "id": "fleetbase-api-sensors-create-a-sensor",
@@ -6509,7 +6748,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Sensors"
         },
         {
             "id": "fleetbase-api-sensors-delete-a-sensor",
@@ -6546,7 +6786,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Sensors"
         },
         {
             "id": "fleetbase-api-sensors-query-sensors",
@@ -6581,7 +6822,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Sensors"
         },
         {
             "id": "fleetbase-api-sensors-retrieve-a-sensor",
@@ -6618,7 +6860,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Sensors"
         },
         {
             "id": "fleetbase-api-sensors-update-a-sensor",
@@ -6658,7 +6901,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Sensors"
         },
         {
             "id": "fleetbase-api-service-areas-create-a-service-area",
@@ -6705,7 +6949,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Areas"
         },
         {
             "id": "fleetbase-api-service-areas-delete-a-service-area",
@@ -6744,7 +6989,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Areas"
         },
         {
             "id": "fleetbase-api-service-areas-query-service-areas",
@@ -6776,7 +7022,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Areas"
         },
         {
             "id": "fleetbase-api-service-areas-retrieve-a-service-area",
@@ -6819,7 +7066,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Areas"
         },
         {
             "id": "fleetbase-api-service-areas-update-a-service-area",
@@ -6860,7 +7108,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Areas"
         },
         {
             "id": "fleetbase-api-service-quotes-query-service-quotes",
@@ -6897,7 +7146,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Quotes"
         },
         {
             "id": "fleetbase-api-service-quotes-retrieve-a-service-quote",
@@ -6931,7 +7181,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Quotes"
         },
         {
             "id": "fleetbase-api-service-rates-create-a-service-rate",
@@ -6986,7 +7237,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Rates"
         },
         {
             "id": "fleetbase-api-service-rates-create-a-service-rate-with-an-empty-service-area",
@@ -7029,7 +7281,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-service-rates-create-a-service-rate"
+            "variant_of": "fleetbase-api-service-rates-create-a-service-rate",
+            "sdk_group": "Service Rates"
         },
         {
             "id": "fleetbase-api-service-rates-delete-a-service-rate",
@@ -7068,7 +7321,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Rates"
         },
         {
             "id": "fleetbase-api-service-rates-query-service-rates",
@@ -7102,7 +7356,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Rates"
         },
         {
             "id": "fleetbase-api-service-rates-retrieve-a-service-rate",
@@ -7136,7 +7391,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Rates"
         },
         {
             "id": "fleetbase-api-service-rates-update-a-service-rate",
@@ -7179,7 +7435,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Service Rates"
         },
         {
             "id": "fleetbase-api-tracking-numbers-create-a-tracking-number",
@@ -7217,7 +7474,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Numbers"
         },
         {
             "id": "fleetbase-api-tracking-numbers-decode-tracking-number-qr",
@@ -7249,7 +7507,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Numbers"
         },
         {
             "id": "fleetbase-api-tracking-numbers-delete-a-tracking-number",
@@ -7288,7 +7547,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Numbers"
         },
         {
             "id": "fleetbase-api-tracking-numbers-query-tracking-numbers",
@@ -7328,7 +7588,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Numbers"
         },
         {
             "id": "fleetbase-api-tracking-numbers-retrieve-a-tracking-number",
@@ -7367,7 +7628,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Numbers"
         },
         {
             "id": "fleetbase-api-tracking-statuses-create-a-tracking-status",
@@ -7412,7 +7674,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Statuses"
         },
         {
             "id": "fleetbase-api-tracking-statuses-delete-a-tracking-status",
@@ -7451,7 +7714,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Statuses"
         },
         {
             "id": "fleetbase-api-tracking-statuses-query-tracking-statuses",
@@ -7489,7 +7753,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Statuses"
         },
         {
             "id": "fleetbase-api-tracking-statuses-retrieve-a-tracking-status",
@@ -7528,7 +7793,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Statuses"
         },
         {
             "id": "fleetbase-api-tracking-statuses-update-a-tracking-status",
@@ -7569,7 +7835,786 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Tracking Statuses"
+        },
+        {
+            "id": "fleetbase-api-trailers-attach-device-to-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Attach Device to Trailer",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/devices/:id/attach",
+            "source": "postman/collections/Fleetbase API/Trailers/Attach Device to Trailer.request.yaml",
+            "description": "Attach a Device to a Trailer while preserving the legacy Vehicle attachment alias.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_device_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "attachable_type": "fleet-ops:trailer",
+                    "attachable": "trailer_id-fixture"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::attachDevice",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-devices-attach-device",
+            "sdk_group": "Devices"
+        },
+        {
+            "id": "fleetbase-api-trailers-attach-equipment-to-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Attach Equipment to Trailer",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/equipment/:id/attach",
+            "source": "postman/collections/Fleetbase API/Trailers/Attach Equipment to Trailer.request.yaml",
+            "description": "Attach Equipment to a Trailer using the polymorphic public attachment contract.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_equipment_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "attachable_type": "fleet-ops:trailer",
+                    "attachable": "trailer_id-fixture"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::attachEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-equipment-attach-equipment",
+            "sdk_group": "Equipment"
+        },
+        {
+            "id": "fleetbase-api-trailers-attach-trailer-to-vehicle",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Attach Trailer to Vehicle",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id/attach",
+            "source": "postman/collections/Fleetbase API/Trailers/Attach Trailer to Vehicle.request.yaml",
+            "description": "Attach a detached Trailer to a Vehicle. Repeating the same attachment is idempotent; another active Vehicle returns 409.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "vehicle": "vehicle_id-fixture",
+                    "source": "manual",
+                    "position": 1
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::attachTrailerToVehicle",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-create-trailer-device",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Create Trailer Device",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/devices",
+            "source": "postman/collections/Fleetbase API/Trailers/Create Trailer Device.request.yaml",
+            "description": "Create a lifecycle telematics Device that will be attached to the Trailer and cleaned up by this folder.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Postman Trailer Tracker",
+                    "device_id": "POSTMAN-TRL-TRACKER",
+                    "type": "gps",
+                    "provider": "manual"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::createDevice",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-devices-create-a-device",
+            "sdk_group": "Devices"
+        },
+        {
+            "id": "fleetbase-api-trailers-create-trailer-equipment",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Create Trailer Equipment",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/equipment",
+            "source": "postman/collections/Fleetbase API/Trailers/Create Trailer Equipment.request.yaml",
+            "description": "Create lifecycle Equipment that will be attached to the Trailer and cleaned up by this folder.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Postman Trailer Sensor Bracket",
+                    "code": "POSTMAN-TRL-EQ",
+                    "type": "tool",
+                    "status": "available"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::createEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-equipment-create-equipment",
+            "sdk_group": "Equipment"
+        },
+        {
+            "id": "fleetbase-api-trailers-create-a-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Create a Trailer",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/trailers",
+            "source": "postman/collections/Fleetbase API/Trailers/Create a Trailer.request.yaml",
+            "description": "Create a first-class Trailer for the authenticated company.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Postman Reefer",
+                    "code": "POSTMAN-TRL-001",
+                    "type": "reefer",
+                    "status": "available",
+                    "plate_number": "PM-TR-001",
+                    "payload_capacity": 20000,
+                    "axle_count": 2,
+                    "refrigerated": true,
+                    "measurement_system": "metric"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::createTrailer",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-delete-trailer-device",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Delete Trailer Device",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/devices/:id",
+            "source": "postman/collections/Fleetbase API/Trailers/Delete Trailer Device.request.yaml",
+            "description": "Delete the lifecycle Device after detaching it.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_device_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::deleteDevice",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-devices-delete-a-device",
+            "sdk_group": "Devices"
+        },
+        {
+            "id": "fleetbase-api-trailers-delete-trailer-equipment",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Delete Trailer Equipment",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/equipment/:id",
+            "source": "postman/collections/Fleetbase API/Trailers/Delete Trailer Equipment.request.yaml",
+            "description": "Delete the lifecycle Equipment after detaching it.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_equipment_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::deleteEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-equipment-delete-equipment",
+            "sdk_group": "Equipment"
+        },
+        {
+            "id": "fleetbase-api-trailers-delete-a-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Delete a Trailer",
+            "method": "DELETE",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id",
+            "source": "postman/collections/Fleetbase API/Trailers/Delete a Trailer.request.yaml",
+            "description": "Soft-delete a detached Trailer.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::deleteTrailer",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-detach-trailer-attachments",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Detach Trailer Attachments",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/devices/:id/detach",
+            "source": "postman/collections/Fleetbase API/Trailers/Detach Trailer Attachments.request.yaml",
+            "description": "Detach the lifecycle Device. Equipment is detached in the following request.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_device_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::detachDevice",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-devices-detach-device",
+            "sdk_group": "Devices"
+        },
+        {
+            "id": "fleetbase-api-trailers-detach-trailer-equipment",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Detach Trailer Equipment",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/equipment/:id/detach",
+            "source": "postman/collections/Fleetbase API/Trailers/Detach Trailer Equipment.request.yaml",
+            "description": "Detach lifecycle Equipment from its current Vehicle before cleanup.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_equipment_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::detachEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-equipment-detach-equipment",
+            "sdk_group": "Equipment"
+        },
+        {
+            "id": "fleetbase-api-trailers-detach-trailer-from-vehicle",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Detach Trailer from Vehicle",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id/detach",
+            "source": "postman/collections/Fleetbase API/Trailers/Detach Trailer from Vehicle.request.yaml",
+            "description": "End the active towing connection while retaining history. Repeating detach is idempotent.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "notes": "Postman lifecycle detach"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::detachTrailerFromVehicle",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-list-trailer-connections",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "List Trailer Connections",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id/connections",
+            "source": "postman/collections/Fleetbase API/Trailers/List Trailer Connections.request.yaml",
+            "description": "List complete effective-dated towing history for a Trailer.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::listTrailerConnections",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-list-vehicle-trailers",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "List Vehicle Trailers",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/vehicles/:id/trailers",
+            "source": "postman/collections/Fleetbase API/Trailers/List Vehicle Trailers.request.yaml",
+            "description": "List currently attached Trailers for a Vehicle.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::listVehicleTrailers",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Vehicles"
+        },
+        {
+            "id": "fleetbase-api-trailers-query-trailers",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Query Trailers",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/trailers",
+            "source": "postman/collections/Fleetbase API/Trailers/Query Trailers.request.yaml",
+            "description": "Query and filter company-scoped Trailers.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": {
+                    "query": "Postman Reefer",
+                    "limit": "25",
+                    "sort": "-created_at"
+                },
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::queryTrailers",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-reattach-equipment-to-vehicle",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Reattach Equipment to Vehicle",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/equipment/:id/attach",
+            "source": "postman/collections/Fleetbase API/Trailers/Reattach Equipment to Vehicle.request.yaml",
+            "description": "Atomically reassign the lifecycle Equipment from Trailer to Vehicle.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_equipment_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "attachable_type": "fleet-ops:vehicle",
+                    "attachable": "vehicle_id-fixture"
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::attachEquipment",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-equipment-attach-equipment",
+            "sdk_group": "Equipment"
+        },
+        {
+            "id": "fleetbase-api-trailers-retrieve-a-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Retrieve a Trailer",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id",
+            "source": "postman/collections/Fleetbase API/Trailers/Retrieve a Trailer.request.yaml",
+            "description": "Retrieve one Trailer by public ID.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::retrieveTrailer",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-track-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Track Trailer",
+            "method": "PATCH",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id/track",
+            "source": "postman/collections/Fleetbase API/Trailers/Track Trailer.request.yaml",
+            "description": "Record a Trailer observation and create a Position.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "latitude": 40.7484,
+                    "longitude": -73.9857,
+                    "speed": 35,
+                    "heading": 90
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::trackTrailer",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-update-a-trailer",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Update a Trailer",
+            "method": "PUT",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id",
+            "source": "postman/collections/Fleetbase API/Trailers/Update a Trailer.request.yaml",
+            "description": "Update a Trailer without allowing its asset discriminator to change.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "name": "Postman Reefer Updated",
+                    "status": "in_use",
+                    "payload_capacity": 21000
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::updateTrailer",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-verify-detached-connection-history",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Verify Detached Connection History",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id/connections",
+            "source": "postman/collections/Fleetbase API/Trailers/Verify Detached Connection History.request.yaml",
+            "description": "Verify completed history remains after the current towing connection ends.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::listTrailerConnections",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-trailers-list-trailer-connections",
+            "sdk_group": "Trailers"
+        },
+        {
+            "id": "fleetbase-api-trailers-verify-trailer-equipment",
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Verify Trailer Equipment",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/trailers/:id",
+            "source": "postman/collections/Fleetbase API/Trailers/Verify Trailer Equipment.request.yaml",
+            "description": "Verify the Trailer representation exposes attached Equipment.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{trailer_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::retrieveTrailer",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "variant_of": "fleetbase-api-trailers-retrieve-a-trailer",
+            "sdk_group": "Trailers"
         },
         {
             "id": "fleetbase-api-vehicles-create-a-vehicle",
@@ -7672,7 +8717,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-delete-a-vehicle",
@@ -7711,7 +8757,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-expand-a-vehicle",
@@ -7756,7 +8803,8 @@
                 "contract_payload": "query",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle"
+            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle",
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-expand-a-vehicle-scalar",
@@ -7798,7 +8846,8 @@
                 "contract_payload": "query",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle"
+            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle",
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-query-vehicles",
@@ -7838,7 +8887,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-retrieve-a-vehicle",
@@ -7877,7 +8927,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-track-vehicle",
@@ -7911,7 +8962,8 @@
                 "request_data": "body",
                 "contract_payload": "raw",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vehicles-update-a-vehicle",
@@ -7972,7 +9024,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vehicles"
         },
         {
             "id": "fleetbase-api-vendors-create-a-vendor",
@@ -8012,7 +9065,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vendors"
         },
         {
             "id": "fleetbase-api-vendors-delete-a-vendor",
@@ -8051,7 +9105,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vendors"
         },
         {
             "id": "fleetbase-api-vendors-query-vendors",
@@ -8088,7 +9143,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vendors"
         },
         {
             "id": "fleetbase-api-vendors-retrieve-a-vendor",
@@ -8127,7 +9183,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vendors"
         },
         {
             "id": "fleetbase-api-vendors-update-a-vendor",
@@ -8171,7 +9228,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Vendors"
         },
         {
             "id": "fleetbase-api-work-orders-create-a-work-order",
@@ -8215,7 +9273,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Work Orders"
         },
         {
             "id": "fleetbase-api-work-orders-delete-a-work-order",
@@ -8252,7 +9311,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Work Orders"
         },
         {
             "id": "fleetbase-api-work-orders-query-work-orders",
@@ -8287,7 +9347,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Work Orders"
         },
         {
             "id": "fleetbase-api-work-orders-retrieve-a-work-order",
@@ -8324,7 +9385,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Work Orders"
         },
         {
             "id": "fleetbase-api-work-orders-send-work-order",
@@ -8361,7 +9423,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Work Orders"
         },
         {
             "id": "fleetbase-api-work-orders-update-a-work-order",
@@ -8400,7 +9463,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Work Orders"
         },
         {
             "id": "fleetbase-api-zones-create-a-zone",
@@ -8513,7 +9577,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Zones"
         },
         {
             "id": "fleetbase-api-zones-delete-a-zone",
@@ -8552,7 +9617,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Zones"
         },
         {
             "id": "fleetbase-api-zones-query-zones",
@@ -8589,7 +9655,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Zones"
         },
         {
             "id": "fleetbase-api-zones-retrieve-a-zone",
@@ -8628,7 +9695,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Zones"
         },
         {
             "id": "fleetbase-api-zones-update-a-zone",
@@ -8669,7 +9737,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Zones"
         },
         {
             "id": "fleetbase-core-api-chat-channels-add-participant",
@@ -8705,7 +9774,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-create-chat-channel",
@@ -8740,7 +9810,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-create-read-receipt",
@@ -8776,7 +9847,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-delete-chat-channel",
@@ -8810,7 +9882,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-delete-message",
@@ -8844,7 +9917,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-list-available-participants",
@@ -8876,7 +9950,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-query-chat-channels",
@@ -8910,7 +9985,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-remove-participant",
@@ -8944,7 +10020,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-retrieve-chat-channel",
@@ -8978,7 +10055,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-send-message",
@@ -9016,7 +10094,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-chat-channels-update-chat-channel",
@@ -9052,7 +10131,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Chat Channels"
         },
         {
             "id": "fleetbase-core-api-comments-create-comment",
@@ -9088,7 +10168,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Comments"
         },
         {
             "id": "fleetbase-core-api-comments-delete-comment",
@@ -9122,7 +10203,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Comments"
         },
         {
             "id": "fleetbase-core-api-comments-query-comments",
@@ -9156,7 +10238,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Comments"
         },
         {
             "id": "fleetbase-core-api-comments-retrieve-comment",
@@ -9190,7 +10273,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Comments"
         },
         {
             "id": "fleetbase-core-api-comments-update-comment",
@@ -9226,7 +10310,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Comments"
         },
         {
             "id": "fleetbase-core-api-files-delete-a-file",
@@ -9260,7 +10345,8 @@
                 "request_data": "body",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-files-download-file",
@@ -9294,7 +10380,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-files-query-files",
@@ -9328,7 +10415,8 @@
                 "request_data": "query",
                 "contract_payload": "query",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-files-retrieve-a-file",
@@ -9362,7 +10450,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-files-update-file",
@@ -9399,7 +10488,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-files-upload-base64-file",
@@ -9435,7 +10525,8 @@
                 "request_data": "body",
                 "contract_payload": "json",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-files-upload-file",
@@ -9481,7 +10572,8 @@
                 "request_data": "multipart",
                 "contract_payload": "multipart",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Files"
         },
         {
             "id": "fleetbase-core-api-organizations-get-current-organization",
@@ -9511,7 +10603,8 @@
                 "request_data": "query",
                 "contract_payload": "none",
                 "legacy_envelope": true
-            }
+            },
+            "sdk_group": "Organizations"
         }
     ]
 }

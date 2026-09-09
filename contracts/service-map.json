@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "9b59befdc1b4623ba40bf5661bd5e88f1dac673e",
+        "ref": "7fe06b7c5e415a9aa292869e9037910896b049ad",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
@@ -47,7 +47,7 @@
         "Equipment": {
             "service": "Fleetbase\\Sdk\\Services\\EquipmentService",
             "trait": "Fleetbase\\Sdk\\Services\\Concerns\\EquipmentServiceEndpoints",
-            "requests": 5
+            "requests": 7
         },
         "Files": {
             "service": "Fleetbase\\Sdk\\Services\\FileService",
@@ -164,10 +164,15 @@
             "trait": "Fleetbase\\Sdk\\Services\\Concerns\\TrackingStatusServiceEndpoints",
             "requests": 5
         },
+        "Trailers": {
+            "service": "Fleetbase\\Sdk\\Services\\TrailerService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\TrailerServiceEndpoints",
+            "requests": 9
+        },
         "Vehicles": {
             "service": "Fleetbase\\Sdk\\Services\\VehicleService",
             "trait": "Fleetbase\\Sdk\\Services\\Concerns\\VehicleServiceEndpoints",
-            "requests": 6
+            "requests": 7
         },
         "Vendors": {
             "service": "Fleetbase\\Sdk\\Services\\VendorService",
