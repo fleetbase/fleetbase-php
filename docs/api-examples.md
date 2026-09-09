@@ -1,6 +1,6 @@
 # Fleetbase PHP SDK API examples
 
-These 241 examples are generated from the locked official Postman contract. CI executes every fenced snippet against a hermetic PSR-18 transport.
+These 264 examples are generated from the locked official Postman contract. CI executes every fenced snippet against a hermetic PSR-18 transport.
 
 Create `$fleetbase` once as shown in the README, then use the relevant service call below. Fixture identifiers and payloads are illustrative; replace them with values from your application.
 
@@ -336,7 +336,7 @@ $result = $fleetbase->customers->verifyCustomerLoginCode(
 
 ### Attach Device
 
-Attach this device to a vehicle.
+Attach this Device to a Vehicle or Trailer. The legacy `vehicle` field remains supported.
 
 `POST {{base_url}}/{{namespace}}/devices/{{device_id}}/attach`
 
@@ -344,7 +344,8 @@ Attach this device to a vehicle.
 $result = $fleetbase->devices->attachDevice(
     $deviceId,
     [
-        'vehicle' => 'vehicle_id-fixture',
+        'attachable_type' => 'fleet-ops:vehicle',
+        'attachable' => 'vehicle_id-fixture',
     ]
 );
 ```
@@ -872,6 +873,22 @@ $result = $fleetbase->entities->updateEntity(
 
 ## Equipment
 
+### Attach Equipment
+
+Attach or atomically reassign Equipment to a Vehicle or Trailer.
+
+`POST {{base_url}}/{{namespace}}/equipment/:id/attach`
+
+```php
+$result = $fleetbase->equipment->attachEquipment(
+    $equipmentId,
+    [
+        'attachable_type' => 'fleet-ops:vehicle',
+        'attachable' => 'vehicle_id-fixture',
+    ]
+);
+```
+
 ### Create Equipment
 
 Create equipment.
@@ -901,6 +918,16 @@ Delete equipment.
 
 ```php
 $result = $fleetbase->equipment->deleteEquipment($equipmentId);
+```
+
+### Detach Equipment
+
+Detach Equipment from its current Vehicle or Trailer.
+
+`POST {{base_url}}/{{namespace}}/equipment/:id/detach`
+
+```php
+$result = $fleetbase->equipment->detachEquipment($equipmentId);
 ```
 
 ### Query Equipment
@@ -3011,6 +3038,295 @@ $result = $fleetbase->trackingStatuses->updateTrackingStatus(
         'country' => 'SG',
     ]
 );
+```
+
+## Trailers
+
+### Attach Device to Trailer
+
+Attach a Device to a Trailer while preserving the legacy Vehicle attachment alias.
+
+`POST {{base_url}}/{{namespace}}/devices/:id/attach`
+
+```php
+$result = $fleetbase->devices->attachDevice(
+    $deviceId,
+    [
+        'attachable_type' => 'fleet-ops:trailer',
+        'attachable' => 'trailer_id-fixture',
+    ]
+);
+```
+
+### Attach Equipment to Trailer
+
+Attach Equipment to a Trailer using the polymorphic public attachment contract.
+
+`POST {{base_url}}/{{namespace}}/equipment/:id/attach`
+
+```php
+$result = $fleetbase->equipment->attachEquipment(
+    $equipmentId,
+    [
+        'attachable_type' => 'fleet-ops:trailer',
+        'attachable' => 'trailer_id-fixture',
+    ]
+);
+```
+
+### Attach Trailer to Vehicle
+
+Attach a detached Trailer to a Vehicle. Repeating the same attachment is idempotent; another active Vehicle returns 409.
+
+`POST {{base_url}}/{{namespace}}/trailers/:id/attach`
+
+```php
+$result = $fleetbase->trailers->attachTrailerToVehicle(
+    $trailerId,
+    [
+        'vehicle' => 'vehicle_id-fixture',
+        'source' => 'manual',
+        'position' => 1,
+    ]
+);
+```
+
+### Create Trailer Device
+
+Create a lifecycle telematics Device that will be attached to the Trailer and cleaned up by this folder.
+
+`POST {{base_url}}/{{namespace}}/devices`
+
+```php
+$result = $fleetbase->devices->createDevice(
+    [
+        'name' => 'Postman Trailer Tracker',
+        'device_id' => 'POSTMAN-TRL-TRACKER',
+        'type' => 'gps',
+        'provider' => 'manual',
+    ]
+);
+```
+
+### Create Trailer Equipment
+
+Create lifecycle Equipment that will be attached to the Trailer and cleaned up by this folder.
+
+`POST {{base_url}}/{{namespace}}/equipment`
+
+```php
+$result = $fleetbase->equipment->createEquipment(
+    [
+        'name' => 'Postman Trailer Sensor Bracket',
+        'code' => 'POSTMAN-TRL-EQ',
+        'type' => 'tool',
+        'status' => 'available',
+    ]
+);
+```
+
+### Create a Trailer
+
+Create a first-class Trailer for the authenticated company.
+
+`POST {{base_url}}/{{namespace}}/trailers`
+
+```php
+$result = $fleetbase->trailers->createTrailer(
+    [
+        'name' => 'Postman Reefer',
+        'code' => 'POSTMAN-TRL-001',
+        'type' => 'reefer',
+        'status' => 'available',
+        'plate_number' => 'PM-TR-001',
+        'payload_capacity' => 20000,
+        'axle_count' => 2,
+        'refrigerated' => true,
+        'measurement_system' => 'metric',
+    ]
+);
+```
+
+### Delete Trailer Device
+
+Delete the lifecycle Device after detaching it.
+
+`DELETE {{base_url}}/{{namespace}}/devices/:id`
+
+```php
+$result = $fleetbase->devices->deleteDevice($deviceId);
+```
+
+### Delete Trailer Equipment
+
+Delete the lifecycle Equipment after detaching it.
+
+`DELETE {{base_url}}/{{namespace}}/equipment/:id`
+
+```php
+$result = $fleetbase->equipment->deleteEquipment($equipmentId);
+```
+
+### Delete a Trailer
+
+Soft-delete a detached Trailer.
+
+`DELETE {{base_url}}/{{namespace}}/trailers/:id`
+
+```php
+$result = $fleetbase->trailers->deleteTrailer($trailerId);
+```
+
+### Detach Trailer Attachments
+
+Detach the lifecycle Device. Equipment is detached in the following request.
+
+`POST {{base_url}}/{{namespace}}/devices/:id/detach`
+
+```php
+$result = $fleetbase->devices->detachDevice($deviceId);
+```
+
+### Detach Trailer Equipment
+
+Detach lifecycle Equipment from its current Vehicle before cleanup.
+
+`POST {{base_url}}/{{namespace}}/equipment/:id/detach`
+
+```php
+$result = $fleetbase->equipment->detachEquipment($equipmentId);
+```
+
+### Detach Trailer from Vehicle
+
+End the active towing connection while retaining history. Repeating detach is idempotent.
+
+`POST {{base_url}}/{{namespace}}/trailers/:id/detach`
+
+```php
+$result = $fleetbase->trailers->detachTrailerFromVehicle(
+    $trailerId,
+    [
+        'notes' => 'Postman lifecycle detach',
+    ]
+);
+```
+
+### List Trailer Connections
+
+List complete effective-dated towing history for a Trailer.
+
+`GET {{base_url}}/{{namespace}}/trailers/:id/connections`
+
+```php
+$result = $fleetbase->trailers->listTrailerConnections($trailerId);
+```
+
+### List Vehicle Trailers
+
+List currently attached Trailers for a Vehicle.
+
+`GET {{base_url}}/{{namespace}}/vehicles/:id/trailers`
+
+```php
+$result = $fleetbase->vehicles->listVehicleTrailers($vehicleId);
+```
+
+### Query Trailers
+
+Query and filter company-scoped Trailers.
+
+`GET {{base_url}}/{{namespace}}/trailers`
+
+```php
+$result = $fleetbase->trailers->queryTrailers(
+    [
+        'query' => 'Postman Reefer',
+        'limit' => '25',
+        'sort' => '-created_at',
+    ]
+);
+```
+
+### Reattach Equipment to Vehicle
+
+Atomically reassign the lifecycle Equipment from Trailer to Vehicle.
+
+`POST {{base_url}}/{{namespace}}/equipment/:id/attach`
+
+```php
+$result = $fleetbase->equipment->attachEquipment(
+    $equipmentId,
+    [
+        'attachable_type' => 'fleet-ops:vehicle',
+        'attachable' => 'vehicle_id-fixture',
+    ]
+);
+```
+
+### Retrieve a Trailer
+
+Retrieve one Trailer by public ID.
+
+`GET {{base_url}}/{{namespace}}/trailers/:id`
+
+```php
+$result = $fleetbase->trailers->retrieveTrailer($trailerId);
+```
+
+### Track Trailer
+
+Record a Trailer observation and create a Position.
+
+`PATCH {{base_url}}/{{namespace}}/trailers/:id/track`
+
+```php
+$result = $fleetbase->trailers->trackTrailer(
+    $trailerId,
+    [
+        'latitude' => 40.7484,
+        'longitude' => -73.9857,
+        'speed' => 35,
+        'heading' => 90,
+    ]
+);
+```
+
+### Update a Trailer
+
+Update a Trailer without allowing its asset discriminator to change.
+
+`PUT {{base_url}}/{{namespace}}/trailers/:id`
+
+```php
+$result = $fleetbase->trailers->updateTrailer(
+    $trailerId,
+    [
+        'name' => 'Postman Reefer Updated',
+        'status' => 'in_use',
+        'payload_capacity' => 21000,
+    ]
+);
+```
+
+### Verify Detached Connection History
+
+Verify completed history remains after the current towing connection ends.
+
+`GET {{base_url}}/{{namespace}}/trailers/:id/connections`
+
+```php
+$result = $fleetbase->trailers->listTrailerConnections($trailerId);
+```
+
+### Verify Trailer Equipment
+
+Verify the Trailer representation exposes attached Equipment.
+
+`GET {{base_url}}/{{namespace}}/trailers/:id`
+
+```php
+$result = $fleetbase->trailers->retrieveTrailer($trailerId);
 ```
 
 ## Vehicles

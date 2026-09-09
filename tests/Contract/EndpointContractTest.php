@@ -141,6 +141,12 @@ final class EndpointContractTest extends TestCase
         if (!is_array($manifest) || !is_array($manifest['requests'] ?? null)) {
             throw new \RuntimeException('The endpoint contract manifest is invalid.');
         }
+        $requestsById = [];
+        foreach ($manifest['requests'] as $entry) {
+            if (is_array($entry) && is_string($entry['id'] ?? null)) {
+                $requestsById[$entry['id']] = $entry;
+            }
+        }
         foreach ($manifest['requests'] as $request) {
             if (!is_array($request)) {
                 throw new \RuntimeException('The endpoint contract request is invalid.');
@@ -149,6 +155,12 @@ final class EndpointContractTest extends TestCase
             $implementationName = $request['implementation'] ?? null;
             $httpMethod = $request['method'] ?? null;
             $url = $request['url'] ?? null;
+            // Legacy envelopes name the canonical method's placeholders. A
+            // scenario may spell the same path parameter :id or {{device_id}}.
+            $canonicalId = $request['variant_of'] ?? null;
+            if (is_string($canonicalId) && isset($requestsById[$canonicalId])) {
+                $url = $requestsById[$canonicalId]['url'] ?? null;
+            }
             $requestFixture = $request['request_fixture'] ?? null;
             if (!is_string($id) || !is_string($implementationName) || !is_string($httpMethod) || !is_string($url) || !is_array($requestFixture)) {
                 throw new \RuntimeException('The endpoint contract request fields are invalid.');

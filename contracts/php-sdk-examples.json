@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "9b59befdc1b4623ba40bf5661bd5e88f1dac673e",
+        "ref": "7fe06b7c5e415a9aa292869e9037910896b049ad",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
@@ -215,8 +215,8 @@
             "variables": {
                 "deviceId": "device_id-fixture"
             },
-            "call": "$result = $fleetbase->devices->attachDevice(\n    $deviceId,\n    [\n        'vehicle' => 'vehicle_id-fixture',\n    ]\n);",
-            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$deviceId = 'device_id-fixture';\n\n$result = $fleetbase->devices->attachDevice(\n    $deviceId,\n    [\n        'vehicle' => 'vehicle_id-fixture',\n    ]\n);"
+            "call": "$result = $fleetbase->devices->attachDevice(\n    $deviceId,\n    [\n        'attachable_type' => 'fleet-ops:vehicle',\n        'attachable' => 'vehicle_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$deviceId = 'device_id-fixture';\n\n$result = $fleetbase->devices->attachDevice(\n    $deviceId,\n    [\n        'attachable_type' => 'fleet-ops:vehicle',\n        'attachable' => 'vehicle_id-fixture',\n    ]\n);"
         },
         "fleetbase-api-devices-create-a-device": {
             "collection": "Fleetbase API",
@@ -566,6 +566,17 @@
             "call": "$result = $fleetbase->entities->updateEntity(\n    $entityId,\n    [\n        'internal_id' => 'ENTITY001-1',\n        'description' => 'New entity description',\n        'destination' => '',\n        'sku' => 'SKUABC123',\n        'currency' => 'SGD',\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$entityId = 'entity_id-fixture';\n\n$result = $fleetbase->entities->updateEntity(\n    $entityId,\n    [\n        'internal_id' => 'ENTITY001-1',\n        'description' => 'New entity description',\n        'destination' => '',\n        'sku' => 'SKUABC123',\n        'currency' => 'SGD',\n    ]\n);"
         },
+        "fleetbase-api-equipment-attach-equipment": {
+            "collection": "Fleetbase API",
+            "group": "Equipment",
+            "name": "Attach Equipment",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::attachEquipment",
+            "variables": {
+                "equipmentId": "equipment_id-fixture"
+            },
+            "call": "$result = $fleetbase->equipment->attachEquipment(\n    $equipmentId,\n    [\n        'attachable_type' => 'fleet-ops:vehicle',\n        'attachable' => 'vehicle_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'equipment_id-fixture';\n\n$result = $fleetbase->equipment->attachEquipment(\n    $equipmentId,\n    [\n        'attachable_type' => 'fleet-ops:vehicle',\n        'attachable' => 'vehicle_id-fixture',\n    ]\n);"
+        },
         "fleetbase-api-equipment-create-equipment": {
             "collection": "Fleetbase API",
             "group": "Equipment",
@@ -585,6 +596,17 @@
             },
             "call": "$result = $fleetbase->equipment->deleteEquipment($equipmentId);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'equipment_id-fixture';\n\n$result = $fleetbase->equipment->deleteEquipment($equipmentId);"
+        },
+        "fleetbase-api-equipment-detach-equipment": {
+            "collection": "Fleetbase API",
+            "group": "Equipment",
+            "name": "Detach Equipment",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::detachEquipment",
+            "variables": {
+                "equipmentId": "equipment_id-fixture"
+            },
+            "call": "$result = $fleetbase->equipment->detachEquipment($equipmentId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'equipment_id-fixture';\n\n$result = $fleetbase->equipment->detachEquipment($equipmentId);"
         },
         "fleetbase-api-equipment-query-equipment": {
             "collection": "Fleetbase API",
@@ -1975,6 +1997,229 @@
             },
             "call": "$result = $fleetbase->trackingStatuses->updateTrackingStatus(\n    $trackingStatusId,\n    [\n        'country' => 'SG',\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trackingStatusId = 'tracking_status_id-fixture';\n\n$result = $fleetbase->trackingStatuses->updateTrackingStatus(\n    $trackingStatusId,\n    [\n        'country' => 'SG',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-attach-device-to-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Attach Device to Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::attachDevice",
+            "variables": {
+                "deviceId": "trailer_device_id-fixture"
+            },
+            "call": "$result = $fleetbase->devices->attachDevice(\n    $deviceId,\n    [\n        'attachable_type' => 'fleet-ops:trailer',\n        'attachable' => 'trailer_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$deviceId = 'trailer_device_id-fixture';\n\n$result = $fleetbase->devices->attachDevice(\n    $deviceId,\n    [\n        'attachable_type' => 'fleet-ops:trailer',\n        'attachable' => 'trailer_id-fixture',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-attach-equipment-to-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Attach Equipment to Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::attachEquipment",
+            "variables": {
+                "equipmentId": "trailer_equipment_id-fixture"
+            },
+            "call": "$result = $fleetbase->equipment->attachEquipment(\n    $equipmentId,\n    [\n        'attachable_type' => 'fleet-ops:trailer',\n        'attachable' => 'trailer_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'trailer_equipment_id-fixture';\n\n$result = $fleetbase->equipment->attachEquipment(\n    $equipmentId,\n    [\n        'attachable_type' => 'fleet-ops:trailer',\n        'attachable' => 'trailer_id-fixture',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-attach-trailer-to-vehicle": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Attach Trailer to Vehicle",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::attachTrailerToVehicle",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->attachTrailerToVehicle(\n    $trailerId,\n    [\n        'vehicle' => 'vehicle_id-fixture',\n        'source' => 'manual',\n        'position' => 1,\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->attachTrailerToVehicle(\n    $trailerId,\n    [\n        'vehicle' => 'vehicle_id-fixture',\n        'source' => 'manual',\n        'position' => 1,\n    ]\n);"
+        },
+        "fleetbase-api-trailers-create-trailer-device": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Create Trailer Device",
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::createDevice",
+            "variables": [],
+            "call": "$result = $fleetbase->devices->createDevice(\n    [\n        'name' => 'Postman Trailer Tracker',\n        'device_id' => 'POSTMAN-TRL-TRACKER',\n        'type' => 'gps',\n        'provider' => 'manual',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->devices->createDevice(\n    [\n        'name' => 'Postman Trailer Tracker',\n        'device_id' => 'POSTMAN-TRL-TRACKER',\n        'type' => 'gps',\n        'provider' => 'manual',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-create-trailer-equipment": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Create Trailer Equipment",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::createEquipment",
+            "variables": [],
+            "call": "$result = $fleetbase->equipment->createEquipment(\n    [\n        'name' => 'Postman Trailer Sensor Bracket',\n        'code' => 'POSTMAN-TRL-EQ',\n        'type' => 'tool',\n        'status' => 'available',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->equipment->createEquipment(\n    [\n        'name' => 'Postman Trailer Sensor Bracket',\n        'code' => 'POSTMAN-TRL-EQ',\n        'type' => 'tool',\n        'status' => 'available',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-create-a-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Create a Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::createTrailer",
+            "variables": [],
+            "call": "$result = $fleetbase->trailers->createTrailer(\n    [\n        'name' => 'Postman Reefer',\n        'code' => 'POSTMAN-TRL-001',\n        'type' => 'reefer',\n        'status' => 'available',\n        'plate_number' => 'PM-TR-001',\n        'payload_capacity' => 20000,\n        'axle_count' => 2,\n        'refrigerated' => true,\n        'measurement_system' => 'metric',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->trailers->createTrailer(\n    [\n        'name' => 'Postman Reefer',\n        'code' => 'POSTMAN-TRL-001',\n        'type' => 'reefer',\n        'status' => 'available',\n        'plate_number' => 'PM-TR-001',\n        'payload_capacity' => 20000,\n        'axle_count' => 2,\n        'refrigerated' => true,\n        'measurement_system' => 'metric',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-delete-trailer-device": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Delete Trailer Device",
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::deleteDevice",
+            "variables": {
+                "deviceId": "trailer_device_id-fixture"
+            },
+            "call": "$result = $fleetbase->devices->deleteDevice($deviceId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$deviceId = 'trailer_device_id-fixture';\n\n$result = $fleetbase->devices->deleteDevice($deviceId);"
+        },
+        "fleetbase-api-trailers-delete-trailer-equipment": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Delete Trailer Equipment",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::deleteEquipment",
+            "variables": {
+                "equipmentId": "trailer_equipment_id-fixture"
+            },
+            "call": "$result = $fleetbase->equipment->deleteEquipment($equipmentId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'trailer_equipment_id-fixture';\n\n$result = $fleetbase->equipment->deleteEquipment($equipmentId);"
+        },
+        "fleetbase-api-trailers-delete-a-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Delete a Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::deleteTrailer",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->deleteTrailer($trailerId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->deleteTrailer($trailerId);"
+        },
+        "fleetbase-api-trailers-detach-trailer-attachments": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Detach Trailer Attachments",
+            "implementation": "Fleetbase\\Sdk\\Services\\DeviceService::detachDevice",
+            "variables": {
+                "deviceId": "trailer_device_id-fixture"
+            },
+            "call": "$result = $fleetbase->devices->detachDevice($deviceId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$deviceId = 'trailer_device_id-fixture';\n\n$result = $fleetbase->devices->detachDevice($deviceId);"
+        },
+        "fleetbase-api-trailers-detach-trailer-equipment": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Detach Trailer Equipment",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::detachEquipment",
+            "variables": {
+                "equipmentId": "trailer_equipment_id-fixture"
+            },
+            "call": "$result = $fleetbase->equipment->detachEquipment($equipmentId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'trailer_equipment_id-fixture';\n\n$result = $fleetbase->equipment->detachEquipment($equipmentId);"
+        },
+        "fleetbase-api-trailers-detach-trailer-from-vehicle": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Detach Trailer from Vehicle",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::detachTrailerFromVehicle",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->detachTrailerFromVehicle(\n    $trailerId,\n    [\n        'notes' => 'Postman lifecycle detach',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->detachTrailerFromVehicle(\n    $trailerId,\n    [\n        'notes' => 'Postman lifecycle detach',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-list-trailer-connections": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "List Trailer Connections",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::listTrailerConnections",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->listTrailerConnections($trailerId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->listTrailerConnections($trailerId);"
+        },
+        "fleetbase-api-trailers-list-vehicle-trailers": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "List Vehicle Trailers",
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::listVehicleTrailers",
+            "variables": {
+                "vehicleId": "vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->vehicles->listVehicleTrailers($vehicleId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->listVehicleTrailers($vehicleId);"
+        },
+        "fleetbase-api-trailers-query-trailers": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Query Trailers",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::queryTrailers",
+            "variables": [],
+            "call": "$result = $fleetbase->trailers->queryTrailers(\n    [\n        'query' => 'Postman Reefer',\n        'limit' => '25',\n        'sort' => '-created_at',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->trailers->queryTrailers(\n    [\n        'query' => 'Postman Reefer',\n        'limit' => '25',\n        'sort' => '-created_at',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-reattach-equipment-to-vehicle": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Reattach Equipment to Vehicle",
+            "implementation": "Fleetbase\\Sdk\\Services\\EquipmentService::attachEquipment",
+            "variables": {
+                "equipmentId": "trailer_equipment_id-fixture"
+            },
+            "call": "$result = $fleetbase->equipment->attachEquipment(\n    $equipmentId,\n    [\n        'attachable_type' => 'fleet-ops:vehicle',\n        'attachable' => 'vehicle_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$equipmentId = 'trailer_equipment_id-fixture';\n\n$result = $fleetbase->equipment->attachEquipment(\n    $equipmentId,\n    [\n        'attachable_type' => 'fleet-ops:vehicle',\n        'attachable' => 'vehicle_id-fixture',\n    ]\n);"
+        },
+        "fleetbase-api-trailers-retrieve-a-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Retrieve a Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::retrieveTrailer",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->retrieveTrailer($trailerId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->retrieveTrailer($trailerId);"
+        },
+        "fleetbase-api-trailers-track-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Track Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::trackTrailer",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->trackTrailer(\n    $trailerId,\n    [\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'speed' => 35,\n        'heading' => 90,\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->trackTrailer(\n    $trailerId,\n    [\n        'latitude' => 40.7484,\n        'longitude' => -73.9857,\n        'speed' => 35,\n        'heading' => 90,\n    ]\n);"
+        },
+        "fleetbase-api-trailers-update-a-trailer": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Update a Trailer",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::updateTrailer",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->updateTrailer(\n    $trailerId,\n    [\n        'name' => 'Postman Reefer Updated',\n        'status' => 'in_use',\n        'payload_capacity' => 21000,\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->updateTrailer(\n    $trailerId,\n    [\n        'name' => 'Postman Reefer Updated',\n        'status' => 'in_use',\n        'payload_capacity' => 21000,\n    ]\n);"
+        },
+        "fleetbase-api-trailers-verify-detached-connection-history": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Verify Detached Connection History",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::listTrailerConnections",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->listTrailerConnections($trailerId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->listTrailerConnections($trailerId);"
+        },
+        "fleetbase-api-trailers-verify-trailer-equipment": {
+            "collection": "Fleetbase API",
+            "group": "Trailers",
+            "name": "Verify Trailer Equipment",
+            "implementation": "Fleetbase\\Sdk\\Services\\TrailerService::retrieveTrailer",
+            "variables": {
+                "trailerId": "trailer_id-fixture"
+            },
+            "call": "$result = $fleetbase->trailers->retrieveTrailer($trailerId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$trailerId = 'trailer_id-fixture';\n\n$result = $fleetbase->trailers->retrieveTrailer($trailerId);"
         },
         "fleetbase-api-vehicles-create-a-vehicle": {
             "collection": "Fleetbase API",

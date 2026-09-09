@@ -14,6 +14,19 @@ namespace Fleetbase\Sdk\Services\Concerns;
 trait EquipmentServiceEndpoints
 {
     /**
+     * Attach Equipment.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function attachEquipment($parameters = [], $options = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/equipment/:id/attach', ['id'], 'body', func_get_args());
+    }
+
+    /**
      * Create Equipment.
      *
      * @param array<string, mixed> $parameters
@@ -36,6 +49,19 @@ trait EquipmentServiceEndpoints
     public function deleteEquipment($parameters = [], $options = [], $requestOptions = [])
     {
         return $this->endpointFromArguments('DELETE', '{{base_url}}/{{namespace}}/equipment/{{equipment_id}}', ['equipment_id'], 'body', func_get_args());
+    }
+
+    /**
+     * Detach Equipment.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function detachEquipment($parameters = [], $options = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('POST', '{{base_url}}/{{namespace}}/equipment/:id/detach', ['id'], 'body', func_get_args());
     }
 
     /**

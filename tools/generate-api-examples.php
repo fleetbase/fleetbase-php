@@ -52,6 +52,9 @@ foreach ($manifest['requests'] as $request) {
     $callGroup = is_string($variantOf) && isset($groupsById[$variantOf])
         ? $groupsById[$variantOf]
         : $group;
+    if (is_string($request['sdk_group'] ?? null)) {
+        $callGroup = $request['sdk_group'];
+    }
     if ($group !== $currentGroup) {
         $lines[] = '';
         $lines[] = '## ' . $group;
