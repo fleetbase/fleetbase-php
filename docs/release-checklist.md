@@ -34,3 +34,11 @@ composer install --no-dev --optimize-autoloader
 6. Confirm the public API reference renders the checked-in 1.3.0 PHP examples.
 
 Never reuse, move, or rewrite a published tag. If validation fails after publication, publish a new patch release.
+
+## Release workflow troubleshooting
+
+- Coverage and mutation jobs, including release validation, pin Xdebug 3.5.3 and verify the loaded version. Update this pin deliberately in all three jobs with fresh coverage and mutation evidence; do not lower the 100% line/branch or 85% mutation gates to accommodate tooling drift. Coverage artifacts are uploaded even when the coverage gate fails.
+- Release detection retries GitHub's commit-to-PR lookup six times, ten seconds apart, to allow merge metadata to become visible. Only a merged `release/` PR targeting `main` whose merge SHA exactly matches the triggering commit is eligible. API errors fail the job; exhausted successful lookups with no matching PR produce an explicit warning and skip publication.
+- An ordinary fix PR does not trigger a release. After merging workflow repairs, use a fresh reviewed release PR for the still-unpublished version. Rerunning an older workflow run uses that run's original workflow and source, not workflow repairs merged afterward. No tag should be created manually to bypass validation or the protected release environment.
+
+Run the detector's offline regression suite with `node --test tools/tests/release-detection.test.mjs`. It uses simulated GitHub responses and does not create releases or require credentials.
