@@ -34,6 +34,8 @@ jobs:
         run: composer install --no-interaction --prefer-dist
       - name: Run quality and contract gates
         run: composer check
+      - name: Test release workflow detection
+        run: node --test tools/tests/release-detection.test.mjs
 
   compatibility:
     name: PHP ${{ matrix.php }} / ${{ matrix.dependencies }}
@@ -69,8 +71,12 @@ jobs:
         uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
         with:
           php-version: "8.2"
+          # Keep branch-coverage semantics stable across runner image updates.
+          extensions: xdebug-3.5.3
           coverage: xdebug
           tools: composer:v2
+      - name: Verify pinned coverage driver
+        run: php -r 'if (phpversion("xdebug") !== "3.5.3") { fwrite(STDERR, "Expected Xdebug 3.5.3\n"); exit(1); }'
       - name: Install locked dependencies
         run: composer install --no-interaction --prefer-dist
       - name: Generate fresh line and branch coverage
@@ -85,6 +91,7 @@ jobs:
       - name: Enforce complete line and branch coverage
         run: php tools/check-coverage.php build/coverage/summary.txt 100
       - name: Upload fresh coverage evidence
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: coverage-evidence
@@ -106,8 +113,11 @@ jobs:
         uses: shivammathur/setup-php@db91e1a0e48e84637d325a7ee4d2677e146ceec4 # 2.36.0
         with:
           php-version: "8.3"
+          extensions: xdebug-3.5.3
           coverage: xdebug
           tools: composer:v2
+      - name: Verify pinned coverage driver
+        run: php -r 'if (phpversion("xdebug") !== "3.5.3") { fwrite(STDERR, "Expected Xdebug 3.5.3\n"); exit(1); }'
       - name: Install locked dependencies
         run: composer install --no-interaction --prefer-dist
       - name: Download and verify Infection 0.35.3
