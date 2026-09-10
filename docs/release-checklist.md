@@ -12,7 +12,7 @@ The release workflow starts automatically when a semantic `release/` branch is m
 
 ## Repository preparation
 
-1. Create `release/v1.3.0`, update its dated changelog section and `docs/releases/1.3.0.md`, and open a pull request to `main`.
+1. Create `release/1.3.0` from `main` after the workflow repairs, update its dated changelog section and `docs/releases/1.3.0.md`, and open a recovery pull request to `main`. The original `release/v1.3.0` attempt did not publish a release.
 2. Require every pull-request check, including the disposable 264-request SDK contract, before merge.
 3. Configure required checks and the protected `release` environment without granting workflow bypasses.
 4. Add `POSTMAN_API_KEY` at repository or organization scope and retain the live-contract artifacts.
@@ -20,7 +20,7 @@ The release workflow starts automatically when a semantic `release/` branch is m
 
 ## Publication
 
-1. Merge the reviewed `release/v1.3.0` pull request into `main`; this automatically starts the release workflow and derives version `1.3.0`.
+1. Merge the reviewed `release/1.3.0` recovery pull request into `main`; this automatically starts the repaired release workflow and derives version `1.3.0`.
 2. Confirm the live SDK contract and validation jobs pass, then approve the protected `release` environment if an approval rule is configured.
 3. Confirm the immutable `1.3.0` tag and GitHub Release target the reviewed commit and contain the expected artifacts and provenance.
 4. Verify GitHub and Packagist identify `AGPL-3.0-or-later` for 1.3.0 while 1.0.x tags retain their original MIT terms.

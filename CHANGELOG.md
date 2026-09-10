@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [1.3.0] - 2026-09-09
+## [1.3.0] - 2026-09-10
 
 ### Added
 
@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Contract tests now use canonical placeholder names for legacy envelopes when scenario URLs spell the same identifier differently.
 - Restored the complete PHP example catalog required by the website's Postman submodule update.
+- Pinned the validated Xdebug coverage driver and retried delayed GitHub merge metadata so release validation and automatic release detection remain reliable.
 
 ## [1.2.0] - 2026-09-06
 
