@@ -317,7 +317,7 @@ composer test:coverage
 
 Tests are hermetic by default and must not use production credentials or mutate a shared API. CI enforces PHP 7.4–8.5 with lowest/latest dependencies, PHPStan at max level, generated-contract drift, compatibility snapshots, exact 100% line and branch coverage, consumer fixtures, security checks, and archive inspection. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution requirements.
 
-The separate `Disposable API contract` workflow uses Fleetbase's canonical contract bootstrap: it pulls the published Fleetbase API image, runs the non-interactive installer with the same CI configuration used by Core API and Fleet-Ops, and invokes Fleetbase's shared Postman seed-and-mint action. Both official collections are routed through a local PHP SDK bridge, and CI then proves all 220 locked requests invoked their mapped SDK methods. This is an isolated runner-local Fleetbase instance, not a production or shared API.
+The separate `Disposable API contract` workflow uses Fleetbase's canonical contract bootstrap: it pulls the published Fleetbase API image and runs the non-interactive installer with the same CI configuration used by Core API and Fleet-Ops. When the contract lock specifies a newer Fleet-Ops source, CI overlays that exact revision, rebuilds the autoloader, migrates and reloads workers before invoking Fleetbase's shared seed-and-mint action. Both official collections are routed through a local PHP SDK bridge, and CI then proves all 270 locked requests invoked their mapped SDK methods. This is an isolated runner-local Fleetbase instance, not a production or shared API; a source-overlay run does not prove those endpoints are deployed in a published image.
 
 ## Security and support
 
