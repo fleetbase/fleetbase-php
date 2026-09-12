@@ -2,23 +2,23 @@
     "schema_version": 1,
     "source": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "7fe06b7c5e415a9aa292869e9037910896b049ad",
+        "ref": "d6a7cc530fa27d7cf19a0d3ef8594cf4e51a76bb",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
         ]
     },
     "summary": {
-        "requests": 264,
-        "groups": 37,
+        "requests": 270,
+        "groups": 38,
         "methods": {
             "DELETE": 39,
-            "GET": 92,
+            "GET": 97,
             "PATCH": 7,
-            "POST": 99,
+            "POST": 100,
             "PUT": 27
         },
-        "mapped": 264,
+        "mapped": 270,
         "exceptions": 0,
         "unmapped": 0,
         "variants": 28
@@ -1213,8 +1213,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-create-a-driver",
-            "sdk_group": "Drivers"
+            "sdk_group": "Drivers",
+            "variant_of": "fleetbase-api-drivers-create-a-driver"
         },
         {
             "id": "fleetbase-api-drivers-delete-a-driver",
@@ -1289,8 +1289,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-delete-a-driver",
-            "sdk_group": "Drivers"
+            "sdk_group": "Drivers",
+            "variant_of": "fleetbase-api-drivers-delete-a-driver"
         },
         {
             "id": "fleetbase-api-drivers-get-driver-current-organization",
@@ -1922,8 +1922,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-update-a-driver",
-            "sdk_group": "Drivers"
+            "sdk_group": "Drivers",
+            "variant_of": "fleetbase-api-drivers-update-a-driver"
         },
         {
             "id": "fleetbase-api-drivers-verify-driver-login-code",
@@ -2616,8 +2616,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-create-a-driver",
-            "sdk_group": "Drivers"
+            "sdk_group": "Drivers",
+            "variant_of": "fleetbase-api-drivers-create-a-driver"
         },
         {
             "id": "fleetbase-api-fleets-create-a-fleet-vehicle",
@@ -2655,8 +2655,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-create-a-vehicle",
-            "sdk_group": "Vehicles"
+            "sdk_group": "Vehicles",
+            "variant_of": "fleetbase-api-vehicles-create-a-vehicle"
         },
         {
             "id": "fleetbase-api-fleets-create-a-subfleet",
@@ -2706,8 +2706,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-create-a-fleet",
-            "sdk_group": "Fleets"
+            "sdk_group": "Fleets",
+            "variant_of": "fleetbase-api-fleets-create-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet",
@@ -2782,8 +2782,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-drivers-delete-a-driver",
-            "sdk_group": "Drivers"
+            "sdk_group": "Drivers",
+            "variant_of": "fleetbase-api-drivers-delete-a-driver"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-fleet-vehicle",
@@ -2818,8 +2818,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-delete-a-vehicle",
-            "sdk_group": "Vehicles"
+            "sdk_group": "Vehicles",
+            "variant_of": "fleetbase-api-vehicles-delete-a-vehicle"
         },
         {
             "id": "fleetbase-api-fleets-delete-a-subfleet",
@@ -2854,8 +2854,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-delete-a-fleet",
-            "sdk_group": "Fleets"
+            "sdk_group": "Fleets",
+            "variant_of": "fleetbase-api-fleets-delete-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-query-fleets",
@@ -2937,8 +2937,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-assign-a-driver-to-a-fleet",
-            "sdk_group": "Fleets"
+            "sdk_group": "Fleets",
+            "variant_of": "fleetbase-api-fleets-assign-a-driver-to-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-reassign-a-vehicle-to-a-fleet",
@@ -2980,8 +2980,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet",
-            "sdk_group": "Fleets"
+            "sdk_group": "Fleets",
+            "variant_of": "fleetbase-api-fleets-assign-a-vehicle-to-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-remove-a-driver-from-a-fleet",
@@ -3065,8 +3065,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-remove-a-driver-from-a-fleet",
-            "sdk_group": "Fleets"
+            "sdk_group": "Fleets",
+            "variant_of": "fleetbase-api-fleets-remove-a-driver-from-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet",
@@ -3150,8 +3150,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet",
-            "sdk_group": "Fleets"
+            "sdk_group": "Fleets",
+            "variant_of": "fleetbase-api-fleets-remove-a-vehicle-from-a-fleet"
         },
         {
             "id": "fleetbase-api-fleets-retrieve-a-fleet",
@@ -3920,6 +3920,239 @@
                 "legacy_envelope": true
             },
             "sdk_group": "Geofences"
+        },
+        {
+            "id": "fleetbase-api-inspections-list-inspection-forms",
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "List Inspection Forms",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/inspection-forms",
+            "source": "postman/collections/Fleetbase API/Inspections/List Inspection Forms.request.yaml",
+            "description": "Lists the inspection forms the organisation has published, newest first. Draft and archived forms are never listed: a driver can only file against a published one.\n\nEach form carries its structure as `grouped_fields` \u2014 the groups of typed fields a driver fills in \u2014 so a list is enough to render a form picker without reading each one.\n\nSend `vehicle` to narrow the list to what applies to one vehicle \u2014 forms bound to that vehicle, and forms bound to nothing, which are the organisation-wide ones. Send `type` to narrow by form type, as one value or a comma separated list.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": {
+                    "vehicle": "{{vehicle_id}}"
+                },
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionFormService::listInspectionForms",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Inspection Forms"
+        },
+        {
+            "id": "fleetbase-api-inspections-list-inspections",
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "List Inspections",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/inspections",
+            "source": "postman/collections/Fleetbase API/Inspections/List Inspections.request.yaml",
+            "description": "Lists filed inspections, newest first.\n\nNarrow by `driver` or `vehicle`, and by `type`, `result` and `status`, each as one value or a comma separated list. Defaults to a recent window rather than the organisation's whole history; use `limit` to widen it.\n\nEach row carries the same shape Retrieve an Inspection answers with: the answers as `custom_field_values`, the `item_results` derived from them, and the `files` filed with the inspection.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": {
+                    "driver": "{{driver_id}}"
+                },
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionService::listInspections",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "query",
+                "contract_payload": "query",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Inspections"
+        },
+        {
+            "id": "fleetbase-api-inspections-list-vehicle-inspections",
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "List Vehicle Inspections",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/vehicles/:id/inspections",
+            "source": "postman/collections/Fleetbase API/Inspections/List Vehicle Inspections.request.yaml",
+            "description": "Lists a vehicle's inspection history, newest first \u2014 the same inspections List Inspections answers with `vehicle`, addressed the way the driver app holds them, from the vehicle's screen.\n\nNarrow by `type`, `result` and `status`, each as one value or a comma separated list.\n\nEach row carries the answers as `custom_field_values`, the `item_results` derived from them, and the `files` filed with the inspection.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{vehicle_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::listVehicleInspections",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Vehicles"
+        },
+        {
+            "id": "fleetbase-api-inspections-retrieve-an-inspection",
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "Retrieve an Inspection",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/inspections/:id",
+            "source": "postman/collections/Fleetbase API/Inspections/Retrieve an Inspection.request.yaml",
+            "description": "Retrieves one inspection with everything it produced: `custom_field_values` \u2014 the driver's answers, each beside the field's `name`, `label` and `type`, with every photo and signature resolved to `{ id, url, filename, content_type }` \u2014 the `item_results` derived from the `pass-fail` answers, the `files` filed with it, and the `issue` and `work_order` raised from any failed items.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{inspection_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionService::retrieveInspection",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Inspections"
+        },
+        {
+            "id": "fleetbase-api-inspections-retrieve-an-inspection-form",
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "Retrieve an Inspection Form",
+            "method": "GET",
+            "url": "{{base_url}}/{{namespace}}/inspection-forms/:id",
+            "source": "postman/collections/Fleetbase API/Inspections/Retrieve an Inspection Form.request.yaml",
+            "description": "Retrieves one published inspection form with its structure and `settings`.\n\nA form is groups of typed fields. `grouped_fields` is what a driver renders: one entry per group, in the order the builder laid them out, each with a `name`, a `meta.grid_size` and its `fields`. A field carries an `id`, a `name`, a `label`, a `type` \u2014 `pass-fail`, `input`, `textarea`, `number`, `select`, `radio-button`, `boolean`, `date-picker`, `date-time-input`, `file-upload` or `signature` \u2014 plus `required`, `options` and `meta`.\n\nA `pass-fail` field's `meta` says what happens when it fails: the default `severity`, whether a photo or a comment is required, whether the defect takes the vehicle out of service (`unsafe_on_fail`), and any `instructions`. A `number` field's `meta` may name its `unit` and the `role` it plays, such as `odometer`.\n\nThe first cut's flat `items` checklist is still answered, read-only, for forms that have not been rebuilt; a form built from fields answers both, and `grouped_fields` is the one to render.\n\nA form that is not published \u2014 a draft, or one that has been archived \u2014 answers 404, the same as one that does not exist: to a driver, a form that cannot be filled in is not there.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": {
+                    "id": "{{inspection_form_id}}"
+                },
+                "query": [],
+                "body_type": null,
+                "body": null
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionFormService::retrieveInspectionForm",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [
+                    "id"
+                ],
+                "request_data": "query",
+                "contract_payload": "none",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Inspection Forms"
+        },
+        {
+            "id": "fleetbase-api-inspections-submit-an-inspection",
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "Submit an Inspection",
+            "method": "POST",
+            "url": "{{base_url}}/{{namespace}}/inspections",
+            "source": "postman/collections/Fleetbase API/Inspections/Submit an Inspection.request.yaml",
+            "description": "Files an inspection against a published form, as the driver app does at the end of a DVIR.\n\nA form built from typed fields is answered with `custom_field_values`: one entry per field the driver answered, naming the field by the `id` the form read gave it, with a `value_type` and a `value`. A `pass-fail` answer is an object \u2014 `passed`, `not_applicable`, `severity`, `comments`, `photos` and `unsafe`; a meter is a number, a signature or a photo is base64. The server stores every photo and signature as a file and answers with `file:` references resolved, and mirrors each `pass-fail` answer into an `item_results` row, which is what issues, work orders and the vehicle's history are built from.\n\nThe first cut's flat `item_results` body is still accepted, for the tokenised public link and for older app builds. When both arrive the field values win and the duplicated results are ignored \u2014 which is exactly what the app sends, so one body works against either cut.\n\nA failed `pass-fail` answer must carry whatever its field insists on: a form that sets `require_comment_on_fail` or `require_photo_on_fail` refuses the whole submission with a 422 rather than filing half an inspection.\n\nWithout `vehicle` the inspection is recorded against the vehicle the driver is currently assigned to. Without `started_at` the inspection is taken to have started when it was filed.\n\nThe app queues a submit while offline and replays it later. Send an `Idempotency-Key` header with each attempt: a replay with a key already used by the same driver answers with the inspection the first attempt filed rather than filing a second one.\n\nThe response is the inspection with its `custom_field_values`, `item_results` and `files`, and the `issue` and `work_order` the form's settings raised from any failed items.",
+            "authentication": "fleetbase-api-key",
+            "request_fixture": {
+                "path_variables": [],
+                "query": [],
+                "body_type": "json",
+                "body": {
+                    "inspection_form": "inspection_form_id-fixture",
+                    "driver": "driver_id-fixture",
+                    "vehicle": "vehicle_id-fixture",
+                    "started_at": "2026-09-09T07:10:00Z",
+                    "odometer": 120400,
+                    "engine_hours": 3100,
+                    "location": {
+                        "latitude": 1.3521,
+                        "longitude": 103.8198
+                    },
+                    "custom_field_values": [],
+                    "item_results": [
+                        {
+                            "item_key": "brakes",
+                            "label": "Brakes",
+                            "category": "Safety",
+                            "passed": false,
+                            "severity": "critical",
+                            "comments": "Pedal is soft.",
+                            "photos": [
+                                "proof_photo_base64-fixture"
+                            ]
+                        },
+                        {
+                            "item_key": "lights",
+                            "label": "Lights",
+                            "category": "Safety",
+                            "passed": true
+                        }
+                    ]
+                }
+            },
+            "response_fixtures": [],
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionService::submitInspection",
+            "tests": [
+                "tests/Contract/EndpointContractTest.php::testEveryEndpointContract"
+            ],
+            "status": "complete",
+            "exception": null,
+            "sdk_signature": {
+                "path_parameters": [],
+                "request_data": "body",
+                "contract_payload": "json",
+                "legacy_envelope": true
+            },
+            "sdk_group": "Inspections"
         },
         {
             "id": "fleetbase-api-issues-create-an-issue",
@@ -5181,8 +5414,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-orders-create-an-order",
-            "sdk_group": "Orders"
+            "sdk_group": "Orders",
+            "variant_of": "fleetbase-api-orders-create-an-order"
         },
         {
             "id": "fleetbase-api-orders-delete-an-order",
@@ -7281,8 +7514,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-service-rates-create-a-service-rate",
-            "sdk_group": "Service Rates"
+            "sdk_group": "Service Rates",
+            "variant_of": "fleetbase-api-service-rates-create-a-service-rate"
         },
         {
             "id": "fleetbase-api-service-rates-delete-a-service-rate",
@@ -7874,8 +8107,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-devices-attach-device",
-            "sdk_group": "Devices"
+            "sdk_group": "Devices",
+            "variant_of": "fleetbase-api-devices-attach-device"
         },
         {
             "id": "fleetbase-api-trailers-attach-equipment-to-trailer",
@@ -7913,8 +8146,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-equipment-attach-equipment",
-            "sdk_group": "Equipment"
+            "sdk_group": "Equipment",
+            "variant_of": "fleetbase-api-equipment-attach-equipment"
         },
         {
             "id": "fleetbase-api-trailers-attach-trailer-to-vehicle",
@@ -7989,8 +8222,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-devices-create-a-device",
-            "sdk_group": "Devices"
+            "sdk_group": "Devices",
+            "variant_of": "fleetbase-api-devices-create-a-device"
         },
         {
             "id": "fleetbase-api-trailers-create-trailer-equipment",
@@ -8026,8 +8259,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-equipment-create-equipment",
-            "sdk_group": "Equipment"
+            "sdk_group": "Equipment",
+            "variant_of": "fleetbase-api-equipment-create-equipment"
         },
         {
             "id": "fleetbase-api-trailers-create-a-trailer",
@@ -8103,8 +8336,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-devices-delete-a-device",
-            "sdk_group": "Devices"
+            "sdk_group": "Devices",
+            "variant_of": "fleetbase-api-devices-delete-a-device"
         },
         {
             "id": "fleetbase-api-trailers-delete-trailer-equipment",
@@ -8139,8 +8372,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-equipment-delete-equipment",
-            "sdk_group": "Equipment"
+            "sdk_group": "Equipment",
+            "variant_of": "fleetbase-api-equipment-delete-equipment"
         },
         {
             "id": "fleetbase-api-trailers-delete-a-trailer",
@@ -8210,8 +8443,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-devices-detach-device",
-            "sdk_group": "Devices"
+            "sdk_group": "Devices",
+            "variant_of": "fleetbase-api-devices-detach-device"
         },
         {
             "id": "fleetbase-api-trailers-detach-trailer-equipment",
@@ -8246,8 +8479,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-equipment-detach-equipment",
-            "sdk_group": "Equipment"
+            "sdk_group": "Equipment",
+            "variant_of": "fleetbase-api-equipment-detach-equipment"
         },
         {
             "id": "fleetbase-api-trailers-detach-trailer-from-vehicle",
@@ -8427,8 +8660,8 @@
                 "contract_payload": "json",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-equipment-attach-equipment",
-            "sdk_group": "Equipment"
+            "sdk_group": "Equipment",
+            "variant_of": "fleetbase-api-equipment-attach-equipment"
         },
         {
             "id": "fleetbase-api-trailers-retrieve-a-trailer",
@@ -8577,8 +8810,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-trailers-list-trailer-connections",
-            "sdk_group": "Trailers"
+            "sdk_group": "Trailers",
+            "variant_of": "fleetbase-api-trailers-list-trailer-connections"
         },
         {
             "id": "fleetbase-api-trailers-verify-trailer-equipment",
@@ -8613,8 +8846,8 @@
                 "contract_payload": "none",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-trailers-retrieve-a-trailer",
-            "sdk_group": "Trailers"
+            "sdk_group": "Trailers",
+            "variant_of": "fleetbase-api-trailers-retrieve-a-trailer"
         },
         {
             "id": "fleetbase-api-vehicles-create-a-vehicle",
@@ -8803,8 +9036,8 @@
                 "contract_payload": "query",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle",
-            "sdk_group": "Vehicles"
+            "sdk_group": "Vehicles",
+            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle"
         },
         {
             "id": "fleetbase-api-vehicles-expand-a-vehicle-scalar",
@@ -8846,8 +9079,8 @@
                 "contract_payload": "query",
                 "legacy_envelope": true
             },
-            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle",
-            "sdk_group": "Vehicles"
+            "sdk_group": "Vehicles",
+            "variant_of": "fleetbase-api-vehicles-retrieve-a-vehicle"
         },
         {
             "id": "fleetbase-api-vehicles-query-vehicles",

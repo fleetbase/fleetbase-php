@@ -2,6 +2,9 @@
     "schema_version": 1,
     "description": "Postman requests that exercise a scenario on an endpoint the SDK already covers, rather than a distinct operation. The generator maps each to the canonical request's method instead of minting a new one, so a contract-test case cannot become permanent public API surface. Adding an entry here removes nothing that already exists; it only prevents a new method being generated.",
     "service_groups": {
+        "fleetbase-api-inspections-list-inspection-forms": "Inspection Forms",
+        "fleetbase-api-inspections-retrieve-an-inspection-form": "Inspection Forms",
+        "fleetbase-api-inspections-list-vehicle-inspections": "Vehicles",
         "fleetbase-api-trailers-list-vehicle-trailers": "Vehicles"
     },
     "variants": {

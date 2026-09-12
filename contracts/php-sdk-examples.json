@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "7fe06b7c5e415a9aa292869e9037910896b049ad",
+        "ref": "d6a7cc530fa27d7cf19a0d3ef8594cf4e51a76bb",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
@@ -1029,6 +1029,66 @@
             "variables": [],
             "call": "$result = $fleetbase->geofences->listGeofenceEvents(\n    [\n        'per_page' => '50',\n        'event_type' => 'entered',\n    ]\n);",
             "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->geofences->listGeofenceEvents(\n    [\n        'per_page' => '50',\n        'event_type' => 'entered',\n    ]\n);"
+        },
+        "fleetbase-api-inspections-list-inspection-forms": {
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "List Inspection Forms",
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionFormService::listInspectionForms",
+            "variables": [],
+            "call": "$result = $fleetbase->inspectionForms->listInspectionForms(\n    [\n        'vehicle' => 'vehicle_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->inspectionForms->listInspectionForms(\n    [\n        'vehicle' => 'vehicle_id-fixture',\n    ]\n);"
+        },
+        "fleetbase-api-inspections-list-inspections": {
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "List Inspections",
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionService::listInspections",
+            "variables": [],
+            "call": "$result = $fleetbase->inspections->listInspections(\n    [\n        'driver' => 'driver_id-fixture',\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->inspections->listInspections(\n    [\n        'driver' => 'driver_id-fixture',\n    ]\n);"
+        },
+        "fleetbase-api-inspections-list-vehicle-inspections": {
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "List Vehicle Inspections",
+            "implementation": "Fleetbase\\Sdk\\Services\\VehicleService::listVehicleInspections",
+            "variables": {
+                "vehicleId": "vehicle_id-fixture"
+            },
+            "call": "$result = $fleetbase->vehicles->listVehicleInspections($vehicleId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$vehicleId = 'vehicle_id-fixture';\n\n$result = $fleetbase->vehicles->listVehicleInspections($vehicleId);"
+        },
+        "fleetbase-api-inspections-retrieve-an-inspection": {
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "Retrieve an Inspection",
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionService::retrieveInspection",
+            "variables": {
+                "inspectionId": "inspection_id-fixture"
+            },
+            "call": "$result = $fleetbase->inspections->retrieveInspection($inspectionId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$inspectionId = 'inspection_id-fixture';\n\n$result = $fleetbase->inspections->retrieveInspection($inspectionId);"
+        },
+        "fleetbase-api-inspections-retrieve-an-inspection-form": {
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "Retrieve an Inspection Form",
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionFormService::retrieveInspectionForm",
+            "variables": {
+                "inspectionFormId": "inspection_form_id-fixture"
+            },
+            "call": "$result = $fleetbase->inspectionForms->retrieveInspectionForm($inspectionFormId);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n$inspectionFormId = 'inspection_form_id-fixture';\n\n$result = $fleetbase->inspectionForms->retrieveInspectionForm($inspectionFormId);"
+        },
+        "fleetbase-api-inspections-submit-an-inspection": {
+            "collection": "Fleetbase API",
+            "group": "Inspections",
+            "name": "Submit an Inspection",
+            "implementation": "Fleetbase\\Sdk\\Services\\InspectionService::submitInspection",
+            "variables": [],
+            "call": "$result = $fleetbase->inspections->submitInspection(\n    [\n        'inspection_form' => 'inspection_form_id-fixture',\n        'driver' => 'driver_id-fixture',\n        'vehicle' => 'vehicle_id-fixture',\n        'started_at' => '2026-09-09T07:10:00Z',\n        'odometer' => 120400,\n        'engine_hours' => 3100,\n        'location' => [\n            'latitude' => 1.3521,\n            'longitude' => 103.8198,\n        ],\n        'custom_field_values' => [],\n        'item_results' => [\n            [\n                'item_key' => 'brakes',\n                'label' => 'Brakes',\n                'category' => 'Safety',\n                'passed' => false,\n                'severity' => 'critical',\n                'comments' => 'Pedal is soft.',\n                'photos' => [\n                    'proof_photo_base64-fixture',\n                ],\n            ],\n            [\n                'item_key' => 'lights',\n                'label' => 'Lights',\n                'category' => 'Safety',\n                'passed' => true,\n            ],\n        ],\n    ]\n);",
+            "code": "<?php\n\n$fleetbase = new \\Fleetbase\\Sdk\\Fleetbase('flb_live_…');\n\n$result = $fleetbase->inspections->submitInspection(\n    [\n        'inspection_form' => 'inspection_form_id-fixture',\n        'driver' => 'driver_id-fixture',\n        'vehicle' => 'vehicle_id-fixture',\n        'started_at' => '2026-09-09T07:10:00Z',\n        'odometer' => 120400,\n        'engine_hours' => 3100,\n        'location' => [\n            'latitude' => 1.3521,\n            'longitude' => 103.8198,\n        ],\n        'custom_field_values' => [],\n        'item_results' => [\n            [\n                'item_key' => 'brakes',\n                'label' => 'Brakes',\n                'category' => 'Safety',\n                'passed' => false,\n                'severity' => 'critical',\n                'comments' => 'Pedal is soft.',\n                'photos' => [\n                    'proof_photo_base64-fixture',\n                ],\n            ],\n            [\n                'item_key' => 'lights',\n                'label' => 'Lights',\n                'category' => 'Safety',\n                'passed' => true,\n            ],\n        ],\n    ]\n);"
         },
         "fleetbase-api-issues-create-an-issue": {
             "collection": "Fleetbase API",

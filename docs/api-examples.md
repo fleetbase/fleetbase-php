@@ -1,6 +1,6 @@
 # Fleetbase PHP SDK API examples
 
-These 264 examples are generated from the locked official Postman contract. CI executes every fenced snippet against a hermetic PSR-18 transport.
+These 270 examples are generated from the locked official Postman contract. CI executes every fenced snippet against a hermetic PSR-18 transport.
 
 Create `$fleetbase` once as shown in the README, then use the relevant service call below. Fixture identifiers and payloads are illustrative; replace them with values from your application.
 
@@ -1461,6 +1461,109 @@ $result = $fleetbase->geofences->listGeofenceEvents(
     [
         'per_page' => '50',
         'event_type' => 'entered',
+    ]
+);
+```
+
+## Inspections
+
+### List Inspection Forms
+
+Lists the inspection forms the organisation has published, newest first. Draft and archived forms are never listed: a driver can only file against a published one. Each form carries its structure as `grouped_fields` — the groups of typed fields a driver fills in — so a list is enough to render a form picker without reading each one. Send `vehicle` to narrow the list to what applies to one vehicle — forms bound to that vehicle, and forms bound to nothing, which are the organisation-wide ones. Send `type` to narrow by form type, as one value or a comma separated list.
+
+`GET {{base_url}}/{{namespace}}/inspection-forms`
+
+```php
+$result = $fleetbase->inspectionForms->listInspectionForms(
+    [
+        'vehicle' => 'vehicle_id-fixture',
+    ]
+);
+```
+
+### List Inspections
+
+Lists filed inspections, newest first. Narrow by `driver` or `vehicle`, and by `type`, `result` and `status`, each as one value or a comma separated list. Defaults to a recent window rather than the organisation's whole history; use `limit` to widen it. Each row carries the same shape Retrieve an Inspection answers with: the answers as `custom_field_values`, the `item_results` derived from them, and the `files` filed with the inspection.
+
+`GET {{base_url}}/{{namespace}}/inspections`
+
+```php
+$result = $fleetbase->inspections->listInspections(
+    [
+        'driver' => 'driver_id-fixture',
+    ]
+);
+```
+
+### List Vehicle Inspections
+
+Lists a vehicle's inspection history, newest first — the same inspections List Inspections answers with `vehicle`, addressed the way the driver app holds them, from the vehicle's screen. Narrow by `type`, `result` and `status`, each as one value or a comma separated list. Each row carries the answers as `custom_field_values`, the `item_results` derived from them, and the `files` filed with the inspection.
+
+`GET {{base_url}}/{{namespace}}/vehicles/:id/inspections`
+
+```php
+$result = $fleetbase->vehicles->listVehicleInspections($vehicleId);
+```
+
+### Retrieve an Inspection
+
+Retrieves one inspection with everything it produced: `custom_field_values` — the driver's answers, each beside the field's `name`, `label` and `type`, with every photo and signature resolved to `{ id, url, filename, content_type }` — the `item_results` derived from the `pass-fail` answers, the `files` filed with it, and the `issue` and `work_order` raised from any failed items.
+
+`GET {{base_url}}/{{namespace}}/inspections/:id`
+
+```php
+$result = $fleetbase->inspections->retrieveInspection($inspectionId);
+```
+
+### Retrieve an Inspection Form
+
+Retrieves one published inspection form with its structure and `settings`. A form is groups of typed fields. `grouped_fields` is what a driver renders: one entry per group, in the order the builder laid them out, each with a `name`, a `meta.grid_size` and its `fields`. A field carries an `id`, a `name`, a `label`, a `type` — `pass-fail`, `input`, `textarea`, `number`, `select`, `radio-button`, `boolean`, `date-picker`, `date-time-input`, `file-upload` or `signature` — plus `required`, `options` and `meta`. A `pass-fail` field's `meta` says what happens when it fails: the default `severity`, whether a photo or a comment is required, whether the defect takes the vehicle out of service (`unsafe_on_fail`), and any `instructions`. A `number` field's `meta` may name its `unit` and the `role` it plays, such as `odometer`. The first cut's flat `items` checklist is still answered, read-only, for forms that have not been rebuilt; a form built from fields answers both, and `grouped_fields` is the one to render. A form that is not published — a draft, or one that has been archived — answers 404, the same as one that does not exist: to a driver, a form that cannot be filled in is not there.
+
+`GET {{base_url}}/{{namespace}}/inspection-forms/:id`
+
+```php
+$result = $fleetbase->inspectionForms->retrieveInspectionForm($inspectionFormId);
+```
+
+### Submit an Inspection
+
+Files an inspection against a published form, as the driver app does at the end of a DVIR. A form built from typed fields is answered with `custom_field_values`: one entry per field the driver answered, naming the field by the `id` the form read gave it, with a `value_type` and a `value`. A `pass-fail` answer is an object — `passed`, `not_applicable`, `severity`, `comments`, `photos` and `unsafe`; a meter is a number, a signature or a photo is base64. The server stores every photo and signature as a file and answers with `file:` references resolved, and mirrors each `pass-fail` answer into an `item_results` row, which is what issues, work orders and the vehicle's history are built from. The first cut's flat `item_results` body is still accepted, for the tokenised public link and for older app builds. When both arrive the field values win and the duplicated results are ignored — which is exactly what the app sends, so one body works against either cut. A failed `pass-fail` answer must carry whatever its field insists on: a form that sets `require_comment_on_fail` or `require_photo_on_fail` refuses the whole submission with a 422 rather than filing half an inspection. Without `vehicle` the inspection is recorded against the vehicle the driver is currently assigned to. Without `started_at` the inspection is taken to have started when it was filed. The app queues a submit while offline and replays it later. Send an `Idempotency-Key` header with each attempt: a replay with a key already used by the same driver answers with the inspection the first attempt filed rather than filing a second one. The response is the inspection with its `custom_field_values`, `item_results` and `files`, and the `issue` and `work_order` the form's settings raised from any failed items.
+
+`POST {{base_url}}/{{namespace}}/inspections`
+
+```php
+$result = $fleetbase->inspections->submitInspection(
+    [
+        'inspection_form' => 'inspection_form_id-fixture',
+        'driver' => 'driver_id-fixture',
+        'vehicle' => 'vehicle_id-fixture',
+        'started_at' => '2026-09-09T07:10:00Z',
+        'odometer' => 120400,
+        'engine_hours' => 3100,
+        'location' => [
+            'latitude' => 1.3521,
+            'longitude' => 103.8198,
+        ],
+        'custom_field_values' => [],
+        'item_results' => [
+            [
+                'item_key' => 'brakes',
+                'label' => 'Brakes',
+                'category' => 'Safety',
+                'passed' => false,
+                'severity' => 'critical',
+                'comments' => 'Pedal is soft.',
+                'photos' => [
+                    'proof_photo_base64-fixture',
+                ],
+            ],
+            [
+                'item_key' => 'lights',
+                'label' => 'Lights',
+                'category' => 'Safety',
+                'passed' => true,
+            ],
+        ],
     ]
 );
 ```

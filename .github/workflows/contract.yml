@@ -26,6 +26,7 @@ jobs:
       stack_ref: ${{ steps.locked.outputs.stack_ref }}
       core_api_ref: ${{ steps.locked.outputs.core_api_ref }}
       fleetops_ref: ${{ steps.locked.outputs.fleetops_ref }}
+      fleetops_source_ref: ${{ steps.locked.outputs.fleetops_source_ref }}
     steps:
       - id: check
         env:
@@ -54,6 +55,7 @@ jobs:
             echo "stack_ref=$(read_lock '.sources.fleetbase_stack.commit')"
             echo "core_api_ref=$(read_lock '.sources.fleetbase_stack.core_api_submodule')"
             echo "fleetops_ref=$(read_lock '.sources.fleetbase_stack.fleetops_submodule')"
+            echo "fleetops_source_ref=$(read_lock '.sources.fleetops.commit')"
           } >> "$GITHUB_OUTPUT"
 
   contract:
@@ -70,6 +72,7 @@ jobs:
       POSTMAN_REF: ${{ needs.gate.outputs.postman_ref }}
       CORE_API_REF: ${{ needs.gate.outputs.core_api_ref }}
       FLEETOPS_REF: ${{ needs.gate.outputs.fleetops_ref }}
+      FLEETOPS_SOURCE_REF: ${{ needs.gate.outputs.fleetops_source_ref }}
       SOURCE_TOKEN: ${{ secrets._GITHUB_AUTH_TOKEN || github.token }}
       POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
     steps:
@@ -135,12 +138,44 @@ jobs:
           set -uo pipefail
           for attempt in $(seq 1 30); do
             if curl --fail --silent --max-time 5 http://localhost:8000/health | grep -q '"status"'; then
-              echo "API is healthy."
+              echo "API is healthy (attempt $attempt)."
               exit 0
             fi
             sleep 5
           done
           echo "::error::API did not become healthy."
+          exit 1
+      # Mirror the canonical api-contract.yml overlay sequence before seeding:
+      # replace package, rebuild classmap, migrate, clear caches, reload Octane.
+      - name: Checkout locked Fleet-Ops source for overlay
+        if: env.FLEETOPS_SOURCE_REF != env.FLEETOPS_REF
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: fleetbase/fleetops
+          ref: ${{ env.FLEETOPS_SOURCE_REF }}
+          path: .fleetops-overlay
+          persist-credentials: false
+      - name: Overlay locked Fleet-Ops implementation
+        if: env.FLEETOPS_SOURCE_REF != env.FLEETOPS_REF
+        run: |
+          set -euo pipefail
+          test "$(git -C .fleetops-overlay rev-parse HEAD)" = "$FLEETOPS_SOURCE_REF"
+          test -f .fleetops-overlay/composer.json
+          # The target is one package inside this runner's disposable container.
+          docker compose exec -T application sh -c 'rm -rf /fleetbase/api/vendor/fleetbase/fleetops-api && mkdir -p /fleetbase/api/vendor/fleetbase/fleetops-api'
+          tar --exclude=.git -C .fleetops-overlay -cf - . | docker compose exec -T application sh -c 'tar -C /fleetbase/api/vendor/fleetbase/fleetops-api -xf -'
+          docker compose exec -T application chown -R www-data:www-data /fleetbase/api/vendor/fleetbase/fleetops-api
+          docker compose exec -T application su www-data -s /bin/sh -c 'cd /fleetbase/api && composer dump-autoload --optimize --no-scripts'
+          docker compose exec -T application su www-data -s /bin/sh -c 'cd /fleetbase/api && php artisan optimize:clear && php artisan migrate --force && php artisan octane:reload'
+          echo "Fleet-Ops source under test: $FLEETOPS_SOURCE_REF" >> "$GITHUB_STEP_SUMMARY"
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent --max-time 5 http://localhost:8000/health | grep -q '"status"'; then
+              echo "API healthy after overlay (attempt $attempt)."
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::API did not recover after the locked Fleet-Ops overlay."
           exit 1
       - name: Mint a fresh SDK smoke credential
         env:
@@ -196,6 +231,7 @@ jobs:
           echo $! > .sdk/build/live-contract/bridge.pid
           for attempt in $(seq 1 20); do
             if curl --fail --silent http://127.0.0.1:9000/__sdk_contract_health | grep -q '"status":"ok"'; then
+              echo "SDK bridge is healthy (attempt $attempt)."
               exit 0
             fi
             sleep 1

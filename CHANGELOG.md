@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-09-12
+
+### Added
+
+- Inspection Forms and Inspections services, including form reads, typed-answer submission, inspection retrieval/listing, and vehicle inspection history.
+- Caller-supplied idempotency headers and direct-array inspection examples, with compatibility preserved against 1.3.0 and earlier baselines.
+
+### Changed
+
+- Updated the locked Postman inventory to all 270 requests and the disposable contract seed to include published inspection forms.
+- Test the explicitly locked Fleet-Ops implementation using the canonical package-overlay, migration, cache-clear, and worker-reload sequence before fixture seeding.
+
 ## [1.3.0] - 2026-09-10
 
 ### Added
@@ -107,7 +119,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Latest baseline whose public API is explicitly preserved by 1.1.0.
 
 
-[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/fleetbase/fleetbase-php/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/fleetbase/fleetbase-php/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/fleetbase/fleetbase-php/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/fleetbase/fleetbase-php/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/fleetbase/fleetbase-php/compare/1.1.1...1.1.2

@@ -8,7 +8,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/fleetbase/fleetbase-php.svg)](https://packagist.org/packages/fleetbase/fleetbase-php)
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue.svg)](LICENSE)
 
-The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted installations, covers all 264 locked Fleetbase and Core API requests, and retains the public API used by earlier SDK releases.
+The official PHP client for the [Fleetbase API](https://fleetbase.io/docs/api). It supports Fleetbase Cloud and self-hosted installations, covers all 270 locked Fleetbase and Core API requests, and retains the public API used by earlier SDK releases.
 
 Version 1.1.0 changed the license to `AGPL-3.0-or-later`. Published 1.0.x tags remain under the MIT license shipped with those releases. Review the [migration guide](docs/migration-guide.md) before upgrading.
 
@@ -54,7 +54,7 @@ echo $place->id;
 
 Never commit an API key. Load it from your runtime secret manager or environment.
 
-Existing property access remains supported (`$fleetbase->orders`). Explicit accessors such as `$fleetbase->orders()` are available for static analysis and dependency injection. Browse [all 264 generated PHP examples](docs/api-examples.md); CI executes each exact snippet against a hermetic transport.
+Existing property access remains supported (`$fleetbase->orders`). Explicit accessors such as `$fleetbase->orders()` are available for static analysis and dependency injection. Browse [all 270 generated PHP examples](docs/api-examples.md); CI executes each exact snippet against a hermetic transport.
 
 ### Endpoint arguments
 
@@ -106,6 +106,28 @@ $fleetbase->trailers->detachTrailerFromVehicle($trailer->id);
 ```
 
 Attach devices and equipment through their own services, using `attachDevice($deviceId, $data)` and `attachEquipment($equipmentId, $data)`. Standard trailer CRUD also supports `createTrailer`, `retrieveTrailer`, `queryTrailers`, `updateTrailer`, and `deleteTrailer`.
+
+### Inspections
+
+Version 1.4.0 adds the driver-facing inspection API:
+
+```php
+$forms = $fleetbase->inspectionForms->listInspectionForms(['vehicle' => $vehicleId]);
+$form = $fleetbase->inspectionForms->retrieveInspectionForm($formId);
+$inspection = $fleetbase->inspections->submitInspection([
+    'inspection_form' => $formId,
+    'driver' => $driverId,
+    'vehicle' => $vehicleId,
+    'custom_field_values' => [
+        ['custom_field' => $fieldId, 'value_type' => 'object', 'value' => ['passed' => true]],
+    ],
+], ['headers' => ['Idempotency-Key' => $submissionKey]]);
+$inspection = $fleetbase->inspections->retrieveInspection($inspectionId);
+$inspections = $fleetbase->inspections->listInspections(['driver' => $driverId]);
+$history = $fleetbase->vehicles->listVehicleInspections($vehicleId, ['limit' => 30]);
+```
+
+Read the form's `grouped_fields` to obtain field IDs and required answer types. Reuse the same caller-generated idempotency key when replaying one submission; generate a new key for a new inspection. The SDK passes the key through to the API and does not implement its own deduplication. Forms are published in the console, not created through this public API. Form authoring, submission updates/deletion, and public inspection-link management are not supported public endpoints.
 
 ## Configuration
 

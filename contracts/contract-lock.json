@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-09",
+    "generated_at": "2026-09-12",
     "sdk_baselines": {
         "required_compatibility": {
             "version": "1.0.2",
@@ -8,29 +8,29 @@
             "commit": "569fe88e0359d567f30588820243d1d69ab418ec"
         },
         "latest_published": {
-            "version": "1.2.0",
-            "git_ref": "1.2.0",
-            "commit": "3e8cf88e080936b5cf3eb8c13dd2f88d040c75bd"
+            "version": "1.3.0",
+            "git_ref": "1.3.0",
+            "commit": "3a9467b306d5fcd93d6adb6b02dfaf5ad4cd0158"
         }
     },
     "sources": {
         "fleetbase_stack": {
             "repository": "https://github.com/fleetbase/fleetbase",
             "ref": "origin/main",
-            "commit": "2612278517a56e5389e98c8fd08648e583c87226",
+            "commit": "a5dea4be5f048c8543e69209ada166ce2efd0870",
             "core_api_submodule": "4c763ce293d2e794f9260aca11fb4b52413a74ac",
             "fleetops_submodule": "2980fb39cd4ff58442d287907849efea3a2805ba"
         },
         "postman": {
             "repository": "https://github.com/fleetbase/postman",
             "ref": "origin/main",
-            "commit": "7fe06b7c5e415a9aa292869e9037910896b049ad",
+            "commit": "d6a7cc530fa27d7cf19a0d3ef8594cf4e51a76bb",
             "scope": [
                 "Fleetbase API",
                 "Fleetbase Core API"
             ],
-            "expected_requests": 264,
-            "expected_groups": 37
+            "expected_requests": 270,
+            "expected_groups": 38
         },
         "core_api": {
             "repository": "https://github.com/fleetbase/core-api",
@@ -39,8 +39,8 @@
         },
         "fleetops": {
             "repository": "https://github.com/fleetbase/fleetops",
-            "ref": "origin/main",
-            "commit": "2980fb39cd4ff58442d287907849efea3a2805ba"
+            "ref": "refs/pull/319/head",
+            "commit": "0d11583d0484ad04761ca0cd6a1025cec4aed91c"
         }
     }
 }

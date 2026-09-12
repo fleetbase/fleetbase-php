@@ -24,6 +24,8 @@ use Fleetbase\Sdk\Services\FleetService;
 use Fleetbase\Sdk\Services\FuelReportService;
 use Fleetbase\Sdk\Services\FuelTransactionService;
 use Fleetbase\Sdk\Services\GeofenceService;
+use Fleetbase\Sdk\Services\InspectionFormService;
+use Fleetbase\Sdk\Services\InspectionService;
 use Fleetbase\Sdk\Services\IssueService;
 use Fleetbase\Sdk\Services\LabelService;
 use Fleetbase\Sdk\Services\ManifestService;
@@ -76,6 +78,12 @@ class Fleetbase
 
     /** @var TrailerService */
     public $trailers;
+
+    /** @var InspectionService */
+    public $inspections;
+
+    /** @var InspectionFormService */
+    public $inspectionForms;
 
     /** @var VendorService */
     public $vendors;
@@ -181,6 +189,8 @@ class Fleetbase
         $this->drivers = new DriverService($this->client);
         $this->vehicles = new VehicleService($this->client);
         $this->trailers = new TrailerService($this->client);
+        $this->inspections = new InspectionService($this->client);
+        $this->inspectionForms = new InspectionFormService($this->client);
         $this->vendors = new VendorService($this->client);
         $this->contacts = new ContactService($this->client);
         $this->serviceAreas = new ServiceAreaService($this->client);
@@ -359,6 +369,16 @@ class Fleetbase
     public function trailers(): TrailerService
     {
         return $this->trailers;
+    }
+
+    public function inspections(): InspectionService
+    {
+        return $this->inspections;
+    }
+
+    public function inspectionForms(): InspectionFormService
+    {
+        return $this->inspectionForms;
     }
 
     public function equipment(): EquipmentService
