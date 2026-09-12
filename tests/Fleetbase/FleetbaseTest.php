@@ -85,6 +85,8 @@ final class FleetbaseTest extends TestCase
             'drivers' => \Fleetbase\Sdk\Services\DriverService::class,
             'vehicles' => \Fleetbase\Sdk\Services\VehicleService::class,
             'trailers' => \Fleetbase\Sdk\Services\TrailerService::class,
+            'inspections' => \Fleetbase\Sdk\Services\InspectionService::class,
+            'inspectionForms' => \Fleetbase\Sdk\Services\InspectionFormService::class,
             'vendors' => \Fleetbase\Sdk\Services\VendorService::class,
             'contacts' => \Fleetbase\Sdk\Services\ContactService::class,
             'serviceAreas' => \Fleetbase\Sdk\Services\ServiceAreaService::class,

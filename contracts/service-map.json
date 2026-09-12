@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "7fe06b7c5e415a9aa292869e9037910896b049ad",
+        "ref": "d6a7cc530fa27d7cf19a0d3ef8594cf4e51a76bb",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
@@ -73,6 +73,16 @@
             "service": "Fleetbase\\Sdk\\Services\\GeofenceService",
             "trait": "Fleetbase\\Sdk\\Services\\Concerns\\GeofenceServiceEndpoints",
             "requests": 4
+        },
+        "Inspection Forms": {
+            "service": "Fleetbase\\Sdk\\Services\\InspectionFormService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\InspectionFormServiceEndpoints",
+            "requests": 2
+        },
+        "Inspections": {
+            "service": "Fleetbase\\Sdk\\Services\\InspectionService",
+            "trait": "Fleetbase\\Sdk\\Services\\Concerns\\InspectionServiceEndpoints",
+            "requests": 3
         },
         "Issues": {
             "service": "Fleetbase\\Sdk\\Services\\IssueService",
@@ -172,7 +182,7 @@
         "Vehicles": {
             "service": "Fleetbase\\Sdk\\Services\\VehicleService",
             "trait": "Fleetbase\\Sdk\\Services\\Concerns\\VehicleServiceEndpoints",
-            "requests": 7
+            "requests": 8
         },
         "Vendors": {
             "service": "Fleetbase\\Sdk\\Services\\VendorService",

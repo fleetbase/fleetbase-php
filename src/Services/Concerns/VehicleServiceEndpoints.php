@@ -39,6 +39,19 @@ trait VehicleServiceEndpoints
     }
 
     /**
+     * List Vehicle Inspections.
+     *
+     * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
+     * @param mixed $options Request data, a second path value, or legacy request options.
+     * @param array<string, mixed> $requestOptions
+     * @return mixed
+     */
+    public function listVehicleInspections($parameters = [], $options = [], $requestOptions = [])
+    {
+        return $this->endpointFromArguments('GET', '{{base_url}}/{{namespace}}/vehicles/:id/inspections', ['id'], 'query', func_get_args());
+    }
+
+    /**
      * List Vehicle Trailers.
      *
      * @param scalar|\Fleetbase\Sdk\Resource|array<string, mixed> $parameters First path value, or the legacy endpoint envelope.
