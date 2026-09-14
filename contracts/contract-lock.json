@@ -24,7 +24,7 @@
         "postman": {
             "repository": "https://github.com/fleetbase/postman",
             "ref": "origin/main",
-            "commit": "d6a7cc530fa27d7cf19a0d3ef8594cf4e51a76bb",
+            "commit": "822b867218f174bad18a789d4fd6791ccfd2af34",
             "scope": [
                 "Fleetbase API",
                 "Fleetbase Core API"
@@ -40,7 +40,7 @@
         "fleetops": {
             "repository": "https://github.com/fleetbase/fleetops",
             "ref": "refs/pull/319/head",
-            "commit": "db671b6fac44b92757e9004896ac60c594917ce3"
+            "commit": "9f2ffe9873c16d4df20ea143839ff3f4425781c0"
         }
     }
 }

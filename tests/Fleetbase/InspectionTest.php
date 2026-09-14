@@ -21,14 +21,14 @@ final class InspectionTest extends TestCase
         $payload = [
             'inspection_form' => 'iform_test',
             'driver' => 'driver_test',
-            'custom_field_values' => [
-                ['custom_field' => 'field_brakes', 'value_type' => 'object', 'value' => ['passed' => false, 'comments' => 'Soft pedal', 'photos' => ['data:image/png;base64,test']]],
-                ['custom_field' => 'field_meter', 'value_type' => 'number', 'value' => 120400],
+            'answers' => [
+                ['field' => 'custom_field_brakes0001', 'value_type' => 'object', 'value' => ['passed' => false, 'comments' => 'Soft pedal', 'photos' => ['data:image/png;base64,test']]],
+                ['field' => 'custom_field_meter00001', 'value_type' => 'number', 'value' => 120400],
             ],
         ];
         $client = $this->mockHttpClient([
-            new Response(201, [], '{"id":"inspection_test","custom_field_values":[],"item_results":[]}'),
-            new Response(200, [], '{"id":"inspection_test","custom_field_values":[],"item_results":[]}'),
+            new Response(201, [], '{"id":"inspection_test","answers":[],"item_results":[]}'),
+            new Response(200, [], '{"id":"inspection_test","answers":[],"item_results":[]}'),
         ]);
         $service = new InspectionService($client);
         $options = ['headers' => ['Idempotency-Key' => 'inspection-offline-123']];

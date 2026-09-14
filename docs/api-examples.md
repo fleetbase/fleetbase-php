@@ -1483,7 +1483,7 @@ $result = $fleetbase->inspectionForms->listInspectionForms(
 
 ### List Inspections
 
-Lists filed inspections, newest first. Narrow by `driver` or `vehicle`, and by `type`, `result` and `status`, each as one value or a comma separated list. Defaults to a recent window rather than the organisation's whole history; use `limit` to widen it. Each row carries the same shape Retrieve an Inspection answers with: the answers as `custom_field_values`, the `item_results` derived from them, and the `files` filed with the inspection.
+Lists filed inspections, newest first. Narrow by `driver` or `vehicle`, and by `type`, `result` and `status`, each as one value or a comma separated list. Defaults to a recent window rather than the organisation's whole history; use `limit` to widen it. Each row carries the same shape Retrieve an Inspection answers with: the `answers`, the `item_results` derived from them, and the `files` filed with the inspection.
 
 `GET {{base_url}}/{{namespace}}/inspections`
 
@@ -1497,7 +1497,7 @@ $result = $fleetbase->inspections->listInspections(
 
 ### List Vehicle Inspections
 
-Lists a vehicle's inspection history, newest first — the same inspections List Inspections answers with `vehicle`, addressed the way the driver app holds them, from the vehicle's screen. Narrow by `type`, `result` and `status`, each as one value or a comma separated list. Each row carries the answers as `custom_field_values`, the `item_results` derived from them, and the `files` filed with the inspection.
+Lists a vehicle's inspection history, newest first — the same inspections List Inspections answers with `vehicle`, addressed the way the driver app holds them, from the vehicle's screen. Narrow by `type`, `result` and `status`, each as one value or a comma separated list. Each row carries the `answers`, the `item_results` derived from them, and the `files` filed with the inspection.
 
 `GET {{base_url}}/{{namespace}}/vehicles/:id/inspections`
 
@@ -1507,7 +1507,7 @@ $result = $fleetbase->vehicles->listVehicleInspections($vehicleId);
 
 ### Retrieve an Inspection
 
-Retrieves one inspection with everything it produced: `custom_field_values` — the driver's answers, each beside the field's `name`, `label` and `type`, with every photo and signature resolved to `{ id, url, filename, content_type }` — the `item_results` derived from the `pass-fail` answers, the `files` filed with it, and the `issue` and `work_order` raised from any failed items.
+Retrieves one inspection with everything it produced: the `answers` — one per field the driver answered, each naming the `field` it answers beside that field's `name`, `label` and `type`, with every photo and signature resolved to `{ id, url, filename, content_type }` — the `item_results` derived from the `pass-fail` answers, the `files` filed with it, and the `issue` and `work_order` raised from any failed items.
 
 `GET {{base_url}}/{{namespace}}/inspections/:id`
 
@@ -1527,7 +1527,7 @@ $result = $fleetbase->inspectionForms->retrieveInspectionForm($inspectionFormId)
 
 ### Submit an Inspection
 
-Files an inspection against a published form, as the driver app does at the end of a DVIR. A form built from typed fields is answered with `custom_field_values`: one entry per field the driver answered, naming the field by the `id` the form read gave it, with a `value_type` and a `value`. A `pass-fail` answer is an object — `passed`, `not_applicable`, `severity`, `comments`, `photos` and `unsafe`; a meter is a number, a signature or a photo is base64. The server stores every photo and signature as a file and answers with `file:` references resolved, and mirrors each `pass-fail` answer into an `item_results` row, which is what issues, work orders and the vehicle's history are built from. The first cut's flat `item_results` body is still accepted, for the tokenised public link and for older app builds. When both arrive the field values win and the duplicated results are ignored — which is exactly what the app sends, so one body works against either cut. A failed `pass-fail` answer must carry whatever its field insists on: a form that sets `require_comment_on_fail` or `require_photo_on_fail` refuses the whole submission with a 422 rather than filing half an inspection. Without `vehicle` the inspection is recorded against the vehicle the driver is currently assigned to. Without `started_at` the inspection is taken to have started when it was filed. The app queues a submit while offline and replays it later. Send an `Idempotency-Key` header with each attempt: a replay with a key already used by the same driver answers with the inspection the first attempt filed rather than filing a second one. The response is the inspection with its `custom_field_values`, `item_results` and `files`, and the `issue` and `work_order` the form's settings raised from any failed items.
+Files an inspection against a published form, as the driver app does at the end of a DVIR. A form built from typed fields is answered with `answers`: one entry per field the driver answered, naming the `field` by the `id` the form read gave it, with a `value` and, optionally, a `value_type`. `custom_field_values` is the previous name for this and is still accepted. A `pass-fail` answer is an object — `passed`, `not_applicable`, `severity`, `comments`, `photos` and `unsafe`; a meter is a number, a signature or a photo is base64. The server stores every photo and signature as a file and answers with `file:` references resolved, and mirrors each `pass-fail` answer into an `item_results` row, which is what issues, work orders and the vehicle's history are built from. The first cut's flat `item_results` body is still accepted, for the tokenised public link and for older app builds. It is the older shape: an entry per checklist item rather than per field, naming the item by an `item_key` of its own instead of naming a field of the form. Send `answers` unless you are targeting an older server. This request deliberately sends both, which is what the app does: when both arrive the answers win and the duplicated results are ignored, so one body works against either cut. A failed `pass-fail` answer must carry whatever its field insists on: a form that sets `require_comment_on_fail` or `require_photo_on_fail` refuses the whole submission with a 422 rather than filing half an inspection. Without `vehicle` the inspection is recorded against the vehicle the driver is currently assigned to. Without `started_at` the inspection is taken to have started when it was filed. The app queues a submit while offline and replays it later. Send an `Idempotency-Key` header with each attempt: a replay with a key already used by the same driver answers with the inspection the first attempt filed rather than filing a second one. The response is the inspection with its `answers`, `item_results` and `files`, and the `issue` and `work_order` the form's settings raised from any failed items.
 
 `POST {{base_url}}/{{namespace}}/inspections`
 
@@ -1544,7 +1544,27 @@ $result = $fleetbase->inspections->submitInspection(
             'latitude' => 1.3521,
             'longitude' => 103.8198,
         ],
-        'custom_field_values' => [],
+        'answers' => [
+            [
+                'field' => 'inspection_pass_fail_field_id-fixture',
+                'value_type' => 'object',
+                'value' => [
+                    'passed' => false,
+                    'not_applicable' => false,
+                    'severity' => 'critical',
+                    'comments' => 'Pedal is soft.',
+                    'photos' => [
+                        'proof_photo_base64-fixture',
+                    ],
+                    'unsafe' => true,
+                ],
+            ],
+            [
+                'field' => 'inspection_number_field_id-fixture',
+                'value_type' => 'number',
+                'value' => 120400,
+            ],
+        ],
         'item_results' => [
             [
                 'item_key' => 'brakes',
