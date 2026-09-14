@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-09-14
+
+### Changed
+
+- Track the inspection API's renamed submission answers: `answers` with a `field` per entry, replacing `custom_field_values` with `custom_field`. Both older spellings are still accepted by the API, and the SDK forwards whichever is given without rewriting it.
+
 ## [1.4.0] - 2026-09-12
 
 ### Added

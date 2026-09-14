@@ -2,7 +2,7 @@
     "schema_version": 1,
     "generated_from": {
         "repository": "https://github.com/fleetbase/postman",
-        "ref": "d6a7cc530fa27d7cf19a0d3ef8594cf4e51a76bb",
+        "ref": "822b867218f174bad18a789d4fd6791ccfd2af34",
         "collections": [
             "Fleetbase API",
             "Fleetbase Core API"
