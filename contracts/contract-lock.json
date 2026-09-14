@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-12",
+    "generated_at": "2026-09-14",
     "sdk_baselines": {
         "required_compatibility": {
             "version": "1.0.2",
@@ -40,7 +40,7 @@
         "fleetops": {
             "repository": "https://github.com/fleetbase/fleetops",
             "ref": "refs/pull/319/head",
-            "commit": "0d11583d0484ad04761ca0cd6a1025cec4aed91c"
+            "commit": "db671b6fac44b92757e9004896ac60c594917ce3"
         }
     }
 }
