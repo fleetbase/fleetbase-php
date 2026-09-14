@@ -118,8 +118,8 @@ $inspection = $fleetbase->inspections->submitInspection([
     'inspection_form' => $formId,
     'driver' => $driverId,
     'vehicle' => $vehicleId,
-    'custom_field_values' => [
-        ['custom_field' => $fieldId, 'value_type' => 'object', 'value' => ['passed' => true]],
+    'answers' => [
+        ['field' => $fieldId, 'value_type' => 'object', 'value' => ['passed' => true]],
     ],
 ], ['headers' => ['Idempotency-Key' => $submissionKey]]);
 $inspection = $fleetbase->inspections->retrieveInspection($inspectionId);
@@ -127,7 +127,7 @@ $inspections = $fleetbase->inspections->listInspections(['driver' => $driverId])
 $history = $fleetbase->vehicles->listVehicleInspections($vehicleId, ['limit' => 30]);
 ```
 
-Read the form's `grouped_fields` to obtain field IDs and required answer types. Reuse the same caller-generated idempotency key when replaying one submission; generate a new key for a new inspection. The SDK passes the key through to the API and does not implement its own deduplication. Forms are published in the console, not created through this public API. Form authoring, submission updates/deletion, and public inspection-link management are not supported public endpoints.
+Read the form's `grouped_fields` to obtain field IDs and required answer types; a field's `id` is what an answer names, and it is the same id the submission answers with. `answers` was called `custom_field_values`, and each answer's `field` was called `custom_field`; both older spellings are still accepted on submit. Reuse the same caller-generated idempotency key when replaying one submission; generate a new key for a new inspection. The SDK passes the key through to the API and does not implement its own deduplication. Forms are published in the console, not created through this public API. Form authoring, submission updates/deletion, and public inspection-link management are not supported public endpoints.
 
 ## Configuration
 
