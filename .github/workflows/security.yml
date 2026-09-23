@@ -62,7 +62,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Scan repository history
-        uses: trufflesecurity/trufflehog@20652fbbdefffcdaa493a5bf57ab2ac6b1db715b # v3.97.1
+        uses: trufflesecurity/trufflehog@f714bf454f350590f4a24c3ddb1aef02c35bf5b6 # v3.97.5
         with:
           version: 3.97.1
           extra_args: --results=verified
@@ -72,7 +72,7 @@ jobs:
           fetch-depth: 1
           path: current
       - name: Scan the current source for verified and unknown secrets
-        uses: trufflesecurity/trufflehog@20652fbbdefffcdaa493a5bf57ab2ac6b1db715b # v3.97.1
+        uses: trufflesecurity/trufflehog@f714bf454f350590f4a24c3ddb1aef02c35bf5b6 # v3.97.5
         with:
           path: current
           head: HEAD
