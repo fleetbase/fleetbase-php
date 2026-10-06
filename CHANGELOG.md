@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `$fleetbase->socket->token()` mints a short-lived realtime socket token (`POST socket/token`) for server-side exchange; the browser presents it with `socket.authenticate(token)`.
+
 ## [1.4.1] - 2026-09-14
 
 ### Changed

@@ -39,6 +39,7 @@ use Fleetbase\Sdk\Services\PayloadService;
 use Fleetbase\Sdk\Services\PlaceService;
 use Fleetbase\Sdk\Services\PurchaseRateService;
 use Fleetbase\Sdk\Services\SensorService;
+use Fleetbase\Sdk\Services\SocketService;
 use Fleetbase\Sdk\Services\ServiceAreaService;
 use Fleetbase\Sdk\Services\ServiceQuoteService;
 use Fleetbase\Sdk\Services\ServiceRateService;
@@ -175,6 +176,9 @@ class Fleetbase
     /** @var FileService */
     public $files;
 
+    /** @var SocketService */
+    public $socket;
+
     /** @param array<string, mixed> $config */
     public function __construct(string $publicKey, array $config = [], bool $debug = false)
     {
@@ -221,6 +225,7 @@ class Fleetbase
         $this->chatChannels = new ChatChannelService($this->client);
         $this->comments = new CommentService($this->client);
         $this->files = new FileService($this->client);
+        $this->socket = new SocketService($this->client);
     }
 
     public function setApiKey(string $publicKey): Fleetbase
@@ -459,5 +464,10 @@ class Fleetbase
     public function workOrders(): WorkOrderService
     {
         return $this->workOrders;
+    }
+
+    public function socket(): SocketService
+    {
+        return $this->socket;
     }
 }

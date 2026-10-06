@@ -117,6 +117,7 @@ final class FleetbaseTest extends TestCase
             'chatChannels' => \Fleetbase\Sdk\Services\ChatChannelService::class,
             'comments' => \Fleetbase\Sdk\Services\CommentService::class,
             'files' => \Fleetbase\Sdk\Services\FileService::class,
+            'socket' => \Fleetbase\Sdk\Services\SocketService::class,
         ];
     }
 }

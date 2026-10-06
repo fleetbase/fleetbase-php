@@ -129,6 +129,24 @@ $history = $fleetbase->vehicles->listVehicleInspections($vehicleId, ['limit' => 
 
 Read the form's `grouped_fields` to obtain field IDs and required answer types; a field's `id` is what an answer names, and it is the same id the submission answers with. `answers` was called `custom_field_values`, and each answer's `field` was called `custom_field`; both older spellings are still accepted on submit. Reuse the same caller-generated idempotency key when replaying one submission; generate a new key for a new inspection. The SDK passes the key through to the API and does not implement its own deduplication. Forms are published in the console, not created through this public API. Form authoring, submission updates/deletion, and public inspection-link management are not supported public endpoints.
 
+### Realtime socket tokens
+
+Realtime channel subscriptions are authorized with a short-lived socket token. Mint it on your server with your secret key and send only the token to the browser or device; never expose the API key in client code.
+
+```php
+$minted = $fleetbase->socket->token(); // POST /v1/socket/token
+
+// Return this to your authenticated front end:
+// { "token": "...", "expires_in": 900, "expires_at": "2026-01-01T00:15:00+00:00" }
+echo json_encode([
+    'token' => $minted->token,
+    'expires_in' => $minted->expires_in,
+    'expires_at' => $minted->expires_at,
+]);
+```
+
+The browser connects with `socketcluster-client`, calls `socket.authenticate(token)` (or supplies the token through an in-memory `authEngine`), and asks your server for a new token about 60 seconds before `expires_in` elapses. A token minted with an API key may subscribe to its company channel (`company.{company uuid}`), its own key channel (`api.{key id}`), and channels of resources in the same company. A server without realtime authentication configured answers `404`, raised as `NotFoundException`.
+
 ## Configuration
 
 The second constructor argument accepts client configuration. The third legacy argument retains the debug flag without printing requests or credentials.
